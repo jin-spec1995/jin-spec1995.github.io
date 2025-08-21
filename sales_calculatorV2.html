@@ -1,132 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JSB Sales Calculator — Exact Sheet Logic</title>
-  <style>
-    :root{
-      --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
-      --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7; --warn:#b54708;
-    }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-         color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale}
-    .wrap{max-width:1180px; margin:32px 0 32px 20px; padding:0 20px 48px;} /* left for SuiteDash sidebar */
-    header.brand{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px;}
-    .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:22px;}
-    .subtle{color:var(--muted); font-size:14px}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>JSB Sales Calculator — Branded + What‑Ifs + True WYSIWYG PDF</title>
+<style>
+  :root{
+    --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
+    --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7; --warn:#b54708;
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+       color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale}
+  .wrap{max-width:1180px; margin:32px 0 32px 20px; padding:0 20px 72px;} /* left margin for SuiteDash sidebar */
+  header.brand{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px;}
+  .brand-left{display:flex; align-items:center; gap:14px}
+  .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:22px;}
+  .tagline{color:var(--muted); font-size:13px}
+  .subtle{color:var(--muted); font-size:14px}
+  .logo-full{height:40px; width:auto}
+  .logo-icon{height:28px; width:auto}
 
-    .tabs{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap}
-    .tab{appearance:none; border:1px solid var(--line); background:#fff; color:#2b3a33; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;}
-    .tab.active{border-color:#10a772; background:#f3fff9; box-shadow:0 0 0 3px rgba(16,167,114,.15); color:#0c5e49}
+  .tabs{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap}
+  .tab{appearance:none; border:1px solid var(--line); background:#fff; color:#2b3a33; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;}
+  .tab.active{border-color:#10a772; background:#f3fff9; box-shadow:0 0 0 3px rgba(16,167,114,.15); color:#0c5e49}
 
-    .grid{display:grid; gap:16px}
-    @media (min-width:980px){ .grid.cols{grid-template-columns:1.1fr 1.9fr} }
-    .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:0 1px 0 #f4f6f8;}
-    .card-title{display:flex; align-items:center; gap:10px; font-weight:700; margin:2px 0 14px;}
-    .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0;}
-    .divider{height:1px; background:var(--line); margin:14px 0}
-    .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+  .grid{display:grid; gap:16px}
+  @media (min-width:980px){ .grid.cols{grid-template-columns:1.1fr 1.9fr} }
+  .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:0 1px 0 #f4f6f8;}
+  .card-title{display:flex; align-items:center; gap:10px; font-weight:700; margin:2px 0 14px;}
+  .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:#0e6f57; border:1px solid #eaf4f0;}
+  .divider{height:1px; background:var(--line); margin:14px 0}
+  .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
 
-    .inputs{display:grid; grid-template-columns:1.5fr 1fr; gap:12px 12px; align-items:center;}
-    label{font-size:14px; color:var(--muted)}
-    input[type=number]{
-      width:100%; padding:10px 14px; border-radius:12px; border:1px solid var(--line); outline:none; background:#fff;
-      transition:border-color .15s, box-shadow .15s; font-size:16px; line-height:22px; height:44px;
-    }
-    input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
-    input[type=number]{ -moz-appearance:textfield; }
-    input[type=number]:focus{border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18);}
-    .hint{font-size:12px; color:var(--muted); margin-top:8px}
+  .inputs{display:grid; grid-template-columns:1.5fr 1fr; gap:12px 12px; align-items:center;}
+  label{font-size:14px; color:var(--muted)}
+  .info{border-bottom:1px dotted #9fb3a7; cursor:help}
+  input[type=number]{
+    width:100%; padding:10px 14px; border-radius:12px; border:1px solid var(--line); outline:none; background:#fff;
+    transition:border-color .15s, box-shadow .15s; font-size:16px; line-height:22px; height:44px;
+  }
+  input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  input[type=number]{ -moz-appearance:textfield; }
+  input[type=number]:focus{border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18);}
+  .hint{font-size:12px; color:var(--muted); margin-top:8px}
 
-    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
-    .btn{appearance:none; border:0; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:10px; letter-spacing:.2px;}
-    .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border:1px solid #10a772}
-    .btn-ghost{background:#fff; color:var(--brand-mid); border:1px solid var(--line)}
-    .btn.warn{background:#fff7ed; color:#7c3b06; border:1px solid #fed7aa}
+  .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+  .btn{appearance:none; border:0; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:10px; letter-spacing:.2px;}
+  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border:1px solid #10a772}
+  .btn-ghost{background:#fff; color:#0e6f57; border:1px solid var(--line)}
+  .btn.warn{background:#fff7ed; color:#7c3b06; border:1px solid #fed7aa}
+  .btn[disabled]{opacity:.5; cursor:not-allowed}
 
-    .kpis{display:grid; gap:12px; margin-top:4px}
-    @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
-    .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff;}
-    .kpi .label{font-size:12px; color:var(--muted)}
-    .kpi .value{font-weight:800; font-size:20px; color:var(--ink)}
-    .kpi.primary{border-color:#cef3e3; background:linear-gradient(180deg,#f7fffb,#ffffff)}
-    .kpi.primary .value{color:#0e6f57}
+  .kpis{display:grid; gap:12px; margin-top:4px}
+  @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
+  .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff;}
+  .kpi .label{font-size:12px; color:var(--muted)}
+  .kpi .value{font-weight:800; font-size:20px; color:var(--ink)}
+  .kpi.primary{border-color:#cef3e3; background:linear-gradient(180deg,#f7fffb,#ffffff)}
+  .kpi.primary .value{color:#0e6f57}
+  .kpi.impact{background:linear-gradient(180deg,#e8fff5,#ffffff); border-color:#bdf0d8;}
 
-    table{width:100%; border-collapse:separate; border-spacing:0; font-size:14px; border:1px solid var(--line); border-radius:14px; overflow:hidden}
-    th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
-    thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:700}
-    tbody tr:last-child td{border-bottom:0}
-    td.right{text-align:right}
-  </style>
+  table{width:100%; border-collapse:separate; border-spacing:0; font-size:14px; border:1px solid var(--line); border-radius:14px; overflow:hidden}
+  th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
+  thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:700}
+  tbody tr:last-child td{border-bottom:0}
+  td.right{text-align:right}
+
+  /* CTA Banner */
+  .cta{border:1px solid #b9eddc; background:#f5fffb; border-radius:16px; padding:14px; display:flex; align-items:center; gap:12px; margin-top:14px}
+  .cta .cta-title{font-weight:800; color:#0e6f57}
+  .cta .cta-btn{margin-left:auto}
+
+  /* Footer */
+  footer.site{margin-top:24px; padding-top:12px; border-top:1px solid var(--line); display:flex; gap:10px; align-items:center; color:#5e6b74; font-size:12px}
+  footer.site img{height:16px}
+
+  /* Off-screen PDF snapshot */
+  #pdfSnapshotRoot{position:fixed; left:-9999px; top:0; width:1120px; padding:0 20px 48px; background:#fff}
+  #pdfSnapshotRoot .actions{display:none !important}
+  #pdfWatermark{position:absolute; right:24px; bottom:24px; opacity:.08}
+</style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" id="appRoot">
     <header class="brand">
-      <div>
-        <div class="brand-title">Just Smart Business</div>
-        <div class="subtle">Sales Calculator — Exact workbook logic with What‑Ifs</div>
+      <div class="brand-left">
+        <!-- Full logo -->
+        <img class="logo-full" alt="Just Smart Business" src="jsb_icon.svg" />
+        <div>
+          <div class="brand-title">Sales Calculator</div>
+          <div class="tagline">Clarity · Strategy · Growth</div>
+        </div>
       </div>
+      <!-- Icon logo -->
+      <img class="logo-icon" alt="JSB icon" src="jsb_logo.svg" />
     </header>
 
-    <nav class="tabs">
-      <button class="tab active" data-tab="inputsTab">1) Inputs</button>
-      <button class="tab" data-tab="resultsTab">2) Results</button>
-      <button class="tab" data-tab="whatifTab">3) What‑Ifs</button>
+    <nav class="tabs" aria-label="Progress">
+      <button class="tab active" data-tab="inputsTab" title="Step 1: Enter your numbers">Enter Your Business Numbers</button>
+      <button class="tab" data-tab="resultsTab" title="Step 2: Review results">Results</button>
+      <button class="tab" data-tab="whatifTab" title="Step 3: Test growth scenarios">Test Your Growth Scenarios</button>
     </nav>
 
     <!-- INPUTS -->
     <section class="card" id="inputsTab">
       <div class="card-title">
-        <span class="section-tag">Data Input</span>
-        <span class="subtle">Match the sheet values and units (decimals for %)</span>
+        <span class="section-tag">Step 1 · Business Numbers</span>
+        <span class="subtle">Use decimals for % (e.g., 0.20 = 20%)</span>
       </div>
       <div class="grid cols">
         <div>
           <div class="inputs">
-            <label for="G5">Average Sale Value (ex GST)</label>
+            <label for="G5" class="info" title="Typical invoice value (ex GST)">Average Sale Value (ex GST)</label>
             <input id="G5" type="number" step="0.01" min="0" value="550">
 
-            <label for="G6">Average Cost of Sale (ex GST)</label>
+            <label for="G6" class="info" title="Direct costs to deliver a sale (ex GST)">Average Cost of Sale (ex GST)</label>
             <input id="G6" type="number" step="0.01" min="0" value="150">
 
-            <label for="G10">Monthly Expenses (ex GST)</label>
+            <label for="G10" class="info" title="Overheads such as rent, salaries, subscriptions (ex GST)">Monthly Expenses (ex GST)</label>
             <input id="G10" type="number" step="0.01" min="0" value="8211">
 
-            <label for="G11">Number of Weeks per Year</label>
+            <label for="G11" class="info" title="Weeks worked per year">Number of Weeks per Year</label>
             <input id="G11" type="number" step="1" min="1" value="48">
 
-            <label for="G12">Number of Days per Week</label>
+            <label for="G12" class="info" title="Days worked per week">Number of Days per Week</label>
             <input id="G12" type="number" step="1" min="1" value="5">
 
-            <label for="G13">How much do you want to make (Desired Net Profit)</label>
+            <label for="G13" class="info" title="Your target net profit for the year">Desired Net Profit</label>
             <input id="G13" type="number" step="0.01" min="0" value="100000">
 
-            <label for="G15">Number of Existing Clients</label>
+            <label for="G15" class="info" title="Number of current active clients">Existing Clients</label>
             <input id="G15" type="number" step="1" min="0" value="36">
 
-            <label for="G16">How many times do they buy per year</label>
+            <label for="G16" class="info" title="Average purchases per existing client per year">Times a client buys per year</label>
             <input id="G16" type="number" step="1" min="1" value="3">
           </div>
 
           <div class="divider"></div>
 
           <div class="card-title">
-            <span class="section-tag">Sales Conversions</span>
-            <span class="subtle">Use decimals: 0.15 = 15%</span>
+            <span class="section-tag">Conversions</span>
+            <span class="subtle">Enter as decimals</span>
           </div>
           <div class="inputs">
-            <label for="G40">Clicks/Walk‑ins → Leads (decimal)</label>
+            <label for="G40" class="info" title="Clicks/Walk‑ins that become leads">Clicks/Walk‑ins → Leads</label>
             <input id="G40" type="number" step="0.0001" min="0" max="1" value="0.15">
 
-            <label for="G41">Leads → Prospects (decimal)</label>
+            <label for="G41" class="info" title="Leads that become qualified prospects">Leads → Prospects</label>
             <input id="G41" type="number" step="0.0001" min="0" max="1" value="0.15">
 
-            <label for="G42">Prospects → Proposals (decimal)</label>
+            <label for="G42" class="info" title="Prospects that receive proposals">Prospects → Proposals</label>
             <input id="G42" type="number" step="0.0001" min="0" max="1" value="0.15">
 
-            <label for="G43">Proposals → Sales (decimal)</label>
+            <label for="G43" class="info" title="Proposals that close as sales">Proposals → Sales</label>
             <input id="G43" type="number" step="0.0001" min="0" max="1" value="0.7">
           </div>
 
@@ -139,12 +166,12 @@
 
         <div>
           <div class="card" style="padding:12px">
-            <div class="subtle">Guide</div>
+            <div class="subtle">Quick Guide</div>
             <ul style="margin:6px 0 0 16px; padding:0; line-height:1.5">
-              <li><strong>Average Sale</strong> and <strong>Cost of Sale</strong> are ex‑GST.</li>
-              <li><strong>Expenses</strong> are monthly; we annualise to calculate targets.</li>
-              <li>Conversions use decimals (e.g., <code>0.20</code> = <code>20%</code>).</li>
-              <li>Run <strong>Calculate</strong> to reveal all results and the What‑Ifs tab.</li>
+              <li>Sales & Cost are <strong>ex‑GST</strong>.</li>
+              <li>Expenses are <strong>monthly</strong>; we annualise in results.</li>
+              <li>Use <code>0.20</code> for 20% conversion.</li>
+              <li>Press <strong>Calculate</strong> to continue.</li>
             </ul>
           </div>
         </div>
@@ -154,16 +181,16 @@
     <!-- RESULTS -->
     <section class="card" id="resultsTab" style="display:none">
       <div class="card-title">
-        <span class="section-tag">Results</span>
+        <span class="section-tag">Step 2 · Results</span>
         <span class="subtle">Direct carry-over of sheet formulas</span>
       </div>
 
       <div class="kpis">
-        <div class="kpi primary">
+        <div class="kpi primary impact">
           <div class="label">Total Sales (Revenue)</div>
           <div class="value mono" id="J11">—</div>
         </div>
-        <div class="kpi primary">
+        <div class="kpi primary impact">
           <div class="label">Sales Required / Year</div>
           <div class="value mono" id="J6">—</div>
         </div>
@@ -214,33 +241,36 @@
           <tr><td>Initial Contacts required</td><td class="right mono" id="J40">—</td><td class="right mono" id="K40">—</td><td class="right mono" id="L40">—</td><td class="right mono" id="M40">—</td></tr>
         </tbody>
       </table>
+
+      
     </section>
 
     <!-- WHAT-IFS -->
     <section class="card" id="whatifTab" style="display:none">
       <div class="card-title">
-        <span class="section-tag">Section 2 — What‑If Results</span>
-        <span class="subtle">Use percentages as decimals, per workbook</span>
+        <span class="section-tag">Step 3 · What‑If Scenarios</span>
+        <span class="subtle">Use decimals for %</span>
       </div>
       <div class="grid cols">
         <div>
           <div class="inputs">
-            <label for="G22">Sales value increased by x% (decimal)</label>
+            <label for="G22" class="info" title="Increase average sale price by % (decimal)">Sales value increased by x% (decimal)</label>
             <input id="G22" type="number" step="0.0001" value="0.05">
 
-            <label for="G23">Cost of Sales decreased by x% (decimal)</label>
+            <label for="G23" class="info" title="Reduce direct cost of sale by % (decimal)">Cost of Sales decreased by x% (decimal)</label>
             <input id="G23" type="number" step="0.0001" value="0.05">
 
-            <label for="G24">Overhead decreased by x% (decimal)</label>
+            <label for="G24" class="info" title="Reduce overheads by % (decimal)">Overhead decreased by x% (decimal)</label>
             <input id="G24" type="number" step="0.0001" value="0.05">
 
-            <label for="G25">Increase number of Sales (decimal)</label>
+            <label for="G25" class="info" title="Increase number of sales by % (decimal of baseline volume)">Increase number of Sales (decimal)</label>
             <input id="G25" type="number" step="0.0001" value="0.15">
           </div>
           <p class="hint">Example: enter 0.05 for 5%.</p>
           <div class="actions">
             <button class="btn btn-primary" id="applyWhatIf">Apply What‑If</button>
             <button class="btn warn" id="clearWhatIf" type="button">Clear</button>
+            <button class="btn btn-ghost" id="downloadPdfBtn" type="button" disabled>Download PDF</button>
           </div>
         </div>
         <div>
@@ -260,7 +290,7 @@
 
       <div class="kpis">
         <div class="kpi primary"><div class="label">New Avg Sale Value</div><div class="value mono" id="G26_out">—</div></div>
-        <div class="kpi"><div class="label">Total Sales (Revenue)</div><div class="value mono" id="J27">—</div></div>
+        <div class="kpi primary"><div class="label">Total Sales (Revenue)</div><div class="value mono" id="J27">—</div></div>
         <div class="kpi"><div class="label">Cost of Sales (adjusted)</div><div class="value mono" id="J28">—</div></div>
         <div class="kpi"><div class="label">Cost of Sales %</div><div class="value mono" id="K28">—</div></div>
       </div>
@@ -294,8 +324,29 @@
           <tr><td>Sales Required per Day</td><td class="right mono" id="J25">—</td></tr>
         </tbody>
       </table>
+      <div class="cta">
+        <img src="jsb_icon.svg" alt="JSB" style="height:20px" />
+        <div>
+          <div class="cta-title">Turn insight into action</div>
+          <div class="subtle" style="margin-top:2px">Book a Strategy Session with a JSB advisor to plan your next steps.</div>
+        </div>
+        <a class="btn btn-primary cta-btn" href="http://justsmartbusiness.com.au" target="_blank" rel="noopener">Book a Session</a>
+      </div>
     </section>
+    
+
+    <footer class="site">
+      <img src="jsb_icon.svg" alt="JSB" />
+      <span>© Just Smart Business · justsmartbusiness.com.au</span>
+    </footer>
   </div>
+
+  <!-- Off-screen WYSIWYG PDF snapshot -->
+  <div id="pdfSnapshotRoot"></div>
+
+  <!-- html2canvas + jsPDF (downloads real PDF, no print dialog) -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
   <script>
     const $ = id => document.getElementById(id);
@@ -313,23 +364,22 @@
     }
 
     let baseline = null;
+    let whatIfReady = false;
 
     function calculate(){
       sanitizeInputs();
       const G5=n('G5'), G6=n('G6'), G10=n('G10'), G11=n('G11'), G12=n('G12'), G13=n('G13'), G15=n('G15'), G16=n('G16');
       const G40=clamp01(n('G40')), G41=clamp01(n('G41')), G42=clamp01(n('G42')), G43=clamp01(n('G43'));
 
-      const G7 = G5 - G6;                         // Gross profit per sale
-      const G8 = (G5!==0) ? (G7/G5) : 0;          // GP %
-      const G9 = (G5!==0) ? (G6/G5) : 0;          // Cost of sale %
-
-      const J14 = G10*12;                          // Expenses (year)
-      const J15 = G13;                              // Desired net profit
-      const J13 = J14 + J15;                        // Gross profit required
+      const G7 = G5 - G6;               // GP per sale
+      const G8 = (G5!==0) ? (G7/G5) : 0; // GP %
+      const J14 = G10*12;                // Expenses/year
+      const J15 = G13;                   // Desired NP
+      const J13 = J14 + J15;             // GP required
       const J12 = (G8!==0) ? (J13*((1-G8)/G8)) : 0; // Cost of Sales
-      const J11 = J13 + J12;                        // Total Sales (Revenue)
+      const J11 = J13 + J12;             // Total Sales
 
-      const J6  = (G5!==0) ? ceil(J11/G5) : 0;     // Sales / Year
+      const J6  = (G5!==0) ? ceil(J11/G5) : 0; // Sales/year
       const K6  = J6*G5;
       const J7  = ceil(J6/12);
       const K7  = J7*G5;
@@ -338,17 +388,14 @@
       const J9  = ceil(J6/G11/5);
       const K9  = J9*G5;
 
-      // New clients required
-      const G17 = Math.max(0, ceil((G16!==0 ? (J6/G16) : 0) - G15)); // as per =ROUNDUP(J6/G16 - G15, 0)
+      const G17 = Math.max(0, ceil((G16!==0 ? (J6/G16) : 0) - G15)); // new clients required
 
-      // Funnel (Section 3)
       const J44 = G17;               const K44 = ceil(J44/12); const L44 = ceil(J44/G11); const M44 = ceil(L44/G12);
       const J43 = (G43!==0) ? ceil(J44/G43) : 0; const K43 = ceil(J43/12); const L43 = ceil(J43/G11); const M43 = ceil(L43/G12);
       const J42 = (G42!==0) ? ceil(J43/G42) : 0; const K42 = ceil(J42/12); const L42 = ceil(J42/G11); const M42 = ceil(L42/G12);
       const J41 = (G41!==0) ? ceil(J42/G41) : 0; const K41 = ceil(J41/12); const L41 = ceil(J41/G11); const M41 = ceil(L41/G12);
       const J40 = (G40!==0) ? ceil(J41/G40) : 0; const K40 = ceil(J40/12); const L40 = ceil(J40/G11); const M40 = ceil(L40/G12);
 
-      // Write KPI
       $('J11').textContent = aud0(clamp0(J11));
       $('J6').textContent  = num0(J6);
       $('J13').textContent = aud0(clamp0(J13));
@@ -365,7 +412,6 @@
       $('J9').textContent = num0(J9);
       $('K9').textContent = aud0(clamp0(K9));
 
-      // Funnel outputs
       [['J44',J44],['K44',K44],['L44',L44],['M44',M44],
        ['J43',J43],['K43',K43],['L43',L43],['M43',M43],
        ['J42',J42],['K42',K42],['L42',L42],['M42',M42],
@@ -374,6 +420,7 @@
 
       baseline = {G5,G6,G10,G11,G12,G13,G15,G16,G40,G41,G42,G43,J6,J11,J12,J13,J14,J15};
       switchTab('resultsTab');
+      whatIfReady = false; $('downloadPdfBtn').disabled = true;
     }
 
     function applyWhatIf(){
@@ -383,30 +430,28 @@
       const G24 = parseFloat($('G24').value)||0;
       const G25 = parseFloat($('G25').value)||0;
 
-      let {G5,G6,G10,G11,G12,G13,J6,J12,J13} = baseline;
+      let {G5,G6,G10,G11,G12,G13,J6,J12} = baseline;
 
-      const G26 = G5 * (1 + G22);           // New Average Sales Value
+      const G26 = G5 * (1 + G22);           // New Avg Sale
       const J27 = G26 * J6;                 // Total Sales
       const J28 = J12 * (1 - G23);          // Cost of Sales adjusted
       const K28 = (J27!==0) ? (J28 / J27) : 0;
 
-      const J29 = J27 - J28;                // GP required (per sheet's label)
+      const J29 = J27 - J28;                // Gross Profit
       const J30 = (G10*12) * (1 - G24);     // Expenses adjusted
-      const J31 = J29 - J30;                // Desired Net Profit (new)
-      const F29 = J31 - G13;                // Increase in Net Profit
+      const J31 = J29 - J30;                // Net Profit new
+      const F29 = J31 - G13;                // Increase in NP
 
-      const incSalesCount = J6 * G25;       // additional sales
+      const incSalesCount = J6 * G25;       // additional sales count
       const addRevenue = incSalesCount * G26;
       const addCost    = incSalesCount * (K28 * G26);
       const F33 = F29 + (addRevenue - addCost);
 
-      // What-if cadence (rows 22..25 in J) based on J27 & G26 & baseline cadence rules
-      const J22 = (G26!==0) ? Math.ceil(J27 / G26) : 0; // equals J6 baseline
+      const J22 = (G26!==0) ? Math.ceil(J27 / G26) : 0;
       const J23 = Math.ceil(J22/12);
       const J24 = Math.ceil(J22/G11);
       const J25 = Math.ceil(J24/G12);
 
-      // Write
       $('G26_out').textContent = aud0(G26);
       $('J27').textContent = aud0(J27);
       $('J28').textContent = aud0(J28);
@@ -416,18 +461,19 @@
       $('J31').textContent = aud0(J31);
       $('F29').textContent = aud0(F29);
       $('F33').textContent = aud0(F33);
-
       $('J22').textContent = num0(J22);
       $('J23').textContent = num0(J23);
       $('J24').textContent = num0(J24);
       $('J25').textContent = num0(J25);
 
       switchTab('whatifTab');
+      whatIfReady = true; $('downloadPdfBtn').disabled = false;
     }
 
     function clearWhatIf(){
       ['G22','G23','G24','G25'].forEach(id => $(id).value = '0');
       ['G26_out','J27','J28','K28','J29','J30','J31','F29','F33','J22','J23','J24','J25'].forEach(id => $(id).textContent = '—');
+      whatIfReady = false; $('downloadPdfBtn').disabled = true;
     }
 
     function switchTab(id){
@@ -439,16 +485,111 @@
       });
     }
 
+    /* ===== WYSIWYG PDF: off‑screen clone that mirrors on‑screen exactly ===== */
+    function makeInputsSnapshotSection(srcSection){
+      // Clone and convert number inputs to readonly text blocks
+      const clone = srcSection.cloneNode(true);
+      clone.querySelectorAll('input[type="number"]').forEach(inp=>{
+        const lab = clone.querySelector(`label[for="${inp.id}"]`);
+        if (lab){
+          const row = document.createElement('div');
+          row.style.display='grid'; row.style.gridTemplateColumns='1.5fr 1fr'; row.style.gap='12px';
+          const l = lab.cloneNode(true);
+          const v = document.createElement('div');
+          const raw = parseFloat(inp.value||0);
+          const money = ['G5','G6','G10','G13'].includes(inp.id);
+          const percent = ['G40','G41','G42','G43'].includes(inp.id);
+          v.textContent = percent ? (raw*100).toFixed(1)+'%' : (money ? aud0(raw) : num0(raw));
+          v.style.padding='10px 14px'; v.style.border='1px solid #e6eaee'; v.style.borderRadius='12px'; v.style.background='#fff'; v.style.fontWeight='700';
+          lab.replaceWith(row); row.appendChild(l); row.appendChild(v);
+          inp.remove();
+        }
+      });
+      clone.querySelectorAll('.actions,.hint').forEach(el=>el.remove());
+      return clone;
+    }
+
+    function buildSnapshot(){
+      const root = document.getElementById('pdfSnapshotRoot');
+      root.innerHTML = '';
+      const skin = document.createElement('div');
+      skin.className = 'wrap';
+      const header = document.querySelector('header.brand').cloneNode(true);
+      skin.appendChild(header);
+
+      const inputClone = makeInputsSnapshotSection(document.getElementById('inputsTab'));
+      const resultsClone = document.getElementById('resultsTab').cloneNode(true);
+      const whatIfClone = document.getElementById('whatifTab').cloneNode(true);
+
+      [inputClone, resultsClone, whatIfClone].forEach(sec=>{
+        sec.style.display='block';
+        sec.querySelectorAll('.actions').forEach(a=>a.remove());
+      });
+
+      // Watermark
+      const wm = document.createElement('img');
+      wm.id = 'pdfWatermark';
+      wm.src = "data:image/svg+xml;base64,PHN2ZyB4bWw6c3BhY2U9InByZXNlcnZlIiBz...AwLjExMDEpIj5ndWlkaW5nIHlvdSB0byBzdWNjZXNzPC90ZXh0Pgo8L3N2Zz4K";
+      wm.style.width = '220px';
+      skin.style.position = 'relative';
+      skin.appendChild(wm);
+
+      skin.appendChild(inputClone);
+      skin.appendChild(resultsClone);
+      skin.appendChild(whatIfClone);
+      root.appendChild(skin);
+      return root;
+    }
+
+    async function downloadPdf(){
+      if (!whatIfReady){
+        alert('Please Apply What‑If first so the report includes all data.');
+        return;
+      }
+      const node = buildSnapshot();
+      await new Promise(r=>setTimeout(r,50));
+
+      const canvas = await html2canvas(node, {scale:2, backgroundColor:'#ffffff', useCORS:true, logging:false, windowWidth:1200});
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit:'pt', format:'a4' });
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const margin = 24;
+      const imgWidth = pageWidth - margin*2;
+      const ratio = imgWidth / canvas.width;
+      const pageSliceHeight = (pageHeight - margin*2) / ratio;
+
+      const pageCanvas = document.createElement('canvas');
+      const pageCtx = pageCanvas.getContext('2d');
+
+      for (let start = 0, page=0; start < canvas.height; start += pageSliceHeight, page++){
+        const sliceH = Math.min(pageSliceHeight, canvas.height - start);
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceH;
+        pageCtx.clearRect(0,0,pageCanvas.width,pageCanvas.height);
+        pageCtx.drawImage(canvas, 0, start, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+        const pageImg = pageCanvas.toDataURL('image/png');
+        if (page>0) pdf.addPage();
+        pdf.addImage(pageImg, 'PNG', margin, margin, imgWidth, sliceH * ratio);
+      }
+
+      const stamp = new Date().toISOString().slice(0,10);
+      pdf.save(`JSB-Sales-Calculator-Branded-${stamp}.pdf`);
+    }
+
     document.addEventListener('click', (e)=>{
       if (e.target.classList.contains('tab')) switchTab(e.target.dataset.tab);
       if (e.target.id === 'calcBtn') calculate();
       if (e.target.id === 'resetBtn') {
         document.querySelectorAll('input').forEach(el=> el.value = el.defaultValue ?? '');
-        baseline = null;
+        baseline = null; whatIfReady = false; $('downloadPdfBtn').disabled = true;
         switchTab('inputsTab');
       }
       if (e.target.id === 'applyWhatIf') applyWhatIf();
       if (e.target.id === 'clearWhatIf') clearWhatIf();
+      if (e.target.id === 'downloadPdfBtn') downloadPdf();
     });
   </script>
 </body>
