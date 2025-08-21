@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JSB Strategic Assessment</title>
+  
+<style>
+  :root{
+    --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
+    --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7;
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+       color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale}
+  .wrap{max-width:1120px; margin:32px 0 32px 20px; padding:0 20px 48px;} /* left aligned for SuiteDash */
+  header.brand{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px;}
+  .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:22px;}
+  .subtle{color:var(--muted); font-size:14px}
+  .grid{display:grid; gap:16px}
+  @media (min-width:980px){ .grid.cols{grid-template-columns:1.2fr 1.8fr} }
+  .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:0 1px 0 #f4f6f8;}
+  .card-title{display:flex; align-items:center; gap:10px; font-weight:700; margin:2px 0 14px;}
+  .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0;}
+  .divider{height:1px; background:var(--line); margin:14px 0}
+  .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+  details.block{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff}
+  details.block + details.block{margin-top:10px}
+  summary{list-style:none; cursor:pointer; user-select:none; padding:14px 16px; display:flex; align-items:center; gap:10px; font-weight:700; background:#f7fbf9; color:#426159;}
+  summary::marker{display:none}
+  .qs{padding:10px 16px 14px}
+  .q-row{display:grid; grid-template-columns:1fr; gap:10px; padding:12px 0; border-bottom:1px solid var(--line)}
+  .q-row:last-child{border-bottom:0}
+  .q-label{font-size:14px; color:var(--ink)}
+  .choices{display:grid; grid-template-columns:repeat(5, minmax(120px, 1fr)); gap:8px; margin-top:6px}
+  .chip-choice{position:relative; display:flex; align-items:center; justify-content:center; gap:8px; padding:10px 10px; border:1px solid var(--line); border-radius:12px; background:#fff; font-size:13px; color:#2b3a33; transition:border-color .15s, box-shadow .15s, background .15s; text-align:center;}
+  .chip-choice input{position:absolute; inset:0; opacity:0; cursor:pointer}
+  .chip-choice:has(input:checked){border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18); background:#f4fff9}
+  .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+  .btn{appearance:none; border:0; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:10px; letter-spacing:.2px;}
+  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border:1px solid #10a772}
+  .btn-ghost{background:#fff; color:var(--brand-mid); border:1px solid var(--line)}
+  .kpis{display:grid; gap:12px; margin-top:4px}
+  @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
+  .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff;}
+  .kpi .label{font-size:12px; color:var(--muted)}
+  .kpi .value{font-weight:800; font-size:20px; color:var(--ink)}
+  .kpi.primary{border-color:#cef3e3; background:linear-gradient(180deg,#f7fffb,#ffffff)}
+  .kpi.primary .value{color:#0e6f57}
+  .banner{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff; display:flex; gap:12px; align-items:flex-start}
+  .badge{font-size:12px; padding:6px 10px; border-radius:999px; color:#083524; background:#ccf2e4; border:1px solid #b9eddc}
+  .banner.low{border-color:#ffe5c0; background:#fff9f0}
+  .banner.low .badge{background:#ffe5c0; border-color:#ffd79c; color:#5a3d0a}
+  .banner.mid{border-color:#cce7e6; background:#f2fbfb}
+  .banner.mid .badge{background:#d9f4f3; border-color:#c2ecea; color:#0e6b66}
+  .banner.high{border-color:#cfeedd; background:#f6fffa}
+  .banner.high .badge{background:#cfeedd; border-color:#b8e7ce; color:#115e38}
+  table{width:100%; border-collapse:separate; border-spacing:0; font-size:14px; border:1px solid var(--line); border-radius:14px; overflow:hidden}
+  th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
+  thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:700}
+  tbody tr:last-child td{border-bottom:0}
+  td.right{text-align:right}
+  @media print{ .actions{display:none !important} .card, table{box-shadow:none} .wrap{margin:0; padding:0} header.brand{margin-bottom:8px} .kpi .value{font-size:18px} }
+</style>
+
+</head>
+<body>
+  <div class="wrap" id="pageRoot">
+    <header class="brand">
+      <div>
+        <div class="brand-title">Just Smart Business</div>
+        <div class="subtle">Strategic Assessment — Follow the workbook exactly</div>
+      </div>
+    </header>
+
+    <div class="grid cols">
+      <section class="card">
+        <div class="card-title">
+          <span class="section-tag">Your Answers</span>
+          <span class="subtle">Choose one option per question</span>
+        </div>
+        <details class="block" open><summary>Strategic Assessment Questions</summary><div class="qs">
+<div class="q-row">
+<div class="q-label">Do you have a clear vision (Big Goal) of where the company is going? (Do you have it written down)</div>
+<div class="choices" data-name="q-1">
+<label class="chip-choice">You have some idea<input type="radio" name="q-1" value="2"></label>
+<label class="chip-choice">You know what you want  but it is not written<input type="radio" name="q-1" value="4"></label>
+<label class="chip-choice">It is written down but it is not measureable<input type="radio" name="q-1" value="6"></label>
+<label class="chip-choice">It is clear and written but you are a bit off track<input type="radio" name="q-1" value="8"></label>
+<label class="chip-choice">It is clear, written and you are on track<input type="radio" name="q-1" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Can you describe clearly the purpose of your business in about 30 words (who you are, what you do and why)?</div>
+<div class="choices" data-name="q-2">
+<label class="chip-choice">To some extent but it is not completely clear<input type="radio" name="q-2" value="2"></label>
+<label class="chip-choice">You  have it clearly stated but focus on sales<input type="radio" name="q-2" value="4"></label>
+<label class="chip-choice">You have it clear and use it on marketing material<input type="radio" name="q-2" value="6"></label>
+<label class="chip-choice">You are clear but often do things beyond this<input type="radio" name="q-2" value="8"></label>
+<label class="chip-choice">It is clear, written and it guides our decisions<input type="radio" name="q-2" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you know what issues are holding you back from achieving your “Big Goal”?</div>
+<div class="choices" data-name="q-3">
+<label class="chip-choice">I don’t have enough time to consider the big picture<input type="radio" name="q-3" value="2"></label>
+<label class="chip-choice">I have an idea where I want to go but lack the tools to identify the issues<input type="radio" name="q-3" value="4"></label>
+<label class="chip-choice">I know what is holding me back but I need to allocate time to work out the steps to get where I want to be.<input type="radio" name="q-3" value="6"></label>
+<label class="chip-choice">I know what they are and I am actively taking steps to address them so I can achieve my &quot;Big Goal&quot;<input type="radio" name="q-3" value="8"></label>
+<label class="chip-choice">I have a coach/mentor and we are working on them<input type="radio" name="q-3" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">How does your service delivery rate, what are the level of complaints?</div>
+<div class="choices" data-name="q-4">
+<label class="chip-choice">Too many but they  are just a part of the business<input type="radio" name="q-4" value="2"></label>
+<label class="chip-choice">A few a week but we manage to juggle them<input type="radio" name="q-4" value="4"></label>
+<label class="chip-choice">You get a few complaints but don’t keep track<input type="radio" name="q-4" value="6"></label>
+<label class="chip-choice">One now and then but it’s a chance to do better<input type="radio" name="q-4" value="8"></label>
+<label class="chip-choice">You measure complaints against a target.<input type="radio" name="q-4" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">How’s your business knowledge?</div>
+<div class="choices" data-name="q-5">
+<label class="chip-choice">You have just started out &amp; just learning<input type="radio" name="q-5" value="2"></label>
+<label class="chip-choice">You have a business degree but little experience<input type="radio" name="q-5" value="4"></label>
+<label class="chip-choice">You have experience but no formal qualifications<input type="radio" name="q-5" value="6"></label>
+<label class="chip-choice">Extensive business experience<input type="radio" name="q-5" value="8"></label>
+<label class="chip-choice">Extensive experience and formal support network<input type="radio" name="q-5" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you have a list of projects that you need to complete this year?</div>
+<div class="choices" data-name="q-6">
+<label class="chip-choice">You focus on the things that need to be done right now<input type="radio" name="q-6" value="2"></label>
+<label class="chip-choice">You have a list but can never seem to find the time<input type="radio" name="q-6" value="4"></label>
+<label class="chip-choice">There are things to be done but no plans made<input type="radio" name="q-6" value="6"></label>
+<label class="chip-choice">Working on a couple of projects right now<input type="radio" name="q-6" value="8"></label>
+<label class="chip-choice">Project plans are in place for this year<input type="radio" name="q-6" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you know what net profit you want to achieve next financial year?</div>
+<div class="choices" data-name="q-7">
+<label class="chip-choice">You are just worried about this year<input type="radio" name="q-7" value="2"></label>
+<label class="chip-choice">You want to increase your profit by a % each year<input type="radio" name="q-7" value="4"></label>
+<label class="chip-choice">You have a target but not measuring where we are<input type="radio" name="q-7" value="6"></label>
+<label class="chip-choice">You have a target but your accounts are a bit behind<input type="radio" name="q-7" value="8"></label>
+<label class="chip-choice">You have a target and you know you are on track<input type="radio" name="q-7" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you know how many sales per year you need to achieve your net profit goal?</div>
+<div class="choices" data-name="q-8">
+<label class="chip-choice">You don’t look at sale numbers but revenue<input type="radio" name="q-8" value="2"></label>
+<label class="chip-choice">Our range is so broad this is hard to do<input type="radio" name="q-8" value="4"></label>
+<label class="chip-choice">You have a target but not measuring where you are<input type="radio" name="q-8" value="6"></label>
+<label class="chip-choice">You have a target but are a bit behind<input type="radio" name="q-8" value="8"></label>
+<label class="chip-choice">You  have a target and you know you are on track<input type="radio" name="q-8" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you know average value per sale you need to achieve your net profit goal?</div>
+<div class="choices" data-name="q-9">
+<label class="chip-choice">Our range is too big to calculate an average<input type="radio" name="q-9" value="2"></label>
+<label class="chip-choice">You try to maximise the sale revenue every time<input type="radio" name="q-9" value="4"></label>
+<label class="chip-choice">You do but don’t follow through with measuring<input type="radio" name="q-9" value="6"></label>
+<label class="chip-choice">You do but your results are below target<input type="radio" name="q-9" value="8"></label>
+<label class="chip-choice">You do and are achieving this average or above<input type="radio" name="q-9" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you know the gross profit rate you need to achieve your net profit goal?</div>
+<div class="choices" data-name="q-10">
+<label class="chip-choice">You know what it is but don’t have a target<input type="radio" name="q-10" value="2"></label>
+<label class="chip-choice">You focus on net profit<input type="radio" name="q-10" value="4"></label>
+<label class="chip-choice">Yes and look at it when the books are done<input type="radio" name="q-10" value="6"></label>
+<label class="chip-choice">Yes  and measure it weekly or monthly<input type="radio" name="q-10" value="8"></label>
+<label class="chip-choice">Yes and measure per sale and per week or month<input type="radio" name="q-10" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you have a budget for overhead expenses in order to achieve your net profit goal?</div>
+<div class="choices" data-name="q-11">
+<label class="chip-choice">No but you try to minimise costs where possible<input type="radio" name="q-11" value="2"></label>
+<label class="chip-choice">Yes but we spend what we need to spend<input type="radio" name="q-11" value="4"></label>
+<label class="chip-choice">Yes and we are over budget<input type="radio" name="q-11" value="6"></label>
+<label class="chip-choice">Yes and we are over/below budget<input type="radio" name="q-11" value="8"></label>
+<label class="chip-choice">Yes and you monitor costs and are on target<input type="radio" name="q-11" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">What is holding you back. What are the issues stopping you from achieving your day to day goals?</div>
+<div class="choices" data-name="q-12">
+<label class="chip-choice">You address issues as they arise<input type="radio" name="q-12" value="2"></label>
+<label class="chip-choice">You have a list and review it when there is time<input type="radio" name="q-12" value="4"></label>
+<label class="chip-choice">You look at issues and plan to do the urgent items<input type="radio" name="q-12" value="6"></label>
+<label class="chip-choice">You look at issues as they arise and create goals to address them<input type="radio" name="q-12" value="8"></label>
+<label class="chip-choice">You do an analysis, create goals and action plans<input type="radio" name="q-12" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Do you know when Cashflow is going to be a problem for you?</div>
+<div class="choices" data-name="q-13">
+<label class="chip-choice">It is always a problem<input type="radio" name="q-13" value="2"></label>
+<label class="chip-choice">We check the bank daily so we can pay the bills<input type="radio" name="q-13" value="4"></label>
+<label class="chip-choice">Things are a bit tight right now<input type="radio" name="q-13" value="6"></label>
+<label class="chip-choice">You always have a bit of a problem some months<input type="radio" name="q-13" value="8"></label>
+<label class="chip-choice">You have peaks and troughs and you plan for this<input type="radio" name="q-13" value="10"></label>
+</div></div>
+<div class="q-row">
+<div class="q-label">Using your own business knowledge honestly how do you think your business is going?</div>
+<div class="choices" data-name="q-14">
+<label class="chip-choice">It’s a day to day proposition<input type="radio" name="q-14" value="2"></label>
+<label class="chip-choice">Things are tough<input type="radio" name="q-14" value="4"></label>
+<label class="chip-choice">Okay but working long hours in the business<input type="radio" name="q-14" value="6"></label>
+<label class="chip-choice">Good but little time for family<input type="radio" name="q-14" value="8"></label>
+<label class="chip-choice">Great and it fits with what we want to do privately<input type="radio" name="q-14" value="10"></label>
+</div></div>
+</div></details>
+        <div class="actions">
+          <button class="btn btn-primary" id="calcBtn">Calculate</button>
+          <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
+        </div>
+        <p class="subtle" style="margin-top:6px">Each answer scores 2–10 as defined in the workbook.</p>
+      </section>
+
+      <section class="card" id="results" style="display:none">
+        <div class="card-title">
+          <span class="section-tag">Results</span>
+          <span class="subtle">Calculated from your answers</span>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi primary">
+            <div class="label">Total Score</div>
+            <div class="value mono" id="overallScore">—</div>
+          </div>
+          <div class="kpi primary">
+            <div class="label">Overall (%)</div>
+            <div class="value mono" id="overallPct">—</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Questions</div>
+            <div class="value mono">14</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Max Score</div>
+            <div class="value mono">140</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="banner" id="resultBanner">
+          <span class="badge">Status</span>
+          <div id="resultText">—</div>
+        </div>
+
+
+        
+      </section>
+    </div>
+  </div>
+  
+<script>
+  // thresholds from workbook: [minFraction, message] sorted desc
+  const THRESHOLDS = [[0.9, "Congratulations, you are doing well and are on track building a business just the way you want.  Keep up the great work!"], [0.75, "You are okay so far but may really benefit from some more guidance to help you maximise your profitability and reduce the time you are working in the business rather than on the business.  We recommend our one-on-one strategy session to see if our small business Intensive \u2013 \u201cFocus on Growth - Today!\u201d is suitable for your needs.  (This is no cost to you simply click on this link to book a time)"], [0.5, "While you are getting by you could possibly be doing better. We definitely recommend our one-on-one strategy session (to see if our small business Intensive \u2013 \u201cFocus on Growth - Today!\u201d is suitable for your needs.  (This is no cost to you simply click on this link to book a time)"], [0.3, "The good news is you have fantastic potential to improve and there is no time like the present to start planning your business and getting on top of the most pressing things right now. You can do this through proper, simple planning. A good way to take the next step is through our strategy session.  We recommend our one-on-one strategy session to see if our small business Intensive \u2013 \u201cFocus on Growth - Today!\u201d is suitable for your needs.  (This is no cost to you simply click on this link to book a time)"], [0.01, "Your strategic approach to your business needs a lot more focus. If you want to grow your business and stop worrying at night on how you can pay the bills we highly recommend that you complete a one-on-one strategy session. From this you will see if our small business intensive \"Focus on Growth Today!\" is suitable for your needs. (this is no cost to you simply click on the linkto book a time)"]];
+
+  const $ = (sel,scope=document)=>scope.querySelector(sel);
+  const $$ = (sel,scope=document)=>Array.from(scope.querySelectorAll(sel));
+  const sum = a => a.reduce((x,y)=>x+y,0);
+  const pct = (x, max) => Math.round((x/max)*100);
+
+  function getValue(name){
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? parseInt(el.value,10) : 0;
+  }
+
+  function compute(){
+    // Gather all question groups
+    const groups = $$(".choices");
+    const names  = groups.map(g=> g.getAttribute("data-name"));
+    const scores = names.map(n=> getValue(n));
+    if (scores.includes(0)){ alert("Please answer all questions before calculating."); return; }
+
+    const total = sum(scores);                // each is 2..10
+    const max   = names.length * 10;
+    const percent = Math.round((total/max)*100);
+
+    // KPIs
+    $("#overallScore").textContent = `${total} / ${max}`;
+    $("#overallPct").textContent   = `${percent}%`;
+
+    // Determine workbook status text from thresholds
+    let msg = "Thank you for completing the assessment.";
+    let band = "mid";
+    for (const [thr, text] of THRESHOLDS){ // thr is 0..1 fraction
+      if ((percent/100) >= thr) { msg = text; band = (thr>=0.9?'high' : thr>=0.5 ? 'mid' : 'low'); break; }
+    }
+    const banner = $("#resultBanner");
+    banner.classList.remove("low","mid","high");
+    banner.classList.add(band);
+    $("#resultText").textContent = msg;
+
+    
+
+    $("#results").style.display = "block";
+    window.scrollTo({ top: $("#results").offsetTop - 10, behavior: "smooth" });
+  }
+
+  document.addEventListener("click", (e)=>{
+    if (e.target.id === "calcBtn") compute();
+    if (e.target.id === "resetBtn") {
+      $$('input[type="radio"]').forEach(r=> r.checked = false);
+      $("#results").style.display = "none";
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+  });
+</script>
+
+</body>
+</html>
