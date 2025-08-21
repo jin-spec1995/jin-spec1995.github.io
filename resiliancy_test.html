@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JSB Resiliency Test</title>
+  <style>
+    /* ===== JSB Branding ===== */
+    :root{
+      --brand-dark:#0d3b2e;     /* dark green */
+      --brand-mid:#0e6f57;      /* deep green */
+      --brand-light:#22c28a;    /* light green accent */
+      --ink:#0b0b0b;            /* black */
+      --paper:#ffffff;          /* white */
+      --muted:#5e6b74;          /* neutral text */
+      --line:#e6eaee;           /* borders */
+      --chip:#f5f8f7;           /* subtle chip bg */
+    }
+
+    /* ===== Base ===== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:var(--paper);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .wrap{max-width:1120px; margin:32px auto; padding:0 20px 48px;}
+    header.brand{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px;}
+    .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:22px;}
+    .subtle{color:var(--muted); font-size:14px}
+
+    /* ===== Layout / Cards ===== */
+    .grid{display:grid; gap:16px}
+    @media (min-width:980px){ .grid.cols{grid-template-columns:1.2fr 1.8fr} }
+    .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:0 1px 0 #f4f6f8;}
+    .card-title{display:flex; align-items:center; gap:10px; font-weight:700; margin:2px 0 14px;}
+    .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0;}
+    .divider{height:1px; background:var(--line); margin:14px 0}
+    .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+
+    /* ===== Form ===== */
+    details.block{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff}
+    details.block + details.block{margin-top:10px}
+    summary{
+      list-style:none; cursor:pointer; user-select:none;
+      padding:14px 16px; display:flex; align-items:center; gap:10px; font-weight:700; background:#f7fbf9; color:#426159;
+    }
+    summary::marker{display:none}
+    .qs{padding:10px 16px 14px}
+    .q-row{display:grid; grid-template-columns:1fr; gap:10px; padding:12px 0; border-bottom:1px solid var(--line)}
+    .q-row:last-child{border-bottom:0}
+    .q-label{font-size:14px; color:var(--ink)}
+    .choices{display:grid; grid-template-columns:repeat(5, minmax(120px, 1fr)); gap:8px; margin-top:6px}
+    .chip-choice{
+      position:relative; display:flex; align-items:center; justify-content:center; gap:8px;
+      padding:10px 10px; border:1px solid var(--line); border-radius:12px; background:#fff; font-size:13px; color:#2b3a33;
+      transition:border-color .15s, box-shadow .15s, background .15s; text-align:center;
+    }
+    .chip-choice input{position:absolute; inset:0; opacity:0; cursor:pointer}
+    .chip-choice:has(input:checked){border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18); background:#f4fff9}
+
+    /* ===== Buttons ===== */
+    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+    .btn{appearance:none; border:0; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:10px; letter-spacing:.2px;}
+    .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border:1px solid #10a772}
+    .btn-ghost{background:#fff; color:var(--brand-mid); border:1px solid var(--line)}
+
+    /* ===== KPIs ===== */
+    .kpis{display:grid; gap:12px; margin-top:4px}
+    @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
+    .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff;}
+    .kpi .label{font-size:12px; color:var(--muted)}
+    .kpi .value{font-weight:800; font-size:20px; color:var(--ink)}
+    .kpi.primary{border-color:#cef3e3; background:linear-gradient(180deg,#f7fffb,#ffffff)}
+    .kpi.primary .value{color:var(--brand-mid)}
+
+    /* ===== Status Banner ===== */
+    .banner{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff; display:flex; gap:12px; align-items:flex-start}
+    .badge{font-size:12px; padding:6px 10px; border-radius:999px; color:#083524; background:#ccf2e4; border:1px solid #b9eddc}
+    .banner.low{border-color:#ffe5c0; background:#fff9f0}
+    .banner.low .badge{background:#ffe5c0; border-color:#ffd79c; color:#5a3d0a}
+    .banner.mid{border-color:#cce7e6; background:#f2fbfb}
+    .banner.mid .badge{background:#d9f4f3; border-color:#c2ecea; color:#0e6b66}
+    .banner.high{border-color:#cfeedd; background:#f6fffa}
+    .banner.high .badge{background:#cfeedd; border-color:#b8e7ce; color:#115e38}
+
+    /* ===== Tables ===== */
+    table{width:100%; border-collapse:separate; border-spacing:0; font-size:14px; border:1px solid var(--line); border-radius:14px; overflow:hidden}
+    th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
+    thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:700}
+    tbody tr:last-child td{border-bottom:0}
+    td.right{text-align:right}
+
+    /* ===== Print ===== */
+    @media print{
+      .actions{display:none !important}
+      .card, table{box-shadow:none}
+      .wrap{margin:0; padding:0}
+      header.brand{margin-bottom:8px}
+      .kpi .value{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="pageRoot">
+    <header class="brand">
+      <div>
+        <div class="brand-title">Just Smart Business</div>
+        <div class="subtle">Resiliency Test — Assess & Improve Business Resilience</div>
+      </div>
+    </header>
+
+    <div class="grid cols">
+      <!-- LEFT: Questionnaire -->
+      <section class="card">
+        <div class="card-title">
+          <span class="section-tag">Your Answers</span>
+          <span class="subtle">Choose one option per question</span>
+        </div>
+
+        <!-- 1) Planning and Preparedness -->
+        <details class="block" open>
+          <summary>Planning and Preparedness</summary>
+          <div class="qs">
+            <div class="q-row">
+              <div class="q-label">In the event of a crisis (e.g., fire, flood, burglary), you have documented procedures and systems to keep the business operating or at least surviving.</div>
+              <div class="choices" data-name="q-1-1">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-1-1" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-1-1" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-1-1" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-1-1" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-1-1" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">If a crisis occurs, you have documented alternatives for premises, suppliers, resources, transport, distribution and procedures.</div>
+              <div class="choices" data-name="q-1-2">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-1-2" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-1-2" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-1-2" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-1-2" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-1-2" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">In a crisis that causes staff shortages, you have trained staff who can perform alternative roles.</div>
+              <div class="choices" data-name="q-1-3">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-1-3" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-1-3" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-1-3" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-1-3" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-1-3" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">If a major supplier or customer stops trading with you, you have an alternatives plan.</div>
+              <div class="choices" data-name="q-1-4">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-1-4" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-1-4" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-1-4" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-1-4" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-1-4" value="5"></label>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- 2) Financial Resilience -->
+        <details class="block">
+          <summary>Financial Resilience</summary>
+          <div class="qs">
+            <div class="q-row">
+              <div class="q-label">In a crisis you know the minimum cash required to keep operating and you have (or can access) that cash.</div>
+              <div class="choices" data-name="q-2-1">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-2-1" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-2-1" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-2-1" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-2-1" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-2-1" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You have efficient invoicing & payment processes to reduce late or non‑payment (including during crisis).</div>
+              <div class="choices" data-name="q-2-2">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-2-2" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-2-2" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-2-2" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-2-2" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-2-2" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">Cash‑flow projections accommodate seasonality and activity fluctuations, including crisis periods.</div>
+              <div class="choices" data-name="q-2-3">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-2-3" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-2-3" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-2-3" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-2-3" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-2-3" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You’re cash‑flow positive or hold sufficient reserves (buffer) for when plans aren’t met.</div>
+              <div class="choices" data-name="q-2-4">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-2-4" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-2-4" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-2-4" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-2-4" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-2-4" value="5"></label>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- 3) Risk Assessment & Management -->
+        <details class="block">
+          <summary>Risk Assessment & Management Plan</summary>
+          <div class="qs">
+            <div class="q-row">
+              <div class="q-label">You’ve identified risks and completed assessments for factors that could affect the business.</div>
+              <div class="choices" data-name="q-3-1">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-3-1" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-3-1" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-3-1" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-3-1" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-3-1" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You’ve identified both internal and external risks (man‑made and natural) relevant to the business.</div>
+              <div class="choices" data-name="q-3-2">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-3-2" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-3-2" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-3-2" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-3-2" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-3-2" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You have a risk management plan and funds allocated to implement it.</div>
+              <div class="choices" data-name="q-3-3">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-3-3" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-3-3" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-3-3" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-3-3" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-3-3" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">For risks beyond your control you’ve taken appropriate insurance cover.</div>
+              <div class="choices" data-name="q-3-4">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-3-4" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-3-4" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-3-4" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-3-4" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-3-4" value="5"></label>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- 4) IT & Communications -->
+        <details class="block">
+          <summary>IT & Communications</summary>
+          <div class="qs">
+            <div class="q-row">
+              <div class="q-label">Up‑to‑date virus protection is used on all IT devices.</div>
+              <div class="choices" data-name="q-4-1">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-4-1" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-4-1" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-4-1" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-4-1" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-4-1" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">IT security checks have been performed and the required procedures are in place.</div>
+              <div class="choices" data-name="q-4-2">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-4-2" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-4-2" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-4-2" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-4-2" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-4-2" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You regularly back up client, operational and financial data.</div>
+              <div class="choices" data-name="q-4-3">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-4-3" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-4-3" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-4-3" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-4-3" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-4-3" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">If electronic systems are unavailable, you can continue operating and retain key data for later input.</div>
+              <div class="choices" data-name="q-4-4">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-4-4" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-4-4" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-4-4" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-4-4" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-4-4" value="5"></label>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- 5) Business Growth Challenges -->
+        <details class="block">
+          <summary>Business Growth Challenges</summary>
+          <div class="qs">
+            <div class="q-row">
+              <div class="q-label">You’ve identified factors that affect growth plans and developed strategies to minimise their impact.</div>
+              <div class="choices" data-name="q-5-1">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-5-1" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-5-1" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-5-1" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-5-1" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-5-1" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You routinely analyse fixed/variable costs and improve efficiency to lift profitability.</div>
+              <div class="choices" data-name="q-5-2">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-5-2" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-5-2" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-5-2" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-5-2" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-5-2" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You monitor market trends and customer behaviour, adjusting operations to optimise the market.</div>
+              <div class="choices" data-name="q-5-3">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-5-3" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-5-3" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-5-3" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-5-3" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-5-3" value="5"></label>
+              </div>
+            </div>
+            <div class="q-row">
+              <div class="q-label">You have assessed and ensured adequate financial & human resources (numbers and skills) for planned growth.</div>
+              <div class="choices" data-name="q-5-4">
+                <label class="chip-choice">Strongly Disagree<input type="radio" name="q-5-4" value="1"></label>
+                <label class="chip-choice">Disagree<input type="radio" name="q-5-4" value="2"></label>
+                <label class="chip-choice">Neutral<input type="radio" name="q-5-4" value="3"></label>
+                <label class="chip-choice">Agree<input type="radio" name="q-5-4" value="4"></label>
+                <label class="chip-choice">Strongly Agree<input type="radio" name="q-5-4" value="5"></label>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="calcBtn">Calculate</button>
+          <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
+        </div>
+      </section>
+
+      <!-- RIGHT: Results -->
+      <section class="card" id="results" style="display:none">
+        <div class="card-title">
+          <span class="section-tag">Results</span>
+          <span class="subtle">Calculated from your answers</span>
+        </div>
+
+        <!-- Owner‑important KPIs -->
+        <div class="kpis">
+          <div class="kpi primary">
+            <div class="label">Overall Resiliency Score</div>
+            <div class="value mono" id="overallScore">—</div>
+          </div>
+          <div class="kpi primary">
+            <div class="label">Overall (%)</div>
+            <div class="value mono" id="overallPct">—</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Strongest Area</div>
+            <div class="value" id="strongest">—</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Biggest Gap</div>
+            <div class="value" id="weakest">—</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="banner" id="resultBanner">
+          <span class="badge">Status</span>
+          <div id="resultText">—</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <table aria-label="Section breakdown">
+          <thead>
+            <tr>
+              <th>Section</th>
+              <th class="right">Score / 20</th>
+              <th class="right">%</th>
+            </tr>
+          </thead>
+          <tbody id="breakdownBody"></tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Data ----------
+    const sections = [
+      { key:"Planning and Preparedness",   ids:["q-1-1","q-1-2","q-1-3","q-1-4"] },
+      { key:"Financial Resilience",        ids:["q-2-1","q-2-2","q-2-3","q-2-4"] },
+      { key:"Risk Assessment & Management",ids:["q-3-1","q-3-2","q-3-3","q-3-4"] },
+      { key:"IT & Communications",         ids:["q-4-1","q-4-2","q-4-3","q-4-4"] },
+      { key:"Business Growth Challenges",  ids:["q-5-1","q-5-2","q-5-3","q-5-4"] },
+    ];
+    const resultTexts = [
+      "Well done on taking the next steps to Understanding the level of your business resilience. While your score is not great there are plenty of simple steps you can take to ensure you can, over time build your business resiliency. Schedule a 20 min conversation with a Just Smart Business Strategic Advisor to understand the next steps to improving your resiliency ",
+      "While you have some good resiliency strategies in place there is more you can do. Often business owners want certainty that is oftern elusive. So the best way to create this certainty is to build out your business much more resilently. Want to know how ? Shedule a 20 min conversation with a Just Smart Business Strategic Advisor to understand the next steps to improving your resiliency",
+      "You are well on the way to creating a resilient enterprise. There are a few areas that you could still work on to strengthen your systems and building a resilient enterprise. Want to know how? Schedule a 20 min conversation with a Just Smart Business Strategic Advisor to understand the next steps to improving your resiliency",
+      "Based on these reults you have create a highly resilient enterprise, congratulations.Want to know more about  Just Smart Business services?  Schedule a 20 min conversation with a Just Smart Business Strategic Advisor to understand the next steps to improving your resiliency"
+    ];
+
+    // ---------- Helpers ----------
+    const $ = (sel,scope=document)=>scope.querySelector(sel);
+    const $$ = (sel,scope=document)=>Array.from(scope.querySelectorAll(sel));
+    const sum = a => a.reduce((x,y)=>x+y,0);
+    const pct = (x, max) => Math.round((x/max)*100);
+
+    function getValue(name){
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? parseInt(el.value,10) : 0;
+    }
+
+    function compute(){
+      // per section scores
+      const secScores = sections.map(s=>{
+        const values = s.ids.map(id=>getValue(id));
+        return { key:s.key, raw: sum(values) }; // 0..20
+      });
+      const overall = sum(secScores.map(s=>s.raw)); // 0..100
+
+      // Guard: require all answers
+      const unanswered = sections.flatMap(s=>s.ids).filter(id=>!getValue(id));
+      if (unanswered.length){
+        alert("Please answer all questions before calculating.");
+        return;
+      }
+
+      // KPIs
+      $("#overallScore").textContent = `${overall} / 100`;
+      $("#overallPct").textContent = `${pct(overall,100)}%`;
+
+      // Breakdown
+      const tb = $("#breakdownBody");
+      tb.innerHTML = "";
+      secScores.forEach(s=>{
+        const tr = document.createElement("tr");
+        const p  = pct(s.raw,20);
+        tr.innerHTML = `<td>${s.key}</td>
+                        <td class="right mono">${s.raw} / 20</td>
+                        <td class="right mono">${p}%</td>`;
+        tb.appendChild(tr);
+      });
+
+      // Strongest / weakest
+      const strongest = secScores.slice().sort((a,b)=>b.raw-a.raw)[0];
+      const weakest   = secScores.slice().sort((a,b)=>a.raw-b.raw)[0];
+      $("#strongest").textContent = `${strongest.key} (${strongest.raw}/20)`;
+      $("#weakest").textContent   = `${weakest.key} (${weakest.raw}/20)`;
+
+      // Status banding
+      const percent = pct(overall,100);
+      const banner  = $("#resultBanner");
+      banner.classList.remove("low","mid","high");
+      let idx = 0;
+      if (percent < 50){ idx = 0; banner.classList.add("low"); }
+      else if (percent < 75){ idx = 1; banner.classList.add("mid"); }
+      else if (percent < 90){ idx = 2; banner.classList.add("mid"); }
+      else { idx = 3; banner.classList.add("high"); }
+      $("#resultText").textContent = resultTexts[idx];
+
+      // Reveal
+      $("#results").style.display = "block";
+      window.scrollTo({ top: $("#results").offsetTop - 10, behavior: "smooth" });
+    }
+
+    // Events
+    document.addEventListener("click", (e)=>{
+      if (e.target.id === "calcBtn") compute();
+      if (e.target.id === "resetBtn") {
+        $$('input[type="radio"]').forEach(r=> r.checked = false);
+        $("#results").style.display = "none";
+        window.scrollTo({top:0,behavior:"smooth"});
+      }
+    });
+  </script>
+</body>
+</html>
