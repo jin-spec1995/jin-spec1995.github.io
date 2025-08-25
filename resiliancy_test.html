@@ -29,9 +29,9 @@
     }
 
     .wrap{max-width:1120px; margin:24px auto 48px; padding:0 20px}
-    header.brand{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0 40px; }
+    header.brand{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0 50px; }
     .brand-left{display:flex; align-items:center; gap:12px}
-    .brand-logo{height:32px; width:auto}
+    .brand-logo{height:58px; width:auto}
     .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:20px}
     .subtle{color:var(--muted); font-size:14px}
 
@@ -151,6 +151,8 @@
           <div class="subtle">Resiliency Test — Assess & Improve Business Resilience</div>
         </div>
       </div>
+      <a class="subtle" href="https://justsmartbusiness.com.au" target="_blank" rel="noopener"><img src="jsb_logo.svg" alt="Just Smart Business" class="brand-logo" /></a>
+    </header>
 
     <div class="grid cols" id="layout" role="region" aria-label="Questionnaire and Results">
       <!-- LEFT: Questionnaire -->
@@ -444,7 +446,7 @@
         <!-- The only buttons visible after Calculate -->
         <div class="actions" style="margin-top:16px">
           <button class="btn btn-ghost" id="resetBtnR" type="button">Reset</button>
-          <a class="btn btn-primary" id="bookBtn" href="https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100" target="_blank" rel="noopener">Book a 20‑minutes free call</a>
+          <a class="btn btn-primary" id="bookBtn" href="https://justsmartbusiness.com.au/contact" target="_blank" rel="noopener">Book a 20‑minutes free call</a>
         </div>
       </section>
     </div>
@@ -463,7 +465,7 @@
 
   <script>
     // Configurable booking link if you want to change it in one place
-    const BOOKING_URL = "https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100"; // <- update to your calendar link
+    const BOOKING_URL = "https://justsmartbusiness.com.au/contact"; // <- update to your calendar link
     const sections = [
       { key:"Planning and Preparedness",   ids:["q-1-1","q-1-2","q-1-3","q-1-4"] },
       { key:"Financial Resilience",        ids:["q-2-1","q-2-2","q-2-3","q-2-4"] },
@@ -559,6 +561,7 @@
   </script>
 </body>
 </html>
+
 
 
 
