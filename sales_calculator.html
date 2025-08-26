@@ -1,542 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JSB Sales Calculator</title>
-  <style>
-    /* ===== JSB Branding ===== */
-    :root{
-      --brand-dark:#0d3b2e;     /* dark green */
-      --brand-mid:#0e6f57;      /* deep green */
-      --brand-light:#22c28a;    /* light green accent */
-      --ink:#0b0b0b;            /* black */
-      --paper:#ffffff;          /* white */
-      --muted:#5e6b74;          /* neutral text */
-      --line:#e6eaee;           /* borders */
-      --chip:#f5f8f7;           /* subtle chip bg */
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Just Smart Business — Sales Calculator (Teaser · Step 1 Only)</title>
+<style>
+  :root{
+    --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
+    --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7;
+    --accent-border:#bdf0d8; --accent-bg1:#f4fffa; --accent-bg2:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:#fff; color:var(--ink);
+    font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
 
-    /* ===== Base ===== */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--ink);
-      background:var(--paper);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    .wrap{max-width:1120px; margin:32px auto; padding:0 20px 48px;}
-    header.brand{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px;}
-    .brand-mark{display:flex; align-items:center; gap:12px;}
-    .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:20px;}
-    .subtle{color:var(--muted); font-size:14px}
+  /* Left align (room for SuiteDash sidebar) */
+  .wrap{max-width:1180px; margin:28px 0 60px 20px; padding:0 20px;}
 
-    /* ===== Cards / layout ===== */
-    .grid{display:grid; gap:16px}
-    @media (min-width:980px){ .grid.cols{grid-template-columns:1.15fr 1.85fr} }
-    .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:0 1px 0 #f4f6f8;}
-    .card-title{display:flex; align-items:center; gap:10px; font-weight:700; margin:2px 0 14px;}
-    .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0;}
-    .divider{height:1px; background:var(--line); margin:14px 0}
+  /* Header */
+  header.brand{display:flex; align-items:center; gap:14px; margin-bottom:16px}
+  .brand-pack{display:flex; align-items:center; gap:12px}
+  .brand-logo{width:40px; height:40px}
+  .brand-title{font-weight:800; color:var(--brand-mid); font-size:22px}
+  .tagline{color:var(--muted); font-size:13px}
 
-    /* ===== Form ===== */
-    .inputs{display:grid; grid-template-columns:1.4fr 1fr; gap:12px 12px; align-items:center;}
-    label{font-size:14px; color:var(--muted)}
-    input[type=number]{
-      width:100%;
-      padding:10px 14px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      outline:none;
-      background:#fff;
-      transition:border-color .15s, box-shadow .15s;
-      font-size:16px;
-      line-height:22px; /* ensure text isn't clipped on capture */
-      height:44px;      /* predictable height for PDF snapshot */
-    }
-    input[type=number]::-webkit-outer-spin-button,
-    input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
-    input[type=number]{ -moz-appearance:textfield; }
-    input[type=number]:focus{border-color:var(--brand-light); box-shadow:0 0 0 3px rgba(34,194,138,.18);}
-    .hint{font-size:12px; color:var(--muted); margin-top:8px}
+  /* Cards / Layout */
+  .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 0 #f4f6f8; margin-bottom:14px}
+  .card-title{display:flex; align-items:center; gap:10px; font-weight:800; margin:2px 0 12px}
+  .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:#0e6f57; border:1px solid #eaf4f0}
+  .divider{height:1px; background:var(--line); margin:14px 0}
+  .hint{color:var(--muted); font-size:12px}
+  .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
 
-    /* ===== Buttons ===== */
-    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
-    .btn{appearance:none; border:0; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:10px; letter-spacing:.2px;}
-    .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border:1px solid #10a772}
-    .btn-ghost{background:#fff; color:var(--brand-mid); border:1px solid var(--line)}
-    .btn.outline{background:#fff; color:var(--brand-mid); border:1px solid var(--brand-mid)}
-    .btn[disabled]{opacity:.55; cursor:not-allowed}
+  .grid{display:grid; gap:14px}
+  @media (min-width:1000px){ .cols-2{grid-template-columns:1.2fr 1.8fr} .cols-2b{grid-template-columns:1fr 1fr} }
 
-    /* ===== KPIs ===== */
-    .kpis{display:grid; gap:12px; margin-top:4px}
-    @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
-    .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff;}
-    .kpi .label{font-size:12px; color:var(--muted)}
-    .kpi .value{font-weight:800; font-size:20px; color:var(--ink)}
-    .kpi.primary{border-color:#cef3e3; background:linear-gradient(180deg,#f7fffb,#ffffff)}
-    .kpi.primary .value{color:var(--brand-mid)}
-    .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+  /* Form */
+  .inputs{display:grid; grid-template-columns:1.35fr 1.1fr; gap:10px 14px; align-items:center; min-width:0}
+  label{font-size:14px; color:var(--muted)}
+  input[type=number], input[type=text]{
+    width:100%; height:44px; padding:10px 14px; border-radius:12px; border:1px solid var(--line); background:#fff;
+    font-size:16px; outline:none; transition:border-color .15s, box-shadow .15s; min-width:0;
+  }
+  input[type=number]:focus, input[type=text]:focus{border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18)}
+  input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0 }
+  input[type=number]{ -moz-appearance:textfield }
 
-    /* ===== Tables ===== */
-    table{width:100%; border-collapse:separate; border-spacing:0; font-size:14px; border:1px solid var(--line); border-radius:14px; overflow:hidden}
-    th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
-    thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:700}
-    tbody tr:last-child td{border-bottom:0}
-    td.right{text-align:right}
+  .readonly{
+    padding:10px 14px; min-height:44px; border-radius:12px; background:#f7fbf9; border:1px dashed #d7ece5;
+    display:flex; align-items:center; font-weight:700;
+  }
 
-    /* ===== Snapshot styles (used only for PDF render) ===== */
-    .snap-root{position:fixed; left:-99999px; top:0; width:1000px; background:#fff; padding:0 20px 20px;}
-    .snap-input{
-      display:inline-block;
-      width:100%;
-      height:44px;
-      padding:10px 14px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      background:#fff;
-      font-size:16px;
-      line-height:22px;
-      color:var(--ink);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+  /* Buttons */
+  .btn{appearance:none; border:1px solid var(--line); background:#fff; color:#20433a;
+       padding:11px 16px; border-radius:12px; font-weight:700; cursor:pointer}
+  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border-color:#10a772}
 
-    /* ===== Print / PDF ===== */
-    @media print{
-      body{background:#fff}
-      .actions{display:none !important}
-      .card, table{box-shadow:none}
-      .wrap{margin:0; padding:0}
-      header.brand{margin-bottom:8px}
-      .kpi .value{font-size:18px}
-    }
-  </style>
+  /* KPIs & Tables */
+  .kpis{display:grid; gap:12px}
+  @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
+  .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff}
+  .kpi .label{font-size:12px; color:#5e6b74}
+  .kpi .value{font-weight:800; font-size:20px}
+  .kpi.primary{border-color:var(--accent-border); background:linear-gradient(180deg,var(--accent-bg1),var(--accent-bg2))}
+  .kpi.primary .value{color:#0e6f57}
+
+  table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:14px}
+  th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
+  thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:800}
+  tbody tr:last-child td{border-bottom:0}
+  td.right{text-align:right}
+
+  footer.site{margin-top:18px; padding-top:12px; border-top:1px solid var(--line); color:#5e6b74; font-size:12px}
+</style>
 </head>
 <body>
-  <div class="wrap" id="pageRoot">
+  <div class="wrap">
+    <!-- Header -->
     <header class="brand">
-      <div class="brand-mark">
+      <div class="brand-pack">
+        <img class="brand-logo" src="jsb_icon.svg" alt="Just Smart Business" />
         <div>
           <div class="brand-title">Just Smart Business</div>
-          <div class="subtle">Sales Calculator — Profit & Pipeline Requirements</div>
+          <div class="tagline">Clarity · Strategy · Growth</div>
         </div>
       </div>
     </header>
 
-    <div class="grid cols">
-      <!-- LEFT: Inputs -->
-      <section class="card">
-        <div class="card-title">
-          <span class="section-tag">Data</span>
-          <span class="subtle">Enter your current numbers</span>
-        </div>
-        <div class="inputs">
-          <label for="G5">Average Sale Value (ex GST)</label>
-          <input id="G5" type="number" step="0.01" min="0" value="550">
+    <!-- ===== STEP 1 ONLY (Teaser) ===== -->
+    <section class="card" id="step1">
+      <div class="card-title">
+        <span class="section-tag">Step 1 · Data Input</span>
+        <span class="hint">&nbsp;Use dollars (ex GST). Click Calculate to preview your baseline.</span>
+      </div>
 
-          <label for="G6">Average Cost of Sale (ex GST)</label>
-          <input id="G6" type="number" step="0.01" min="0" value="150">
+      <div class="grid cols-2">
+        <!-- Inputs -->
+        <div>
+          <div class="inputs">
+            <label for="G5">Average Sale Value (ex GST)</label>
+            <input id="G5" type="number" min="0" step="0.01" value="550">
 
-          <label for="G9">Monthly Expenses (ex GST)</label>
-          <input id="G9" type="number" step="0.01" min="0" value="8211">
+            <label for="G6">Average Cost of Sale (ex GST)</label>
+            <input id="G6" type="number" min="0" step="0.01" value="150">
 
-          <label for="G10">Number of Weeks per Year</label>
-          <input id="G10" type="number" step="1" min="1" value="48">
+            <label>Gross Profit per Sale (ex GST)</label>
+            <div class="readonly mono" id="G7_ro">—</div>
 
-          <label for="G11">Number of Days per Week</label>
-          <input id="G11" type="number" step="1" min="1" value="5">
+            <label>Gross Profit %</label>
+            <div class="readonly mono" id="G8_ro">—</div>
 
-          <label for="G12">Desired Net Profit (How much do you want to make)</label>
-          <input id="G12" type="number" step="0.01" min="0" value="100000">
+            <label>Cost of Sale %</label>
+            <div class="readonly mono" id="G9_ro">—</div>
 
-          <label for="G29">Existing Clients</label>
-          <input id="G29" type="number" step="1" min="0" value="36">
-        </div>
+            <label for="G10">Monthly Expenses (ex GST)</label>
+            <input id="G10" type="number" min="0" step="0.01" value="8211">
 
-        <div class="divider"></div>
+            <label for="G11">Number of weeks per year</label>
+            <input id="G11" type="number" min="1" step="1" value="48">
 
-        <div class="card-title">
-          <span class="section-tag">Conversions</span>
-          <span class="subtle">Use decimals: 0.15 = 15%</span>
-        </div>
-        <div class="inputs">
-          <label for="G26">Times a client buys per year</label>
-          <input id="G26" type="number" step="1" min="0" value="12">
+            <label for="G12">Number of days per week</label>
+            <input id="G12" type="number" min="1" step="1" value="5">
 
-          <label for="G25">Proposals → Sales (decimal)</label>
-          <input id="G25" type="number" step="0.0001" min="0" max="1" value="0.7">
+            <label for="G13">Desired Net Profit (year)</label>
+            <input id="G13" type="number" min="0" step="0.01" value="100000">
 
-          <label for="G24">Enquiries → Proposals (decimal)</label>
-          <input id="G24" type="number" step="0.0001" min="0" max="1" value="0.15">
+            <label for="G15">Existing Clients</label>
+            <input id="G15" type="number" min="0" step="1" value="36">
 
-          <label for="G23">Leads → Genuine Enquiries (decimal)</label>
-          <input id="G23" type="number" step="0.0001" min="0" max="1" value="0.15">
+            <label for="G16">Purchases per Client / year</label>
+            <input id="G16" type="number" min="1" step="1" value="3">
 
-          <label for="G22">Clicks/Walk‑ins → Leads (decimal)</label>
-          <input id="G22" type="number" step="0.0001" min="0" max="1" value="0.15">
-        </div>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="calcBtn">Calculate</button>
-          <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
-          <button class="btn outline" id="pdfBtn" type="button" disabled>Download PDF</button>
-        </div>
-      </section>
-
-      <!-- RIGHT: Results -->
-      <section class="card" id="results" style="display:none">
-        <div class="card-title">
-          <span class="section-tag">Results</span>
-          <span class="subtle">Calculated from your inputs</span>
-        </div>
-
-        <!-- Highlight most important KPIs for owners -->
-        <div class="kpis">
-          <div class="kpi primary">
-            <div class="label">Total Sales Needed (Revenue)</div>
-            <div class="value mono" id="J11">—</div>
+            <label>Total New Clients Required</label>
+            <div class="readonly mono" id="G17_ro">—</div>
           </div>
-          <div class="kpi primary">
-            <div class="label">Sales Required / Year</div>
-            <div class="value mono" id="J6">—</div>
-          </div>
-          <div class="kpi">
-            <div class="label">New Clients Needed / Year</div>
-            <div class="value mono" id="J26">—</div>
-          </div>
-          <div class="kpi">
-            <div class="label">Sales / Month</div>
-            <div class="value mono" id="J7">—</div>
-          </div>
+
+          <div class="divider"></div>
+          <button id="calcBtn" class="btn btn-primary">Calculate (Preview Baseline)</button>
+          <button id="reset1" class="btn">Reset</button>
+          <p class="hint">Negative values are blocked. Counts round up to match the workbook.</p>
         </div>
 
-        <div class="divider"></div>
+        <!-- Results -->
+        <div>
+          <div class="card" id="step1Results" style="display:none">
+            <div class="card-title"><span class="section-tag">Baseline Results (Preview)</span></div>
 
-        <!-- Profit structure -->
-        <div class="grid" style="grid-template-columns:1fr 1fr; gap:12px">
-          <div class="card" style="padding:12px">
-            <div class="subtle">Expenses (per year)</div>
-            <div class="mono" id="J14">—</div>
-          </div>
-          <div class="card" style="padding:12px">
-            <div class="subtle">Desired Net Profit</div>
-            <div class="mono" id="J15">—</div>
+            <div class="kpis">
+              <div class="kpi primary"><div class="label">Total Sales</div><div class="value mono" id="J11">—</div></div>
+              <div class="kpi primary"><div class="label">Sales Required / Year</div><div class="value mono" id="J6">—</div></div>
+              <div class="kpi primary"><div class="label">Gross Profit Required</div><div class="value mono" id="J13">—</div></div>
+              <div class="kpi primary"><div class="label">Cost of Sales</div><div class="value mono" id="J12">—</div></div>
+            </div>
+
+            <div class="divider"></div>
+            <table>
+              <thead><tr><th>Metric</th><th class="right">Number</th><th class="right">Revenue (Ex GST)</th></tr></thead>
+              <tbody>
+                <tr><td>Sales Required per Year</td><td class="right mono" id="J6_tbl">—</td><td class="right mono" id="K6">—</td></tr>
+                <tr><td>Sales Required per Month</td><td class="right mono" id="J7">—</td><td class="right mono" id="K7">—</td></tr>
+                <tr><td>Sales Required per Week</td><td class="right mono" id="J8">—</td><td class="right mono" id="K8">—</td></tr>
+                <tr><td>Sales Required per Day</td><td class="right mono" id="J9">—</td><td class="right mono" id="K9">—</td></tr>
+              </tbody>
+            </table>
+
+            <div class="divider"></div>
+            <div class="grid cols-2b">
+              <div class="card"><div class="hint">Expenses (per year)</div><div class="mono" id="J14">—</div></div>
+              <div class="card"><div class="hint">Desired Net Profit</div><div class="mono" id="J15">—</div></div>
+            </div>
+
+            <div class="divider"></div>
+            <p class="hint">Love what you see? Unlock live “What-If” analysis & conversion planning with the full version.</p>
           </div>
         </div>
-        <div class="grid" style="grid-template-columns:1fr 1fr; gap:12px; margin-top:10px">
-          <div class="card" style="padding:12px">
-            <div class="subtle">Gross Profit Required</div>
-            <div class="mono" id="J13">—</div>
-          </div>
-          <div class="card" style="padding:12px">
-            <div class="subtle">Cost of Sales</div>
-            <div class="mono" id="J12">—</div>
-          </div>
-        </div>
+      </div>
+    </section>
 
-        <div class="divider"></div>
-
-        <!-- Sales cadence -->
-        <table aria-label="Sales cadence">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th class="right">Number</th>
-              <th class="right">Revenue (ex GST)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Sales Required per Year</td>
-              <td class="right mono" id="J6_tbl">—</td>
-              <td class="right mono" id="K6">—</td>
-            </tr>
-            <tr>
-              <td>Sales Required per Month</td>
-              <td class="right mono" id="J7_tbl">—</td>
-              <td class="right mono" id="K7">—</td>
-            </tr>
-            <tr>
-              <td>Sales Required per Week</td>
-              <td class="right mono" id="J8">—</td>
-              <td class="right mono" id="K8">—</td>
-            </tr>
-            <tr>
-              <td>Sales Required per Day</td>
-              <td class="right mono" id="J9">—</td>
-              <td class="right mono" id="K9">—</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="divider"></div>
-
-        <!-- Funnel requirements -->
-        <table aria-label="Funnel requirements">
-          <thead>
-            <tr>
-              <th>Stage</th>
-              <th class="right">Per Year</th>
-              <th class="right">Per Month</th>
-              <th class="right">Per Week</th>
-              <th class="right">Per Work Day</th>
-            </tr>
-          </thead>
-        <tbody>
-            <tr>
-              <td>New Clients Required</td>
-              <td class="right mono" id="J26_tbl">—</td>
-              <td class="right mono" id="K26">—</td>
-              <td class="right mono" id="L26">—</td>
-              <td class="right mono" id="M26">—</td>
-            </tr>
-            <tr>
-              <td>Proposals required</td>
-              <td class="right mono" id="J25">—</td>
-              <td class="right mono" id="K25">—</td>
-              <td class="right mono" id="L25">—</td>
-              <td class="right mono" id="M25">—</td>
-            </tr>
-            <tr>
-              <td>Enquiries required</td>
-              <td class="right mono" id="J24">—</td>
-              <td class="right mono" id="K24">—</td>
-              <td class="right mono" id="L24">—</td>
-              <td class="right mono" id="M24">—</td>
-            </tr>
-            <tr>
-              <td>Leads required</td>
-              <td class="right mono" id="J23">—</td>
-              <td class="right mono" id="K23">—</td>
-              <td class="right mono" id="L23">—</td>
-              <td class="right mono" id="M23">—</td>
-            </tr>
-            <tr>
-              <td>Clicks / Walk‑ins required</td>
-              <td class="right mono" id="J22">—</td>
-              <td class="right mono" id="K22">—</td>
-              <td class="right mono" id="L22">—</td>
-              <td class="right mono" id="M22">—</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </div>
+    <footer class="site">© Just Smart Business — Teaser view. Full calculator available for clients.</footer>
   </div>
 
-  <!-- PDF libs (pure JS) -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script>
+  /* Helpers */
+  const $=id=>document.getElementById(id);
+  const qsa=sel=>Array.prototype.slice.call(document.querySelectorAll(sel));
+  const aud0=v=>new Intl.NumberFormat(undefined,{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(Number(v)||0);
+  const num0=v=>new Intl.NumberFormat(undefined,{maximumFractionDigits:0}).format(Number(v)||0);
+  const ceil=v=>Math.ceil(Number(v)||0);
 
-  <script>
-    // ---------- Helpers ----------
-    const $ = (id) => document.getElementById(id);
-    const n = (id) => { const v = parseFloat($(id).value); return isNaN(v) ? 0 : v; };
-    const ceil = (v) => Math.ceil(v);                  // Excel ROUNDUP for non-negative inputs
-    const ceilTo = (v, d=0) => { const m = Math.pow(10,d); return Math.ceil(v*m)/m; };
-    const clamp0 = (x) => (x < 0 ? 0 : x);
-    const aud0 = (v) => new Intl.NumberFormat(undefined,{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(v);
-    const num0 = (v) => new Intl.NumberFormat(undefined,{maximumFractionDigits:0}).format(v);
-
-    function sanitize() {
-      ['G5','G6','G9','G10','G11','G12','G29','G26'].forEach(id=>{
-        if ($(id).value === '') return;
-        if (parseFloat($(id).value) < 0) $(id).value = 0;
-      });
-      ['G22','G23','G24','G25'].forEach(id=>{
-        if ($(id).value === '') return;
-        let v = parseFloat($(id).value);
-        if (isNaN(v)) v = 0;
-        $(id).value = Math.max(0, Math.min(1, v));
-      });
-    }
-
-    function compute(){
-      sanitize();
-
-      // Inputs
-      const G5=n('G5'), G6=n('G6'), G9=n('G9'), G10=n('G10'), G11=n('G11');
-      const G12=n('G12'), G29=n('G29'), G26=n('G26'), G25=n('G25'), G24=n('G24'), G23=n('G23'), G22=n('G22');
-
-      // Derived (from sheet)
-      const G7 = G5 - G6;                       // Gross Profit per sale
-      const G8 = (G5!==0) ? (G7/G5) : 0;        // GP %
-      const G20 = 1 - G8;
-
-      // Profit stack
-      const J14 = G9*12;                        // Expenses (year)
-      const J15 = G12;                          // Desired profit
-      const J13 = J14 + J15;                    // Gross profit required
-      const J12 = (G8!==0) ? (J13*(G20/G8)) : 0;// Cost of Sales (algebra from sheet)
-      const J11 = J13 + J12;                    // Total Sales (Revenue)
-
-      // Sales cadence
-      const J6  = clamp0((G5!==0) ? ceil(J11/G5) : 0); // Sales / Year
-      const K6  = J6*G5;
-      const J7  = clamp0(ceil(J6/12));
-      const K7  = J7*G5;
-      const J8  = clamp0((G10!==0) ? ceil(J6/G10) : 0);
-      const K8  = J8*G5;
-      const J9  = clamp0((G11!==0) ? ceil(J8/G11) : 0);
-      const K9  = J9*G6;  // per original sheet
-
-      // Funnel (Rows 26..22)
-      const J26 = clamp0(ceil(((G26!==0) ? (J6/G26) : 0) - G29));
-      const K26 = J26/12, L26 = (G10!==0) ? (J26/G10) : 0, M26 = (G11!==0) ? (L26/G11) : 0;
-
-      const J25 = (G25!==0) ? (J26/G25) : 0;
-      const K25 = J25/12, L25 = (G10!==0) ? (J25/G10) : 0, M25 = (G11!==0) ? (L25/G11) : 0;
-
-      const J24 = (G24!==0) ? (J25/G24) : 0;
-      const K24 = ceilTo(J24/12,0);
-      const L24 = (G10!==0) ? ceilTo(J24/G10,0) : 0;
-      const M24 = (G11!==0) ? ceilTo(L24/G11,0) : 0;
-
-      const J23 = (G23!==0) ? (J24/G23) : 0;
-      const K23 = ceilTo(J23/12,0);
-      const L23 = (G10!==0) ? ceilTo(J23/G10,0) : 0;
-      const M23 = (G11!==0) ? ceilTo(L23/G11,0) : 0;
-
-      const J22 = (G22!==0) ? (J23/G22) : 0;
-      const K22 = ceilTo(J22/12,0);
-      const L22 = (G10!==0) ? ceilTo(J22/G10,0) : 0;
-      const M22 = (G11!==0) ? ceilTo(L22/G11,0) : 0;
-
-      // Write key KPIs (hero tiles)
-      $('J11').textContent = aud0(clamp0(J11));
-      $('J6').textContent  = num0(J6);
-      $('J26').textContent = num0(clamp0(J26));
-      $('J7').textContent  = num0(J7);
-
-      // Profit stack
-      $('J14').textContent = aud0(clamp0(J14));
-      $('J15').textContent = aud0(clamp0(J15));
-      $('J13').textContent = aud0(clamp0(J13));
-      $('J12').textContent = aud0(clamp0(J12));
-
-      // Table mirrors
-      $('J6_tbl').textContent = num0(J6);
-      $('K6').textContent = aud0(clamp0(K6));
-      $('J7_tbl').textContent = num0(J7);
-      $('K7').textContent = aud0(clamp0(K7));
-      $('J8').textContent = num0(J8);
-      $('K8').textContent = aud0(clamp0(K8));
-      $('J9').textContent = num0(J9);
-      $('K9').textContent = aud0(clamp0(K9));
-
-      $('J26_tbl').textContent = num0(clamp0(J26));
-      $('K26').textContent = num0(clamp0(K26));
-      $('L26').textContent = num0(clamp0(L26));
-      $('M26').textContent = num0(clamp0(M26));
-
-      $('J25').textContent = num0(clamp0(J25));
-      $('K25').textContent = num0(clamp0(K25));
-      $('L25').textContent = num0(clamp0(L25));
-      $('M25').textContent = num0(clamp0(M25));
-
-      $('J24').textContent = num0(clamp0(J24));
-      $('K24').textContent = num0(clamp0(K24));
-      $('L24').textContent = num0(clamp0(L24));
-      $('M24').textContent = num0(clamp0(M24));
-
-      $('J23').textContent = num0(clamp0(J23));
-      $('K23').textContent = num0(clamp0(K23));
-      $('L23').textContent = num0(clamp0(L23));
-      $('M23').textContent = num0(clamp0(M23));
-
-      $('J22').textContent = num0(clamp0(J22));
-      $('K22').textContent = num0(clamp0(K22));
-      $('L22').textContent = num0(clamp0(L22));
-      $('M22').textContent = num0(clamp0(M22));
-
-      // Reveal results & enable PDF
-      $('results').style.display = 'block';
-      $('pdfBtn').disabled = false;
-    }
-
-    /**
-     * Renders a CLEAN PDF where inputs are converted to text.
-     * This avoids html2canvas cutting off input values in the image.
-     */
-    async function downloadPDFSnapshot(){
-      const root = document.getElementById('pageRoot');
-
-      // Clone the page and convert inputs to static text elements in the clone
-      const clone = root.cloneNode(true);
-      clone.classList.add('snap-root');
-
-      // Ensure results are visible in the clone
-      const resultsClone = clone.querySelector('#results');
-      if (resultsClone) resultsClone.style.display = 'block';
-
-      // Replace all inputs with <span class="snap-input">value</span>
-      clone.querySelectorAll('input').forEach((inp)=>{
-        const span = document.createElement('span');
-        span.className = 'snap-input';
-        span.textContent = inp.value;
-        // Keep width similar to original input column
-        span.style.width = '100%';
-        inp.parentNode.replaceChild(span, inp);
-      });
-
-      document.body.appendChild(clone);
-
-      // Use high scale for crisp text
-      const canvas = await html2canvas(clone, {
-        scale: 2,
-        backgroundColor: '#ffffff',
-        useCORS: true,
-        windowWidth: clone.scrollWidth,
-        windowHeight: clone.scrollHeight
-      });
-
-      // Clean up the offscreen clone
-      document.body.removeChild(clone);
-
-      // Build multipage A4 PDF
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pageWidth  = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = pageWidth;
-      const imgHeight = canvas.height * (imgWidth / canvas.width);
-
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
-      heightLeft -= pageHeight;
-
-      while (heightLeft > 1) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save('JSB-Sales-Calculator.pdf');
-    }
-
-    // Events
-    document.addEventListener('click', (e)=>{
-      if (e.target.id === 'calcBtn') compute();
-      if (e.target.id === 'resetBtn') {
-        document.querySelectorAll('input').forEach(el=> el.value = el.defaultValue);
-        $('results').style.display = 'none';
-        $('pdfBtn').disabled = true;
-        window.scrollTo({top:0, behavior:'smooth'});
-      }
-      if (e.target.id === 'pdfBtn') {
-        downloadPDFSnapshot();
-      }
+  function sanitizeStep1(){
+    ['G5','G6','G10','G11','G12','G13','G15','G16'].forEach(id=>{
+      const v=parseFloat($(id).value||'0'); if(v<0) $(id).value=0;
     });
-  </script>
+    if(+$('G11').value<1) $('G11').value=1;
+    if(+$('G12').value<1) $('G12').value=1;
+    if(+$('G16').value<1) $('G16').value=1;
+  }
+
+  function calculateStep1(){
+    sanitizeStep1();
+    const G5=+$('G5').value||0, G6=+$('G6').value||0, G10=+$('G10').value||0, G11=+$('G11').value||48, G12=+$('G12').value||5, G13=+$('G13').value||0, G15=+$('G15').value||0, G16=+$('G16').value||1;
+
+    const G7=Math.max(0,G5-G6), G8=(G5?G7/G5:0), G9=1-G8;
+
+    const J14=G10*12;                // Expenses / year
+    const J15=G13;                   // Desired NP (target)
+    const J13=J14+J15;               // GP required
+    const J12=(G8? J13*((1-G8)/G8) : 0); // Cost of Sales / year
+    const J11=J13+J12;               // Total Sales revenue
+    const J6 =(G5? ceil(J11/G5):0);  // Sales/year (count)
+    const K6=J6*G5, J7=ceil(J6/12), K7=J7*G5, J8=ceil(J6/G11), K8=J8*G5, J9=ceil(J6/G11/G12), K9=J9*G5;
+
+    const G17=Math.max(0, ceil((G16? (J6/G16) : 0) - G15));
+
+    $('G7_ro').textContent=aud0(G7);
+    $('G8_ro').textContent=(G8*100).toFixed(0)+'%';
+    $('G9_ro').textContent=(G9*100).toFixed(0)+'%';
+    $('G17_ro').textContent=num0(G17);
+
+    $('J11').textContent=aud0(J11); $('J6').textContent=num0(J6); $('J13').textContent=aud0(J13); $('J12').textContent=aud0(J12);
+    $('J6_tbl').textContent=num0(J6); $('K6').textContent=aud0(K6); $('J7').textContent=num0(J7); $('K7').textContent=aud0(K7);
+    $('J8').textContent=num0(J8); $('K8').textContent=aud0(K8); $('J9').textContent=num0(J9); $('K9').textContent=aud0(K9);
+    $('J14').textContent=aud0(J14); $('J15').textContent=aud0(J15);
+
+    $('step1Results').style.display='block';
+  }
+
+  /* Wire up */
+  $('calcBtn').addEventListener('click', calculateStep1);
+  $('reset1').addEventListener('click', ()=>{
+    ['G5','G6','G10','G11','G12','G13','G15','G16'].forEach(id=>{ const el=$(id); el.value = el.defaultValue || 0; });
+    $('step1Results').style.display='none';
+    ['G7_ro','G8_ro','G9_ro','G17_ro'].forEach(id=>$(id).textContent='—');
+  });
+</script>
 </body>
 </html>
+
