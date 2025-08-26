@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Just Smart Business — Sales Calculator (3 Steps + PDF)</title>
+<title>Just Smart Business — Sales Calculator</title>
 <style>
   :root{
-    --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
+    --brand-dark:#00543c; --brand-mid:#0e6f57; --brand-light:#22c28a;
     --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7;
-    --warn:#b54708; --good:#0e6f57;
+    --accent-border:#bdf0d8; --accent-bg1:#f4fffa; --accent-bg2:#ffffff;
+    --accent2-border:#cdeee1; --accent2-bg1:#f1fffb; --accent2-bg2:#ffffff;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -17,24 +18,29 @@
     font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   }
-  .wrap{max-width:1180px; margin:28px 0 60px 20px; padding:0 20px;} /* left-aligned for SuiteDash sidebar */
-  header.brand{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px}
-  .brand-left{display:flex; align-items:center; gap:12px}
-  .logo{height:40px; width:auto}
+
+  /* Left-aligned content (room for SuiteDash sidebar) */
+  .wrap{max-width:1180px; margin:28px 0 60px 20px; padding:0 20px;}
+
+  /* Header */
+  header.brand{display:flex; align-items:center; gap:14px; margin-bottom:16px}
+  .brand-pack{display:flex; align-items:center; gap:12px}
+  .brand-logo{width:40px; height:40px}
   .brand-title{font-weight:800; color:var(--brand-mid); font-size:22px}
   .tagline{color:var(--muted); font-size:13px}
 
-  .top-actions{display:flex; gap:10px; align-items:center}
-  .btn{appearance:none; border:1px solid var(--line); background:#fff; color:#20433a;
-       padding:11px 16px; border-radius:12px; font-weight:700; cursor:pointer}
-  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border-color:#10a772}
-  .btn[disabled]{opacity:.5; cursor:not-allowed}
-
+  /* Tabs & Buttons */
   .tabs{display:flex; gap:8px; margin:8px 0 14px; flex-wrap:wrap}
   .tab{border:1px solid var(--line); background:#fff; color:#2b3a33; padding:10px 14px; border-radius:12px;
        font-weight:700; cursor:pointer}
   .tab.active{border-color:#10a772; background:#f3fff9; box-shadow:0 0 0 3px rgba(16,167,114,.15); color:#0c5e49}
 
+  .btn{appearance:none; border:1px solid var(--line); background:#fff; color:#20433a;
+       padding:11px 16px; border-radius:12px; font-weight:700; cursor:pointer}
+  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border-color:#10a772}
+  .btn[disabled]{opacity:.5; cursor:not-allowed}
+
+  /* Cards / Layout */
   .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 0 #f4f6f8; margin-bottom:14px}
   .card-title{display:flex; align-items:center; gap:10px; font-weight:800; margin:2px 0 12px}
   .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:#0e6f57; border:1px solid #eaf4f0}
@@ -43,68 +49,90 @@
   .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
 
   .grid{display:grid; gap:14px}
-  @media (min-width:1000px){ .cols-2{grid-template-columns:1.2fr 1.8fr} .cols-3{grid-template-columns:1fr 1fr 1fr}}
-  .inputs{display:grid; grid-template-columns:1.5fr 1fr; gap:10px 12px; align-items:center}
+  @media (min-width:1000px){ .cols-2{grid-template-columns:1.2fr 1.8fr} .cols-2b{grid-template-columns:1fr 1fr} }
+
+  /* Form */
+  .inputs{display:grid; grid-template-columns:1.35fr 1.1fr; gap:10px 14px; align-items:center; min-width:0}
+  .inputs.pct{grid-template-columns:1.1fr 1.3fr} /* wider for % column */
   label{font-size:14px; color:var(--muted)}
-  input[type=number]{
+  input[type=number], input[type=text]{
     width:100%; height:44px; padding:10px 14px; border-radius:12px; border:1px solid var(--line); background:#fff;
-    font-size:16px; outline:none; transition:border-color .15s, box-shadow .15s;
+    font-size:16px; outline:none; transition:border-color .15s, box-shadow .15s; min-width:0;
   }
-  input[type=number]:focus{border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18)}
+  input[type=number]:focus, input[type=text]:focus{border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18)}
   input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0 }
   input[type=number]{ -moz-appearance:textfield }
 
   .readonly{
-    padding:10px 14px; height:44px; border-radius:12px; background:#f7fbf9; border:1px dashed #d7ece5;
+    padding:10px 14px; min-height:44px; border-radius:12px; background:#f7fbf9; border:1px dashed #d7ece5;
     display:flex; align-items:center; font-weight:700;
   }
 
+  /* Percentage steppers */
+  .pct-control{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:center}
+  .pct-steps{display:inline-flex; gap:6px}
+  .pct-btn{appearance:none; border:1px solid var(--line); background:#fff; color:#20433a;
+        padding:6px 10px; border-radius:10px; font-weight:700; cursor:pointer; line-height:1}
+  .pct-control > input[type=text]{padding-right:36px; text-align:right}
+
+  /* KPIs & Tables */
   .kpis{display:grid; gap:12px}
-  @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
+  @media (min-width:720px){ .kpis { grid-template-columns: repeat(2, 1fr); }  }
   .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff}
-  .kpi .label{font-size:12px; color:var(--muted)}
+  .kpi .label{font-size:12px; color:#5e6b74}
   .kpi .value{font-weight:800; font-size:20px}
-  .kpi.primary{border-color:#bdf0d8; background:linear-gradient(180deg,#f4fffa,#ffffff)}
-  .kpi.primary .value{color:var(--good)}
+  /* Section 1 KPI style */
+  .kpi.primary{border-color:var(--accent-border); background:linear-gradient(180deg,var(--accent-bg1),var(--accent-bg2))}
+  .kpi.primary .value{color:#0e6f57}
+  /* Section 2 highlight style (same structure, different tint) */
+  .kpi.primary2{border-color:var(--accent2-border); background:linear-gradient(180deg,var(--accent2-bg1),var(--accent2-bg2))}
+  .kpi.primary2 .value .primary3{color:#0e6f57}
 
   table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:14px}
   th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
   thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:800}
   tbody tr:last-child td{border-bottom:0}
   td.right{text-align:right}
-
-  /* Footer */
+#step2Results table tbody tr:last-child td {
+  color: var(--brand-dark);
+  font-weight: 800;
+}
   footer.site{margin-top:18px; padding-top:12px; border-top:1px solid var(--line); color:#5e6b74; font-size:12px}
 
-  /* Off‑screen PDF snapshot */
-  #pdfSnapshotRoot{position:fixed; left:-9999px; top:0; width:1120px; padding:0 20px 48px; background:#fff}
+  /* PDF snapshot container */
+  #pdfSnapshotRoot{position:fixed; left:-9999px; top:0; width:1120px; padding:0; background:#fff}
   #pdfSnapshotRoot .btn, #pdfSnapshotRoot .tabs{display:none !important}
+  /* cloned inputs styled for PDF */
+  #pdfSnapshotRoot input.pdf-field{
+    background:#f7fbf9; border:1px solid #dfe9e4; font-weight:700; color:#0b2f24;
+    pointer-events:none; text-align:right;
+  }
 </style>
 </head>
 <body>
   <div class="wrap" id="rootApp">
+    <!-- Header -->
     <header class="brand">
-      <div class="brand-left">
-        <div class="brand-title">Just Smart Business</div>
-        <div class="tagline">Clarity · Strategy · Growth</div>
-      </div>
-      <div class="top-actions">
-        <button id="downloadAll" class="btn" disabled>Download PDF</button>
+      <div class="brand-pack">
+        <img class="brand-logo" src="jsb_icon.svg" alt="Just Smart Business" />
+        <div>
+          <div class="brand-title">Just Smart Business</div>
+          <div class="tagline">Clarity · Strategy · Growth</div>
+        </div>
       </div>
     </header>
 
     <nav class="tabs">
       <button class="tab active" data-tab="step1">1) Inputs</button>
-      <button class="tab" data-tab="step2">2) What‑If</button>
+      <button class="tab" data-tab="step2">2) What-If (Live)</button>
       <button class="tab" data-tab="step3">3) Sales Conversions</button>
     </nav>
 
-    <!-- ===================== STEP 1 — INPUTS & CORE RESULTS ===================== -->
+    <!-- ================ STEP 1 ================= -->
     <section class="card" id="step1">
-      <div class="card-title"><span class="section-tag">Step 1 · Data Input</span><span class="hint">&nbsp;Use dollars (ex GST). Derived fields update after Calculate.</span></div>
+      <div class="card-title"><span class="section-tag">Step 1 · Data Input</span><span class="hint">&nbsp;Use dollars (ex GST). Click Calculate to lock your baseline.</span></div>
 
       <div class="grid cols-2">
-        <!-- Left: Inputs -->
         <div>
           <div class="inputs">
             <label for="G5">Average Sale Value (ex GST)</label>
@@ -131,13 +159,13 @@
             <label for="G12">Number of days per week</label>
             <input id="G12" type="number" min="1" step="1" value="5">
 
-            <label for="G13">How much do you want to make (Desired Net Profit)</label>
+            <label for="G13">Desired Net Profit (year)</label>
             <input id="G13" type="number" min="0" step="0.01" value="100000">
 
-            <label for="G15">Number of Existing Clients</label>
+            <label for="G15">Existing Clients</label>
             <input id="G15" type="number" min="0" step="1" value="36">
 
-            <label for="G16">How many times do they buy from you each year</label>
+            <label for="G16">Purchases per Client / year</label>
             <input id="G16" type="number" min="1" step="1" value="3">
 
             <label>Total New Clients Required</label>
@@ -145,41 +173,25 @@
           </div>
 
           <div class="divider"></div>
-          <button id="calcBtn" class="btn btn-primary">Calculate</button>
+          <button id="calcBtn" class="btn btn-primary">Calculate (Lock Baseline)</button>
           <button id="reset1" class="btn">Reset</button>
-          <p class="hint">We stop negative values and round up counts to match workbook logic.</p>
+          <p class="hint">Negative values are blocked here. Counts round up to match the workbook.</p>
         </div>
 
-        <!-- Right: Results (hidden until Calculate) -->
         <div>
           <div class="card" id="step1Results" style="display:none">
-            <div class="card-title"><span class="section-tag">Results</span></div>
+            <div class="card-title"><span class="section-tag">Baseline Results</span></div>
 
             <div class="kpis">
-              <div class="kpi primary">
-                <div class="label">Total Sales</div>
-                <div class="value mono" id="J11">—</div>
-              </div>
-              <div class="kpi primary">
-                <div class="label">Sales Required / Year</div>
-                <div class="value mono" id="J6">—</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Gross Profit Required</div>
-                <div class="value mono" id="J13">—</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Cost of Sales</div>
-                <div class="value mono" id="J12">—</div>
-              </div>
+              <div class="kpi primary"><div class="label">Total Sales</div><div class="value mono" id="J11">—</div></div>
+              <div class="kpi primary"><div class="label">Sales Required / Year</div><div class="value mono" id="J6">—</div></div>
+              <div class="kpi primary"><div class="label">Gross Profit Required</div><div class="value mono" id="J13">—</div></div>
+              <div class="kpi primary"><div class="label">Cost of Sales</div><div class="value mono" id="J12">—</div></div>
             </div>
 
             <div class="divider"></div>
-
             <table>
-              <thead>
-                <tr><th>Metric</th><th class="right">Number</th><th class="right">Revenue (Ex GST)</th></tr>
-              </thead>
+              <thead><tr><th>Metric</th><th class="right">Number</th><th class="right">Revenue (Ex GST)</th></tr></thead>
               <tbody>
                 <tr><td>Sales Required per Year</td><td class="right mono" id="J6_tbl">—</td><td class="right mono" id="K6">—</td></tr>
                 <tr><td>Sales Required per Month</td><td class="right mono" id="J7">—</td><td class="right mono" id="K7">—</td></tr>
@@ -189,16 +201,9 @@
             </table>
 
             <div class="divider"></div>
-
-            <div class="grid cols-2">
-              <div class="card">
-                <div class="hint">Expenses (per year)</div>
-                <div class="mono" id="J14">—</div>
-              </div>
-              <div class="card">
-                <div class="hint">Desired Net Profit</div>
-                <div class="mono" id="J15">—</div>
-              </div>
+            <div class="grid cols-2b">
+              <div class="card"><div class="hint">Expenses (per year)</div><div class="mono" id="J14">—</div></div>
+              <div class="card"><div class="hint">Desired Net Profit</div><div class="mono" id="J15">—</div></div>
             </div>
 
           </div>
@@ -206,68 +211,101 @@
       </div>
     </section>
 
-    <!-- ===================== STEP 2 — WHAT‑IF ===================== -->
+    <!-- ================ STEP 2 ================= -->
     <section class="card" id="step2" style="display:none">
-      <div class="card-title"><span class="section-tag">Step 2 · What‑If</span><span class="hint">&nbsp;Enter decimals for % (e.g., 0.05 = 5%)</span></div>
+      <div class="card-title"><span class="section-tag">Step 2 · What-If (Live)</span><span class="hint">&nbsp;Use the ±1% buttons or type percentages (e.g., 5%).</span></div>
 
       <div class="grid cols-2">
+        <!-- Left -->
         <div>
-          <div class="inputs">
-            <label for="G22">Sales value increased by x% (decimal)</label>
-            <input id="G22" type="number" step="0.0001" value="0.05">
+          <div class="card">
+            <div class="card-title"><span class="section-tag">Part A — Adjust Prices / Costs / Overhead</span></div>
+            <div class="inputs pct">
+              <label for="W_price">Average Sale Value change</label>
+              <div class="pct-control">
+                <input id="W_price" type="text" inputmode="decimal" value="0%">
+                <div class="pct-steps">
+                  <button type="button" class="pct-btn" data-step="-1" data-target="W_price">−1%</button>
+                  <button type="button" class="pct-btn" data-step="1"  data-target="W_price">+1%</button>
+                </div>
+              </div>
 
-            <label for="G23">Cost of Sales decreased by x% (decimal)</label>
-            <input id="G23" type="number" step="0.0001" value="0.05">
+              <label for="W_cost">Cost of Sales change</label>
+              <div class="pct-control">
+                <input id="W_cost" type="text" inputmode="decimal" value="0%">
+                <div class="pct-steps">
+                  <button type="button" class="pct-btn" data-step="-1" data-target="W_cost">−1%</button>
+                  <button type="button" class="pct-btn" data-step="1"  data-target="W_cost">+1%</button>
+                </div>
+              </div>
 
-            <label for="G24">Overhead decreased by x% (decimal)</label>
-            <input id="G24" type="number" step="0.0001" value="0.05">
-
-            <label for="G25">Increase number of Sales (decimal)</label>
-            <input id="G25" type="number" step="0.0001" value="0.15">
+              <label for="W_overhead">Overhead change</label>
+              <div class="pct-control">
+                <input id="W_overhead" type="text" inputmode="decimal" value="0%">
+                <div class="pct-steps">
+                  <button type="button" class="pct-btn" data-step="-1" data-target="W_overhead">−1%</button>
+                  <button type="button" class="pct-btn" data-step="1"  data-target="W_overhead">+1%</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="divider"></div>
-          <button id="applyWhatIf" class="btn btn-primary">Apply What‑If</button>
-          <button id="clearWhatIf" class="btn">Clear</button>
+
+          <div class="card">
+            <div class="card-title"><span class="section-tag">Part B — What if You also Increased Your Number of Sales?</span></div>
+            <div class="inputs pct">
+              <label for="W_volume">Change in Number of Sales</label>
+              <div class="pct-control">
+                <input id="W_volume" type="text" inputmode="decimal" value="0%">
+                <div class="pct-steps">
+                  <button type="button" class="pct-btn" data-step="-1" data-target="W_volume">−1%</button>
+                  <button type="button" class="pct-btn" data-step="1"  data-target="W_volume">+1%</button>
+                </div>
+              </div>
+
+              <label>Additional Sales (count)</label>
+              <div class="readonly mono" id="W_addSalesCount_left">—</div>
+
+              <label>New Total Sales (count)</label>
+              <div class="readonly mono" id="W_newSalesCount_left">—</div>
+            </div>
+          </div>
+          <p class="hint">Part B only changes the sales count; Part A adjusts price, cost and overhead.</p>
         </div>
 
+        <!-- Right (results) -->
         <div>
-          <div class="card" id="step2Results" style="display:none">
-            <div class="card-title"><span class="section-tag">Adjusted Prices & Costs</span></div>
-            <div class="kpis">
-              <div class="kpi primary"><div class="label">New Avg Sale Value</div><div class="value mono" id="G26_out">—</div></div>
-              <div class="kpi primary"><div class="label">Total Sales (Revenue)</div><div class="value mono" id="J27">—</div></div>
-              <div class="kpi"><div class="label">Cost of Sales (adjusted)</div><div class="value mono" id="J28">—</div></div>
-              <div class="kpi"><div class="label">Cost of Sales %</div><div class="value mono" id="K28">—</div></div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="grid cols-2">
-              <div class="card"><div class="hint">Gross Profit</div><div class="mono" id="J29">—</div></div>
-              <div class="card"><div class="hint">Expenses (adjusted)</div><div class="mono" id="J30">—</div></div>
-            </div>
-
-            <div class="grid cols-2" style="margin-top:10px">
-              <div class="card"><div class="hint">Desired Net Profit (new)</div><div class="mono" id="J31">—</div></div>
-              <div class="card"><div class="hint">Increase in Net Profit</div><div class="mono" id="F29">—</div></div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="card">
-              <div class="card-title"><span class="section-tag">Increase in NP — with Additional Sales + Price & Cost Adjs</span></div>
-              <div class="mono" id="F33">—</div>
-            </div>
-
-            <div class="divider"></div>
+          <div class="card" id="step2Results">
+            <div class="card-title"><span class="section-tag">Adjusted Outcomes (Live)</span></div>
 
             <table>
-              <thead><tr><th>What‑If Cadence</th><th class="right">Number</th></tr></thead>
               <tbody>
-                <tr><td>Sales Required per Year</td><td class="right mono" id="J22">—</td></tr>
-                <tr><td>Sales Required per Month</td><td class="right mono" id="J23">—</td></tr>
-                <tr><td>Sales Required per Week</td><td class="right mono" id="J24">—</td></tr>
-                <tr><td>Sales Required per Day</td><td class="right mono" id="J25">—</td></tr>
+                <tr><td><strong>Total Sales (Revenue)</strong></td><td class="right mono" id="W_totalSales">—</td></tr>
+                <tr><td><strong>Cost of Sales</strong></td><td class="right mono" id="W_costOfSales">—</td></tr>
+                <tr><td><strong>Gross Profit Required</strong></td><td class="right mono" id="W_grossProfit">—</td></tr>
+                <tr><td><strong>Expenses</strong></td><td class="right mono" id="W_expenses">—</td></tr>
+                <tr><td><strong>New Net Profit</strong></td><td class="right mono primary3" id="W_newNP_row">—</td></tr>
+              </tbody>
+            </table>
+
+            <div class="divider"></div>
+
+            <!-- Highlights in same KPI style as section 1, distinct tint -->
+            <div class="kpis">
+        
+              <div class="kpi primary2"><div class="label">Increased Net Profit (adjust prices/costs)</div><div class="value mono" id="W_incNP_base">—</div></div>
+              <div class="kpi primary2"><div class="label">Increased Net Profit by Increasing Sales Numbers</div><div class="value mono" id="W_incNP_salesOnly">—</div></div>
+              <div class="kpi primary2"><div class="label">Increased Net Profit by Adjusting Prices & Increasing Sales Numbers</div><div class="value mono" id="W_incNP_combo">—</div></div>
+              <div class="kpi primary2"><div class="label">Cost of Sales % (after changes)</div><div class="value mono" id="W_cosPct">—</div></div>
+            </div>
+
+            <div class="divider"></div>
+            <table>
+              <thead><tr><th>Cadence (with sales change applied)</th><th class="right">Number</th></tr></thead>
+              <tbody>
+                <tr><td>Sales Required per Year</td><td class="right mono" id="W_year">—</td></tr>
+                <tr><td>Sales Required per Month</td><td class="right mono" id="W_month">—</td></tr>
+                <tr><td>Sales Required per Week</td><td class="right mono" id="W_week">—</td></tr>
+                <tr><td>Sales Required per Day</td><td class="right mono" id="W_day">—</td></tr>
               </tbody>
             </table>
 
@@ -276,41 +314,81 @@
       </div>
     </section>
 
-    <!-- ===================== STEP 3 — SALES CONVERSIONS ===================== -->
+    <!-- ================ STEP 3 ================= -->
     <section class="card" id="step3" style="display:none">
-      <div class="card-title"><span class="section-tag">Step 3 · Sales Conversions</span><span class="hint">&nbsp;Use decimals for conversion rates (e.g., 0.20)</span></div>
+      <div class="card-title"><span class="section-tag">Step 3 · Sales Conversions</span><span class="hint">&nbsp;Enter percentages (e.g., 15%).</span></div>
 
       <div class="grid cols-2">
         <div>
-          <div class="inputs">
-            <label for="G40">Clicks/Walk‑ins → Leads (decimal)</label>
-            <input id="G40" type="number" step="0.0001" min="0" max="1" value="0.15">
+          <div class="inputs pct">
+            <label for="C_clickLead">Clicks/Walk-ins → Leads</label>
+            <div class="pct-control">
+              <input id="C_clickLead" type="text" inputmode="decimal" value="15%">
+              <div class="pct-steps">
+                <button type="button" class="pct-btn" data-step="-1" data-target="C_clickLead">−1%</button>
+                <button type="button" class="pct-btn" data-step="1"  data-target="C_clickLead">+1%</button>
+              </div>
+            </div>
 
-            <label for="G41">Leads → Prospects (decimal)</label>
-            <input id="G41" type="number" step="0.0001" min="0" max="1" value="0.15">
+            <label for="C_leadProspect">Leads → Prospects</label>
+            <div class="pct-control">
+              <input id="C_leadProspect" type="text" inputmode="decimal" value="15%">
+              <div class="pct-steps">
+                <button type="button" class="pct-btn" data-step="-1" data-target="C_leadProspect">−1%</button>
+                <button type="button" class="pct-btn" data-step="1"  data-target="C_leadProspect">+1%</button>
+              </div>
+            </div>
 
-            <label for="G42">Prospects → Proposals (decimal)</label>
-            <input id="G42" type="number" step="0.0001" min="0" max="1" value="0.15">
+            <label for="C_prospectProposal">Prospects → Proposals</label>
+            <div class="pct-control">
+              <input id="C_prospectProposal" type="text" inputmode="decimal" value="15%">
+              <div class="pct-steps">
+                <button type="button" class="pct-btn" data-step="-1" data-target="C_prospectProposal">−1%</button>
+                <button type="button" class="pct-btn" data-step="1"  data-target="C_prospectProposal">+1%</button>
+              </div>
+            </div>
 
-            <label for="G43">Proposals → Sales (decimal)</label>
-            <input id="G43" type="number" step="0.0001" min="0" max="1" value="0.7">
+            <label for="C_proposalSale">Proposals → Sales</label>
+            <div class="pct-control">
+              <input id="C_proposalSale" type="text" inputmode="decimal" value="70%">
+              <div class="pct-steps">
+                <button type="button" class="pct-btn" data-step="-1" data-target="C_proposalSale">−1%</button>
+                <button type="button" class="pct-btn" data-step="1"  data-target="C_proposalSale">+1%</button>
+              </div>
+            </div>
           </div>
           <div class="divider"></div>
-          <button id="applyConv" class="btn btn-primary">Calculate Requirements</button>
-          <button id="reset3" class="btn">Reset</button>
+          <div class="actions">
+            <button id="applyConv" class="btn btn-primary">Calculate Requirements</button>
+            <button id="resetConv" class="btn">Reset</button>
+            <button id="downloadAllStep3" class="btn">Download PDF</button>
+          </div>
         </div>
 
         <div>
           <div class="card" id="step3Results" style="display:none">
-            <div class="card-title"><span class="section-tag">Required Numbers</span></div>
+            <div class="card-title"><span class="section-tag">Scenario A — Original Sales Number</span></div>
             <table>
               <thead><tr><th>Stage</th><th class="right">Per Year</th><th class="right">Per Month</th><th class="right">Per Week</th><th class="right">Per Work Day</th></tr></thead>
               <tbody>
-                <tr><td>New Clients Required</td><td class="right mono" id="J44">—</td><td class="right mono" id="K44">—</td><td class="right mono" id="L44">—</td><td class="right mono" id="M44">—</td></tr>
-                <tr><td>Proposals required</td><td class="right mono" id="J43">—</td><td class="right mono" id="K43">—</td><td class="right mono" id="L43">—</td><td class="right mono" id="M43">—</td></tr>
-                <tr><td>Prospects required</td><td class="right mono" id="J42">—</td><td class="right mono" id="K42">—</td><td class="right mono" id="L42">—</td><td class="right mono" id="M42">—</td></tr>
-                <tr><td>Leads required</td><td class="right mono" id="J41">—</td><td class="right mono" id="K41">—</td><td class="right mono" id="L41">—</td><td class="right mono" id="M41">—</td></tr>
-                <tr><td>Initial Contacts required</td><td class="right mono" id="J40">—</td><td class="right mono" id="K40">—</td><td class="right mono" id="L40">—</td><td class="right mono" id="M40">—</td></tr>
+                <tr><td>New Clients Required</td><td class="right mono" id="A_new_y">—</td><td class="right mono" id="A_new_m">—</td><td class="right mono" id="A_new_w">—</td><td class="right mono" id="A_new_d">—</td></tr>
+                <tr><td>Proposals required</td><td class="right mono" id="A_prop_y">—</td><td class="right mono" id="A_prop_m">—</td><td class="right mono" id="A_prop_w">—</td><td class="right mono" id="A_prop_d">—</td></tr>
+                <tr><td>Prospects required</td><td class="right mono" id="A_prosp_y">—</td><td class="right mono" id="A_prosp_m">—</td><td class="right mono" id="A_prosp_w">—</td><td class="right mono" id="A_prosp_d">—</td></tr>
+                <tr><td>Leads required</td><td class="right mono" id="A_lead_y">—</td><td class="right mono" id="A_lead_m">—</td><td class="right mono" id="A_lead_w">—</td><td class="right mono" id="A_lead_d">—</td></tr>
+                <tr><td>Initial Contacts required</td><td class="right mono" id="A_init_y">—</td><td class="right mono" id="A_init_m">—</td><td class="right mono" id="A_init_w">—</td><td class="right mono" id="A_init_d">—</td></tr>
+              </tbody>
+            </table>
+
+            <div class="divider"></div>
+            <div class="card-title"><span class="section-tag">Scenario B — With Increased Sales Number</span></div>
+            <table>
+              <thead><tr><th>Stage</th><th class="right">Per Year</th><th class="right">Per Month</th><th class="right">Per Week</th><th class="right">Per Work Day</th></tr></thead>
+              <tbody>
+                <tr><td>New Clients Required</td><td class="right mono" id="B_new_y">—</td><td class="right mono" id="B_new_m">—</td><td class="right mono" id="B_new_w">—</td><td class="right mono" id="B_new_d">—</td></tr>
+                <tr><td>Proposals required</td><td class="right mono" id="B_prop_y">—</td><td class="right mono" id="B_prop_m">—</td><td class="right mono" id="B_prop_w">—</td><td class="right mono" id="B_prop_d">—</td></tr>
+                <tr><td>Prospects required</td><td class="right mono" id="B_prosp_y">—</td><td class="right mono" id="B_prosp_m">—</td><td class="right mono" id="B_prosp_w">—</td><td class="right mono" id="B_prosp_d">—</td></tr>
+                <tr><td>Leads required</td><td class="right mono" id="B_lead_y">—</td><td class="right mono" id="B_lead_m">—</td><td class="right mono" id="B_lead_w">—</td><td class="right mono" id="B_lead_d">—</td></tr>
+                <tr><td>Initial Contacts required</td><td class="right mono" id="B_init_y">—</td><td class="right mono" id="B_init_m">—</td><td class="right mono" id="B_init_w">—</td><td class="right mono" id="B_init_d">—</td></tr>
               </tbody>
             </table>
           </div>
@@ -321,316 +399,280 @@
     <footer class="site">© Just Smart Business — This report reflects inputs provided by the client.</footer>
   </div>
 
-  <!-- Off‑screen snapshot for WYSIWYG PDF -->
+  <!-- Hidden snapshot root for PDF -->
   <div id="pdfSnapshotRoot"></div>
 
-  <!-- Libraries for “real” PDF export -->
+  <!-- libs -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
   <script>
-    // ---------- Helpers ----------
-    const $ = id => document.getElementById(id);
-    const aud0 = v => new Intl.NumberFormat(undefined,{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(v);
-    const num0 = v => new Intl.NumberFormat(undefined,{maximumFractionDigits:0}).format(v);
-    const ceil = v => Math.ceil(v);
-    const clamp01 = x => Math.max(0, Math.min(1, x));
-    const nz = v => (isNaN(v)||v===null)?0:v;
-    const get = id => nz(parseFloat($(id).value));
+    /* Helpers */
+    const $=id=>document.getElementById(id);
+    const qsa=sel=>Array.prototype.slice.call(document.querySelectorAll(sel));
+    const aud0=v=>new Intl.NumberFormat(undefined,{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(Number(v)||0);
+    const num0=v=>new Intl.NumberFormat(undefined,{maximumFractionDigits:0}).format(Number(v)||0);
+    const ceil=v=>Math.ceil(Number(v)||0);
+    const pct1=v=>((Number(v)||0)*100).toFixed(1)+'%';
+    const clamp01=x=>Math.max(0,Math.min(1,Number(x)||0));
 
     function showTab(tabId){
-      document.querySelectorAll('.tab').forEach(b=> b.classList.toggle('active', b.dataset.tab===tabId));
-      ['step1','step2','step3'].forEach(id => { const s=$(id); if(s) s.style.display = (id===tabId)?'block':'none'; });
+      qsa('.tab').forEach(b=>b.classList.toggle('active', b.dataset.tab===tabId));
+      ['step1','step2','step3'].forEach(id => { const el=$(id); if(el) el.style.display = (id===tabId)?'block':'none'; });
     }
 
-    document.querySelectorAll('.tab').forEach(b=>{
-      b.addEventListener('click', ()=> showTab(b.dataset.tab));
-    });
+    /* Percent helpers */
+    const parsePercentText = txt => {
+      txt = (typeof txt==='string'?txt:String(txt||'0')).trim();
+      if(txt.endsWith('%')) txt = txt.slice(0,-1);
+      const n = parseFloat(txt.replace(/,/g,'')) || 0;
+      return n/100;
+    };
+    const formatPercentText = dec => (Math.round(((Number(dec)||0)*100))) + '%';
+    const percentGet = id => parsePercentText($(id).value);
+    const percentSet = (id,dec) => $(id).value = formatPercentText(dec);
 
-    // ---------- STEP 1: Core formulas ----------
-    let baseline = null;       // remembers key values for later steps
-    let step1Done = false;
-    let step2Done = false;
+    /* Step 1 */
+    let baseline=null;
 
     function sanitizeStep1(){
       ['G5','G6','G10','G11','G12','G13','G15','G16'].forEach(id=>{
-        if (get(id)<0) $(id).value = 0;
+        const v=parseFloat($(id).value||'0'); if(v<0) $(id).value=0;
       });
-      if (get('G11')<1) $('G11').value = 1;
-      if (get('G12')<1) $('G12').value = 1;
-      if (get('G16')<1) $('G16').value = 1;
+      if(+$('G11').value<1) $('G11').value=1;
+      if(+$('G12').value<1) $('G12').value=1;
+      if(+$('G16').value<1) $('G16').value=1;
     }
 
     function calculateStep1(){
       sanitizeStep1();
-      const G5=get('G5'), G6=get('G6'), G10=get('G10'), G11=get('G11'), G12=get('G12'), G13=get('G13'), G15=get('G15'), G16=get('G16');
+      const G5=+$('G5').value||0, G6=+$('G6').value||0, G10=+$('G10').value||0, G11=+$('G11').value||48, G12=+$('G12').value||5, G13=+$('G13').value||0, G15=+$('G15').value||0, G16=+$('G16').value||1;
 
-      const G7 = Math.max(0, G5 - G6);              // GP per sale
-      const G8 = (G5!==0) ? (G7/G5) : 0;            // GP%
-      const G9 = 1 - G8;                            // Cost%
+      const G7=Math.max(0,G5-G6), G8=(G5?G7/G5:0), G9=1-G8;
 
-      // Annual expense & required GP / Sales as in workbook
-      const J14 = G10 * 12;                         // Expenses / year
-      const J15 = G13;                              // Desired NP
-      const J13 = J14 + J15;                        // GP required
-      const J12 = (G8!==0) ? (J13*((1-G8)/G8)) : 0; // Cost of Sales
-      const J11 = J13 + J12;                        // Total Sales
+      const J14=G10*12;
+      const J15=G13;
+      const J13=J14+J15;
+      const J12=(G8? J13*((1-G8)/G8) : 0);
+      const J11=J13+J12;
+      const J6 =(G5? ceil(J11/G5):0);
+      const K6=J6*G5, J7=ceil(J6/12), K7=J7*G5, J8=ceil(J6/G11), K8=J8*G5, J9=ceil(J6/G11/G12), K9=J9*G5;
 
-      const J6  = (G5!==0) ? ceil(J11 / G5) : 0;    // Sales / Year
-      const K6  = J6 * G5;
-      const J7  = ceil(J6/12);                      // Month
-      const K7  = J7*G5;
-      const J8  = ceil(J6/G11);                     // Week
-      const K8  = J8*G5;
-      const J9  = ceil(J6/G11/5);                   // Day (5 work days per week baseline)
-      const K9  = J9*G5;
+      const G17=Math.max(0, ceil((G16? (J6/G16) : 0) - G15));
 
-      // New Clients Required (net of existing)
-      const estSalesFromExisting = (G16!==0) ? (G15 * G16) : 0;
-      const G17 = Math.max(0, ceil(J6 - estSalesFromExisting));
+      $('G7_ro').textContent=aud0(G7);
+      $('G8_ro').textContent=(G8*100).toFixed(0)+'%';
+      $('G9_ro').textContent=(G9*100).toFixed(0)+'%';
+      $('G17_ro').textContent=num0(G17);
 
-      // Write derived inputs (read-only displays)
-      $('G7_ro').textContent = aud0(G7);
-      $('G8_ro').textContent = (G8*100).toFixed(0) + '%';
-      $('G9_ro').textContent = (G9*100).toFixed(0) + '%';
-      $('G17_ro').textContent = num0(G17);
+      $('J11').textContent=aud0(J11); $('J6').textContent=num0(J6); $('J13').textContent=aud0(J13); $('J12').textContent=aud0(J12);
+      $('J6_tbl').textContent=num0(J6); $('K6').textContent=aud0(K6); $('J7').textContent=num0(J7); $('K7').textContent=aud0(K7);
+      $('J8').textContent=num0(J8); $('K8').textContent=aud0(K8); $('J9').textContent=num0(J9); $('K9').textContent=aud0(K9);
+      $('J14').textContent=aud0(J14); $('J15').textContent=aud0(J15);
 
-      // Write Results
-      $('J11').textContent = aud0(J11);
-      $('J6').textContent  = num0(J6);
-      $('J13').textContent = aud0(J13);
-      $('J12').textContent = aud0(J12);
+      $('step1Results').style.display='block';
 
-      $('J6_tbl').textContent = num0(J6);
-      $('K6').textContent = aud0(K6);
-      $('J7').textContent = num0(J7);
-      $('K7').textContent = aud0(K7);
-      $('J8').textContent = num0(J8);
-      $('K8').textContent = aud0(K8);
-      $('J9').textContent = num0(J9);
-      $('K9').textContent = aud0(K9);
-
-      $('J14').textContent = aud0(J14);
-      $('J15').textContent = aud0(J15);
-
-      // Show results
-      $('step1Results').style.display = 'block';
-
-      // Save baseline for steps 2 & 3
-      baseline = { G5,G6,G7,G8,G9,G10,G11,G12,G13,G15,G16, J11,J12,J13,J14,J15, J6,J7,J8,J9, G17 };
-      step1Done = true;
-      $('downloadAll').disabled = false;  // allow PDF after step 1 as well
+      baseline={ G5,G6,G7,G8,G9,G10,G11,G12,G13,G15:G15,G16,
+                 J11,J12,J13,J14,J15,J6,J7,J8,J9,G17 };
+      recalcWhatIf();
     }
 
-    // ---------- STEP 2: What‑If ----------
-    function applyWhatIf(){
-      if (!step1Done){ alert('Please complete Step 1 (Calculate) first.'); return; }
-      const G22 = nz(parseFloat($('G22').value));
-      const G23 = nz(parseFloat($('G23').value));
-      const G24 = nz(parseFloat($('G24').value));
-      const G25 = nz(parseFloat($('G25').value));
+    /* Step 2 */
+    function recalcWhatIf(){
+      const b=baseline||{};
+      const baseAvg=+b.G5||0, baseCostTotal=+b.J12||0, baseSales=+b.J6||0, baseOverhead=+b.J14||0, targetNP=+b.G13||0;
+      const weeks=+b.G11||48, days=+b.G12||5;
 
-      const {G5,G10,J6,J12,G11,G12:DaysPerWeek,G13} = baseline;
+      const p=percentGet('W_price'), c=percentGet('W_cost'), o=percentGet('W_overhead'), v=percentGet('W_volume');
 
-      const G26 = G5 * (1 + G22);             // New Avg Sale
-      const J27 = G26 * J6;                   // Total Sales (same volume)
-      const J28 = J12 * (1 - G23);            // Cost of Sales adj
-      const K28 = (J27!==0)? (J28/J27) : 0;   // Cost % of revenue
+      const newAvg = baseAvg*(1+p);
+      const sales_sameVol = newAvg*baseSales;
+      const cos_sameVol   = baseCostTotal*(1+c);
+      const gp_sameVol    = sales_sameVol - cos_sameVol;
+      const exp_adj       = baseOverhead*(1+o);
+      const np_adjustOnly = gp_sameVol - exp_adj;
+      const incNP_adjustOnly = np_adjustOnly - targetNP;
 
-      const J29 = J27 - J28;                  // Gross Profit
-      const J30 = (G10*12) * (1 - G24);       // Expenses adj
-      const J31 = J29 - J30;                  // Net Profit (new)
-      const F29 = J31 - G13;                  // Increase in NP
+      const cosPct = (sales_sameVol? (cos_sameVol/sales_sameVol) : 0);
 
-      // Additional sales effect
-      const incSalesCount = J6 * G25;
-      const addRevenue = incSalesCount * G26;
-      const addCost = incSalesCount * (K28 * G26);
-      const F33 = F29 + (addRevenue - addCost);
+      const addSalesCount = baseSales * v;
+      const newSalesCount = Math.max(0, Math.ceil(baseSales*(1+v)));
 
-      // Cadence with new average sale (keeping same volume total J27)
-      const WJ22 = (G26!==0)? ceil(J27/G26) : 0; // year
-      const WJ23 = ceil(WJ22/12);
-      const WJ24 = ceil(WJ22/G11);
-      const WJ25 = ceil(WJ24/DaysPerWeek);
+      const addRevenue    = addSalesCount * newAvg;
+      const addCost       = addSalesCount * (cosPct * newAvg);
+      const incNP_salesOnly = addRevenue - addCost;
+      const np_combo      = np_adjustOnly + incNP_salesOnly;
+      const incNP_combo   = np_combo - targetNP;
 
-      // Write
-      $('G26_out').textContent = aud0(G26);
-      $('J27').textContent = aud0(J27);
-      $('J28').textContent = aud0(J28);
-      $('K28').textContent = (K28*100).toFixed(1)+'%';
-      $('J29').textContent = aud0(J29);
-      $('J30').textContent = aud0(J30);
-      $('J31').textContent = aud0(J31);
-      $('F29').textContent = aud0(F29);
-      $('F33').textContent = aud0(F33);
-      $('J22').textContent = num0(WJ22);
-      $('J23').textContent = num0(WJ23);
-      $('J24').textContent = num0(WJ24);
-      $('J25').textContent = num0(WJ25);
+      const y = newSalesCount;
+      const m = Math.ceil(y/12);
+      const w = Math.ceil(y/(weeks||1));
+      const d = Math.ceil(w/(days||1));
 
-      $('step2Results').style.display = 'block';
-      step2Done = true;
+      $('W_totalSales').textContent  = aud0(sales_sameVol);
+      $('W_costOfSales').textContent = aud0(cos_sameVol);
+      $('W_grossProfit').textContent = aud0(gp_sameVol);
+      $('W_expenses').textContent    = aud0(exp_adj);
+      $('W_newNP_row').textContent   = aud0(np_adjustOnly);
+    
+
+
+      $('W_addSalesCount_left').textContent = num0(addSalesCount);
+      $('W_newSalesCount_left').textContent = num0(newSalesCount);
+
+      $('W_incNP_base').textContent = aud0(incNP_adjustOnly < 500 ? 0 : incNP_adjustOnly);
+
+
+      $('W_incNP_salesOnly').textContent  = aud0(incNP_salesOnly);
+      $('W_incNP_combo').textContent = aud0(incNP_combo < 500 ? 0 : incNP_combo);
+      $('W_cosPct').textContent = pct1(cosPct);
+
+      $('W_year').textContent  = num0(y);
+      $('W_month').textContent = num0(m);
+      $('W_week').textContent  = num0(w);
+      $('W_day').textContent   = num0(d);
     }
 
-    // ---------- STEP 3: Conversions / Funnel ----------
+    document.addEventListener('click',(e)=>{
+      const btn = e.target.closest('.pct-btn');
+      if(!btn) return;
+      const id = btn.dataset.target;
+      const stepPct = parseFloat(btn.dataset.step||'0');
+      let dec = percentGet(id);
+      dec += (stepPct/100);
+      percentSet(id, dec);
+      if(id.startsWith('W_')) recalcWhatIf();
+    });
+
+    ['W_price','W_cost','W_overhead','W_volume','C_clickLead','C_leadProspect','C_prospectProposal','C_proposalSale'].forEach(id=>{
+      const el=$(id);
+      el.addEventListener('blur', ()=>{ percentSet(id, percentGet(id)); if(id.startsWith('W_')) recalcWhatIf(); });
+      el.addEventListener('input', ()=>{ if(id.startsWith('W_')) recalcWhatIf(); });
+    });
+
+    /* Step 3 */
+    const breakdown=(y,weeks,days)=>({ y, m:ceil(y/12), w:ceil(y/(weeks||1)), d:ceil(ceil(y/(weeks||1))/(days||1)) });
+    function setRow(prefix,o){ $(prefix+'_y').textContent=num0(o.y); $(prefix+'_m').textContent=num0(o.m); $(prefix+'_w').textContent=num0(o.w); $(prefix+'_d').textContent=num0(o.d); }
+    function computeFunnel(newClients,c1,c2,c3,c4,weeks,days){
+      const propY=(c4>0)? ceil(newClients/c4):0;
+      const prospY=(c3>0)? ceil(propY/c3):0;
+      const leadY=(c2>0)? ceil(prospY/c2):0;
+      const initY=(c1>0)? ceil(leadY/c1):0;
+      return { new:breakdown(newClients,weeks,days), prop:breakdown(propY,weeks,days), prosp:breakdown(prospY,weeks,days), lead:breakdown(leadY,weeks,days), init:breakdown(initY,weeks,days) };
+    }
     function applyConversions(){
-      if (!step1Done){ alert('Please complete Step 1 (Calculate) first.'); return; }
-      const G40 = clamp01(get('G40'));
-      const G41 = clamp01(get('G41'));
-      const G42 = clamp01(get('G42'));
-      const G43 = clamp01(get('G43'));
+      if(!baseline){ calculateStep1(); }
+      const b=baseline||{}, weeks=b.G11||48, days=b.G12||5;
+      const J6=b.J6||0, v=percentGet('W_volume'), freq=b.G16||1, existing=b.G15||0;
 
-      const {G17, G11, G12} = baseline; // new clients / year, weeks/year, days/week
+      const salesA = J6;
+      const salesB = Math.max(0, ceil(J6*(1+v)));
 
-      // Funnel from New Clients (per year) back to Initial Contacts
-      const J44 = Math.max(0, G17);                              // New Clients / Year
-      const J43 = (G43>0)? ceil(J44 / G43) : 0;                   // Proposals / Year
-      const J42 = (G42>0)? ceil(J43 / G42) : 0;                   // Prospects / Year
-      const J41 = (G41>0)? ceil(J42 / G41) : 0;                   // Leads / Year
-      const J40 = (G40>0)? ceil(J41 / G40) : 0;                   // Initial Contacts / Year
+      const newClientsA = Math.max(0, ceil((salesA/freq) - existing));
+      const newClientsB = Math.max(0, ceil((salesB/freq) - existing));
 
-      const K44 = ceil(J44/12), L44 = ceil(J44/G11), M44 = ceil(L44/G12);
-      const K43 = ceil(J43/12), L43 = ceil(J43/G11), M43 = ceil(L43/G12);
-      const K42 = ceil(J42/12), L42 = ceil(J42/G11), M42 = ceil(L42/G12);
-      const K41 = ceil(J41/12), L41 = ceil(J41/G11), M41 = ceil(L41/G12);
-      const K40 = ceil(J40/12), L40 = ceil(J40/G11), M40 = ceil(L40/G12);
+      const c1 = clamp01(parsePercentText($('C_clickLead').value));
+      const c2 = clamp01(parsePercentText($('C_leadProspect').value));
+      const c3 = clamp01(parsePercentText($('C_prospectProposal').value));
+      const c4 = clamp01(parsePercentText($('C_proposalSale').value));
 
-      [['J44',J44],['K44',K44],['L44',L44],['M44',M44],
-       ['J43',J43],['K43',K43],['L43',L43],['M43',M43],
-       ['J42',J42],['K42',K42],['L42',L42],['M42',M42],
-       ['J41',J41],['K41',K41],['L41',L41],['M41',M41],
-       ['J40',J40],['K40',K40],['L40',L40],['M40',M40]
-      ].forEach(([id,val])=> $(id).textContent = num0(val));
+      const A=computeFunnel(newClientsA,c1,c2,c3,c4,weeks,days);
+      const B=computeFunnel(newClientsB,c1,c2,c3,c4,weeks,days);
 
-      $('step3Results').style.display = 'block';
+      setRow('A_new',A.new); setRow('A_prop',A.prop); setRow('A_prosp',A.prosp); setRow('A_lead',A.lead); setRow('A_init',A.init);
+      setRow('B_new',B.new); setRow('B_prop',B.prop); setRow('B_prosp',B.prosp); setRow('B_lead',B.lead); setRow('B_init',B.init);
+
+      $('step3Results').style.display='block';
+    }
+    function resetConversions(){
+      percentSet('C_clickLead',0.15); percentSet('C_leadProspect',0.15); percentSet('C_prospectProposal',0.15); percentSet('C_proposalSale',0.70);
+      qsa('#step3Results td.mono').forEach(td=>td.textContent='—');
+      $('step3Results').style.display='none';
     }
 
-    // ---------- PDF (WYSIWYG snapshot of all 3 steps with current values) ----------
-    function inputsToText(section){
-      // Convert all <input type="number"> into readonly text boxes for accurate rendering
-      section.querySelectorAll('input[type="number"]').forEach(inp=>{
-        const lab = section.querySelector(`label[for="${inp.id}"]`);
-        const value = inp.value;
-        const wrapper = document.createElement('div');
-        wrapper.style.display='grid';
-        wrapper.style.gridTemplateColumns='1.5fr 1fr';
-        wrapper.style.gap='10px 12px';
-        const display = document.createElement('div');
-        display.className = 'readonly mono';
-        // Heuristic formatting for money-like fields
-        const moneyIds = ['G5','G6','G10','G13'];
-        const percentIds = ['G40','G41','G42','G43','G22','G23','G24','G25'];
-        let out = value;
-        if (moneyIds.includes(inp.id)) out = aud0(parseFloat(value||0));
-        else if (percentIds.includes(inp.id)) out = ((parseFloat(value||0))*100).toFixed(1) + '%';
-        else out = num0(parseFloat(value||0));
-        display.textContent = out;
-        if (lab){
-          const row = document.createElement('div');
-          row.style.display='contents';
-          lab.replaceWith(row);
-          row.appendChild(lab.cloneNode(true));
-          row.appendChild(display);
-        }else{
-          inp.replaceWith(display);
-        }
-        inp.remove();
-      });
-    }
+    /* PDF snapshot — convert cloned number inputs to text
+       and format currency/percent so nothing goes blank */
+    function snapshotOne(sectionId){
+      const currentValues = {};
+      qsa('#'+sectionId+' input').forEach(inp=> currentValues[inp.id]=inp.value);
 
-    function buildSnapshot(){
-      const root = $('pdfSnapshotRoot');
-      root.innerHTML = '';
-      const skin = document.createElement('div');
-      skin.className = 'wrap';
-
-      // Header clone
+      const root=$('pdfSnapshotRoot'); root.innerHTML='';
+      const skin=document.createElement('div'); skin.className='wrap';
+      skin.style.margin='0'; skin.style.padding='20px';
       skin.appendChild(document.querySelector('header.brand').cloneNode(true));
 
-      // Clone steps in order; ensure they're visible
-      const s1 = $('step1').cloneNode(true);
-      const s2 = $('step2').cloneNode(true);
-      const s3 = $('step3').cloneNode(true);
-      [s1,s2,s3].forEach(s=>{ s.style.display='block'; });
+      const sec=document.getElementById(sectionId).cloneNode(true);
+      sec.style.display='block';
 
-      // Convert inputs to text for accurate PDF
-      [s1,s2,s3].forEach(inputsToText);
+      sec.querySelectorAll('input').forEach(inp=>{
+        const id=inp.id;
+        if(id && (id in currentValues)) inp.value = currentValues[id];
 
-      skin.appendChild(s1);
-      skin.appendChild(s2);
-      skin.appendChild(s3);
+        /* CRITICAL: switch numeric inputs to text so formatted values render */
+        if(inp.getAttribute('type')==='number') inp.setAttribute('type','text');
 
-      // Footer
-      const foot = document.querySelector('footer.site').cloneNode(true);
-      skin.appendChild(foot);
+        inp.classList.add('pdf-field');
 
+        if(['G5','G6','G10','G13'].includes(id)){
+          const n = parseFloat(String(inp.value).replace(/[^0-9.\-]/g,''))||0;
+          inp.value = aud0(n);
+        }else if(id && (id.startsWith('W_')||id.startsWith('C_'))){
+          const dec = parsePercentText(inp.value);
+          inp.value = formatPercentText(dec);
+        }else if(['G11','G12','G15','G16'].includes(id)){
+          const n = parseFloat(String(inp.value).replace(/[^0-9.\-]/g,''))||0;
+          inp.value = num0(n);
+        }
+      });
+
+      skin.appendChild(sec);
+      skin.appendChild(document.querySelector('footer.site').cloneNode(true));
       root.appendChild(skin);
-      return root;
+      return skin;
     }
 
     async function downloadPDF(){
-      const node = buildSnapshot();
-      await new Promise(r=>setTimeout(r,40));
-      const canvas = await html2canvas(node,{scale:2, backgroundColor:'#ffffff', windowWidth:1200});
       const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({ unit:'pt', format:'a4' });
+      const pdf = new jsPDF({unit:'pt', format:'a4', compress:true});
+      const pageW=pdf.internal.pageSize.getWidth(), pageH=pdf.internal.pageSize.getHeight();
+      const margin=24, maxW=pageW - margin*2, maxH=pageH - margin*2;
+      const ids=['step1','step2','step3'];
 
-      const pageW = pdf.internal.pageSize.getWidth();
-      const pageH = pdf.internal.pageSize.getHeight();
-      const margin = 24;
-      const imgW = pageW - margin*2;
-      const ratio = imgW / canvas.width;
-      const sliceH = (pageH - margin*2)/ratio;
-
-      const pageCanvas = document.createElement('canvas');
-      const ctx = pageCanvas.getContext('2d');
-
-      for (let y=0, page=0; y<canvas.height; y+=sliceH, page++){
-        const h = Math.min(sliceH, canvas.height - y);
-        pageCanvas.width = canvas.width;
-        pageCanvas.height = h;
-        ctx.clearRect(0,0,pageCanvas.width,pageCanvas.height);
-        ctx.drawImage(canvas, 0, y, canvas.width, h, 0, 0, canvas.width, h);
-        const img = pageCanvas.toDataURL('image/png');
-        if (page>0) pdf.addPage();
-        pdf.addImage(img, 'PNG', margin, margin, imgW, h*ratio);
+      for(let i=0;i<ids.length;i++){
+        const node = snapshotOne(ids[i]);
+        await new Promise(r=>setTimeout(r,25));
+        const canvas = await html2canvas(node,{scale:1.4, backgroundColor:'#ffffff', windowWidth:1120});
+        const ratio = Math.min(maxW/canvas.width, maxH/canvas.height);
+        const drawW = canvas.width * ratio;
+        const drawH = canvas.height * ratio;
+        const x = margin, y = margin; // top-left anchor
+        if(i>0) pdf.addPage();
+        pdf.addImage(canvas.toDataURL('image/jpeg',0.7),'JPEG',x,y,drawW,drawH,undefined,'MEDIUM');
       }
       const stamp = new Date().toISOString().slice(0,10);
       pdf.save(`JSB-Sales-Calculator-${stamp}.pdf`);
     }
 
-    // ---------- Events ----------
+    /* Wiring */
+    qsa('.tab').forEach(b=>b.addEventListener('click', ()=>showTab(b.dataset.tab)));
     $('calcBtn').addEventListener('click', calculateStep1);
     $('reset1').addEventListener('click', ()=>{
-      ['G5','G6','G10','G11','G12','G13','G15','G16'].forEach(id=> $(id).value = $(id).defaultValue || 0);
-      $('step1Results').style.display='none';
-      $('G7_ro').textContent = $('G8_ro').textContent = $('G9_ro').textContent = $('G17_ro').textContent = '—';
-      baseline=null; step1Done=false; step2Done=false; $('downloadAll').disabled = true;
+      ['G5','G6','G10','G11','G12','G13','G15','G16'].forEach(id=>{ const el=$(id); el.value = el.defaultValue || 0; });
+      baseline=null; $('step1Results').style.display='none';
+      ['G7_ro','G8_ro','G9_ro','G17_ro'].forEach(id=>$(id).textContent='—');
+      ['W_price','W_cost','W_overhead','W_volume','C_clickLead','C_leadProspect','C_prospectProposal','C_proposalSale'].forEach(id=>percentSet(id, id.startsWith('C_') ? (id==='C_proposalSale'?0.70:0.15) : 0));
+      recalcWhatIf(); resetConversions();
     });
-
-    $('applyWhatIf').addEventListener('click', applyWhatIf);
-    $('clearWhatIf').addEventListener('click', ()=>{
-      ['G22','G23','G24','G25'].forEach(id=> $(id).value = '0');
-      ['G26_out','J27','J28','K28','J29','J30','J31','F29','F33','J22','J23','J24','J25'].forEach(id=> $(id).textContent='—');
-      $('step2Results').style.display='none';
-      step2Done=false;
-    });
-
     $('applyConv').addEventListener('click', applyConversions);
-    $('reset3').addEventListener('click', ()=>{
-      ['G40','G41','G42','G43'].forEach((id,i)=> $(id).value = ['0.15','0.15','0.15','0.7'][i]);
-      ['J44','K44','L44','M44','J43','K43','L43','M43','J42','K42','L42','M42','J41','K41','L41','M41','J40','K40','L40','M40'].forEach(id=> $(id).textContent='—');
-      $('step3Results').style.display='none';
-    });
+    $('resetConv').addEventListener('click', resetConversions);
+    $('downloadAllStep3').addEventListener('click', downloadPDF);
 
-    $('downloadAll').addEventListener('click', ()=>{
-      if (!step1Done){ alert('Please complete Step 1 first.'); return; }
-      downloadPDF();
-    });
-
-    // Default: keep Step 1 open
+    /* Defaults */
     showTab('step1');
+    ['W_price','W_cost','W_overhead','W_volume'].forEach(id=>percentSet(id,0));
+    ['C_clickLead','C_leadProspect','C_prospectProposal'].forEach(id=>percentSet(id,0.15));
+    percentSet('C_proposalSale',0.70);
+    recalcWhatIf();
   </script>
 </body>
 </html>
