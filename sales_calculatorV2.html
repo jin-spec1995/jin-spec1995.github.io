@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Just Smart Business — Sales Calculator</title>
+<title>JSB — Profit Target Calculator (Full Version)</title>
 <style>
   :root{
-    --brand-dark:#00543c; --brand-mid:#0e6f57; --brand-light:#22c28a;
+    --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
     --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7;
     --accent-border:#bdf0d8; --accent-bg1:#f4fffa; --accent-bg2:#ffffff;
     --accent2-border:#cdeee1; --accent2-bg1:#f1fffb; --accent2-bg2:#ffffff;
@@ -30,9 +30,8 @@
   .tagline{color:var(--muted); font-size:13px}
 
   /* Tabs & Buttons */
-  .tabs{display:flex; gap:8px; margin:8px 0 14px; flex-wrap:wrap}
-  .tab{border:1px solid var(--line); background:#fff; color:#2b3a33; padding:10px 14px; border-radius:12px;
-       font-weight:700; cursor:pointer}
+  #tabs{display:flex; gap:8px; margin:8px 0 14px; flex-wrap:wrap}
+  .tab{border:1px solid var(--line); background:#fff; color:#2b3a33; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer}
   .tab.active{border-color:#10a772; background:#f3fff9; box-shadow:0 0 0 3px rgba(16,167,114,.15); color:#0c5e49}
 
   .btn{appearance:none; border:1px solid var(--line); background:#fff; color:#20433a;
@@ -45,16 +44,25 @@
   .card-title{display:flex; align-items:center; gap:10px; font-weight:800; margin:2px 0 12px}
   .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:#0e6f57; border:1px solid #eaf4f0}
   .divider{height:1px; background:var(--line); margin:14px 0}
+  .divider1{height:1px; background:var(--brand-mid); margin:6px 0}
   .hint{color:var(--muted); font-size:12px}
   .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
 
   .grid{display:grid; gap:14px}
   @media (min-width:1000px){ .cols-2{grid-template-columns:1.2fr 1.8fr} .cols-2b{grid-template-columns:1fr 1fr} }
 
+  /* Intro (landing) */
+  .intro-hero{display:flex; flex-direction:column; gap:8px}
+  .intro-hero h1{margin:0; font-size:24px; color:var(--brand-mid);}
+  .lead{font-size:16px; color:#24322b}
+  .bullets{display:grid; gap:8px; margin-top:6px}
+  .bullets li{margin-left:18px}
+
   /* Form */
   .inputs{display:grid; grid-template-columns:1.35fr 1.1fr; gap:10px 14px; align-items:center; min-width:0}
-  .inputs.pct{grid-template-columns:1.1fr 1.3fr} /* wider for % column */
+  .inputs.pct{grid-template-columns:1.1fr 1.3fr}
   label{font-size:14px; color:var(--muted)}
+  .label-help{display:flex; align-items:center; justify-content:space-between; gap:8px}
   input[type=number], input[type=text]{
     width:100%; height:44px; padding:10px 14px; border-radius:12px; border:1px solid var(--line); background:#fff;
     font-size:16px; outline:none; transition:border-color .15s, box-shadow .15s; min-width:0;
@@ -68,6 +76,13 @@
     display:flex; align-items:center; font-weight:700;
   }
 
+  /* Help tooltip (red question mark) */
+  .help{position:relative; display:inline-flex; align-items:center; justify-content:center;
+        width:18px; height:18px; border-radius:50%; background:#d7263d; color:#fff; font-size:12px; font-weight:800; cursor:help}
+  .help .tip{display:none; position:absolute; top:-6px; right:-8px; transform:translate(100%,-100%);
+    background:#101418; color:#fff; padding:8px 10px; border-radius:10px; width:260px; font-size:12px; line-height:1.35; z-index:10; box-shadow:0 8px 18px rgba(0,0,0,.18); border:1px solid #223;}
+  .help:hover .tip{display:block}
+
   /* Percentage steppers */
   .pct-control{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:center}
   .pct-steps{display:inline-flex; gap:6px}
@@ -77,32 +92,28 @@
 
   /* KPIs & Tables */
   .kpis{display:grid; gap:12px}
-  @media (min-width:720px){ .kpis { grid-template-columns: repeat(2, 1fr); }  }
+  @media (min-width:720px){ .kpis { grid-template-columns: repeat(2, 1fr); } }
   .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff}
   .kpi .label{font-size:12px; color:#5e6b74}
   .kpi .value{font-weight:800; font-size:20px}
-  /* Section 1 KPI style */
   .kpi.primary{border-color:var(--accent-border); background:linear-gradient(180deg,var(--accent-bg1),var(--accent-bg2))}
   .kpi.primary .value{color:#0e6f57}
-  /* Section 2 highlight style (same structure, different tint) */
   .kpi.primary2{border-color:var(--accent2-border); background:linear-gradient(180deg,var(--accent2-bg1),var(--accent2-bg2))}
-  .kpi.primary2 .value .primary3{color:#0e6f57}
 
-  table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:14px}
+  table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:14px; background:#fff}
   th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
   thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:800}
   tbody tr:last-child td{border-bottom:0}
   td.right{text-align:right}
-#step2Results table tbody tr:last-child td {
-  color: var(--brand-dark);
-  font-weight: 800;
-}
+
+  /* Emphasis row in Step 2 table */
+  #step2Results table tbody tr:last-child td{color:var(--brand-dark); font-weight:800}
+
   footer.site{margin-top:18px; padding-top:12px; border-top:1px solid var(--line); color:#5e6b74; font-size:12px}
 
   /* PDF snapshot container */
   #pdfSnapshotRoot{position:fixed; left:-9999px; top:0; width:1120px; padding:0; background:#fff}
-  #pdfSnapshotRoot .btn, #pdfSnapshotRoot .tabs{display:none !important}
-  /* cloned inputs styled for PDF */
+  #pdfSnapshotRoot .btn, #pdfSnapshotRoot #tabs{display:none !important}
   #pdfSnapshotRoot input.pdf-field{
     background:#f7fbf9; border:1px solid #dfe9e4; font-weight:700; color:#0b2f24;
     pointer-events:none; text-align:right;
@@ -114,98 +125,182 @@
     <!-- Header -->
     <header class="brand">
       <div class="brand-pack">
-        <img class="brand-logo" src="jsb_icon.svg" alt="Just Smart Business" />
+        <!-- In the header -->
+<img id="logoHome" class="brand-logo" src="jsb_icon.svg" alt="Just Smart Business" style="cursor:pointer" />
+
         <div>
-          <div class="brand-title">Just Smart Business</div>
-          <div class="tagline">Clarity · Strategy · Growth</div>
+          <div class="brand-title">Profit Target Calculator</div>
+          <div class="tagline">Practical Strategy · Real Results</div>
         </div>
       </div>
     </header>
 
-    <nav class="tabs">
+    <!-- ================== INTRO (Landing) ================== -->
+    <section class="card" id="intro">
+      <div class="intro-hero">
+        <h1>Know Your Numbers. Grow Your Profit.</h1>
+        <p class="lead">See how sales, margins, and costs work together—so you can set clear profit targets with confidence.</p>
+        <div class="divider1"></div>
+        <p><strong>What this does:</strong> We take your current numbers and show you the exact actions needed to hit your profit goal. No guesswork, no overwhelm—just clear targets you can act on.</p>
+        <p><strong>We focus on four key drivers of success:</strong></p>
+        <ul class="bullets">
+          <li><strong>Average Sale Value</strong> – how much each customer spends</li>
+          <li><strong>Number of Sales</strong> – the volume you need to sustain growth</li>
+          <li><strong>Gross Profit Rate</strong> – the margin that fuels your business</li>
+          <li><strong>Overheads</strong> – the costs that can quietly eat away at profit</li>
+        </ul>
+        <div class="divider1"></div>
+        <p><strong>Things to consider:</strong></p>
+        <ul class="bullets">
+          <li><strong>Average Sale Value</strong> – If 10 sales total $5,500, your average sale is $550.</li>
+          <li><strong>Average Cost of Sale</strong> – Direct costs tied to delivering that sale.</li>
+          <li><strong>Overheads</strong> – Monthly costs you pay to keep the business running, even with no sales.</li>
+        </ul>
+        <p class="lead">👉 Take a few minutes to run the calculation—you might be closer to your next profit milestone than you think.</p>
+        <div>
+          <button id="startBtn" class="btn btn-primary">Start My Calculation</button>
+        </div>
+      </div>
+    </section>
+    <!-- Tabs (hidden until Start) -->
+    <nav id="tabs" style="display:none">
       <button class="tab active" data-tab="step1">1) Inputs</button>
       <button class="tab" data-tab="step2">2) What-If (Live)</button>
       <button class="tab" data-tab="step3">3) Sales Conversions</button>
     </nav>
 
     <!-- ================ STEP 1 ================= -->
-    <section class="card" id="step1">
-      <div class="card-title"><span class="section-tag">Step 1 · Data Input</span><span class="hint">&nbsp;Use dollars (ex GST). Click Calculate to lock your baseline.</span></div>
+    <section class="card" id="step1" style="display:none">
+      <div class="card-title">
+        <span class="section-tag">Step 1 · Your Numbers</span>
+        <span class="hint">&nbsp;Enter figures (ex GST). Hit <strong>Calculate</strong> to see your baseline.</span>
+      </div>
 
       <div class="grid cols-2">
+        <!-- Inputs -->
         <div>
           <div class="inputs">
-            <label for="G5">Average Sale Value (ex GST)</label>
+            <label class="label-help" for="G5">
+              <span>Average Sale Value (ex GST)</span>
+              <span class="help">?<span class="tip"><strong>Average Sale Value</strong> is your typical transaction size. Example: 10 sales totalling $5,500 ⇒ $550.</span></span>
+            </label>
             <input id="G5" type="number" min="0" step="0.01" value="550">
 
-            <label for="G6">Average Cost of Sale (ex GST)</label>
+            <label class="label-help" for="G6">
+              <span>Average Cost per Sale (ex GST)</span>
+              <span class="help">?<span class="tip"><strong>Average Cost of Sale</strong> is the direct cost to deliver one sale (materials, subcontractors, etc.).</span></span>
+            </label>
             <input id="G6" type="number" min="0" step="0.01" value="150">
 
-            <label>Gross Profit per Sale (ex GST)</label>
+            <label class="label-help">
+              <span>Gross Profit per Sale</span>
+              <span class="help">?<span class="tip"><strong>Gross Profit per Sale</strong> = Average Sale Value − Average Cost of Sale.</span></span>
+            </label>
             <div class="readonly mono" id="G7_ro">—</div>
 
-            <label>Gross Profit %</label>
+            <label class="label-help">
+              <span>Gross Profit %</span>
+              <span class="help">?<span class="tip"><strong>Gross Profit Rate</strong> is your gross margin (before overheads) as a % of the sale.</span></span>
+            </label>
             <div class="readonly mono" id="G8_ro">—</div>
 
-            <label>Cost of Sale %</label>
+            <label class="label-help">
+              <span>Cost of Sale %</span>
+              <span class="help">?<span class="tip">The proportion of each sale that goes to direct costs (complements your gross profit %).</span></span>
+            </label>
             <div class="readonly mono" id="G9_ro">—</div>
 
-            <label for="G10">Monthly Expenses (ex GST)</label>
+            <label class="label-help" for="G10">
+              <span>Monthly Operating Expenses (ex GST)</span>
+              <span class="help">?<span class="tip"><strong>Overheads</strong> are monthly costs to run the business (rent, admin, software), even with zero sales.</span></span>
+            </label>
             <input id="G10" type="number" min="0" step="0.01" value="8211">
 
-            <label for="G11">Number of weeks per year</label>
+            <label for="G11">Number of Weeks per Year</label>
             <input id="G11" type="number" min="1" step="1" value="48">
 
-            <label for="G12">Number of days per week</label>
+            <label for="G12">Number of Working Days per Week</label>
             <input id="G12" type="number" min="1" step="1" value="5">
 
-            <label for="G13">Desired Net Profit (year)</label>
+            <label for="G13">Net Profit Goal (annual)</label>
             <input id="G13" type="number" min="0" step="0.01" value="100000">
 
-            <label for="G15">Existing Clients</label>
+            <label for="G15">Current Active Clients</label>
             <input id="G15" type="number" min="0" step="1" value="36">
 
-            <label for="G16">Purchases per Client / year</label>
+            <label for="G16">Purchases per Client / Year</label>
             <input id="G16" type="number" min="1" step="1" value="3">
 
-            <label>Total New Clients Required</label>
+            <label>Additional Clients Needed</label>
             <div class="readonly mono" id="G17_ro">—</div>
           </div>
 
           <div class="divider"></div>
-          <button id="calcBtn" class="btn btn-primary">Calculate (Lock Baseline)</button>
-          <button id="reset1" class="btn">Reset</button>
-          <p class="hint">Negative values are blocked here. Counts round up to match the workbook.</p>
+          <button id="calcBtn" class="btn btn-primary">Calculate</button>
+          <button id="reset1" class="btn">Clear Inputs</button>
+          <p class="hint">No nonsense: negative values are blocked. Counts round up for practical planning.</p>
         </div>
 
+        <!-- Results -->
         <div>
           <div class="card" id="step1Results" style="display:none">
-            <div class="card-title"><span class="section-tag">Baseline Results</span></div>
+            <div class="card-title"><span class="section-tag">Your Baseline Results</span></div>
 
+            <!-- KPI tiles -->
             <div class="kpis">
-              <div class="kpi primary"><div class="label">Total Sales</div><div class="value mono" id="J11">—</div></div>
-              <div class="kpi primary"><div class="label">Sales Required / Year</div><div class="value mono" id="J6">—</div></div>
+              <div class="kpi primary"><div class="label">Annual Sales Revenue Required</div><div class="value mono" id="J11">—</div></div>
+              <div class="kpi primary"><div class="label">Sales Required per Year</div><div class="value mono" id="J6">—</div></div>
               <div class="kpi primary"><div class="label">Gross Profit Required</div><div class="value mono" id="J13">—</div></div>
-              <div class="kpi primary"><div class="label">Cost of Sales</div><div class="value mono" id="J12">—</div></div>
+              <div class="kpi primary"><div class="label">Annual Cost of Sales</div><div class="value mono" id="J12">—</div></div>
             </div>
 
             <div class="divider"></div>
-            <table>
-              <thead><tr><th>Metric</th><th class="right">Number</th><th class="right">Revenue (Ex GST)</th></tr></thead>
-              <tbody>
-                <tr><td>Sales Required per Year</td><td class="right mono" id="J6_tbl">—</td><td class="right mono" id="K6">—</td></tr>
-                <tr><td>Sales Required per Month</td><td class="right mono" id="J7">—</td><td class="right mono" id="K7">—</td></tr>
-                <tr><td>Sales Required per Week</td><td class="right mono" id="J8">—</td><td class="right mono" id="K8">—</td></tr>
-                <tr><td>Sales Required per Day</td><td class="right mono" id="J9">—</td><td class="right mono" id="K9">—</td></tr>
-              </tbody>
-            </table>
 
-            <div class="divider"></div>
+            <!-- TABLE 1: Mini Profit & Loss Estimate -->
+            <div class="card" style="padding:0; overflow:hidden">
+              <table>
+                <thead><tr><th colspan="2">Mini Profit &amp; Loss Estimate</th></tr></thead>
+                <tbody>
+                  <tr><td>Sales</td><td class="right mono" id="PL_sales">—</td></tr>
+                  <tr><td>Cost of Sales</td><td class="right mono" id="PL_cos">—</td></tr>
+                  <tr><td>Gross Profit Required</td><td class="right mono" id="PL_gp">—</td></tr>
+                  <tr><td>Expenses</td><td class="right mono" id="PL_exp">—</td></tr>
+                  <tr><td>Desired Net Profit</td><td class="right mono" id="PL_np">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- TABLE 2: Sales Numbers per period + Monthly KPIs -->
             <div class="grid cols-2b">
-              <div class="card"><div class="hint">Expenses (per year)</div><div class="mono" id="J14">—</div></div>
-              <div class="card"><div class="hint">Desired Net Profit</div><div class="mono" id="J15">—</div></div>
+              <div class="card" style="padding:0; overflow:hidden">
+                <table>
+                  <thead>
+                    <tr><th colspan="3">Sales Numbers per period</th></tr>
+                    <tr><th>Period</th><th class="right">Number</th><th class="right">Revenue</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Yearly</td><td class="right mono" id="T_year_num">—</td><td class="right mono" id="T_year_rev">—</td></tr>
+                    <tr><td>Monthly</td><td class="right mono" id="T_month_num">—</td><td class="right mono" id="T_month_rev">—</td></tr>
+                    <tr><td>Weekly</td><td class="right mono" id="T_week_num">—</td><td class="right mono" id="T_week_rev">—</td></tr>
+                    <tr><td>Daily</td><td class="right mono" id="T_day_num">—</td><td class="right mono" id="T_day_rev">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card" style="padding:0; overflow:hidden">
+                <table>
+                  <thead><tr><th colspan="2">Monthly KPIs*</th></tr></thead>
+                  <tbody>
+                    <tr><td>Average Sale Value</td><td class="right mono" id="KPI_asv">—</td></tr>
+                    <tr><td>Gross Profit Rate</td><td class="right mono" id="KPI_gpr">—</td></tr>
+                    <tr><td>Overhead Expenses</td><td class="right mono" id="KPI_oh">—</td></tr>
+                    <tr><td>Number of Sales</td><td class="right mono" id="KPI_sales_m">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
+            <p class="hint">*Hit these monthly KPIs to stay on track for your annual profit goal.</p>
           </div>
         </div>
       </div>
@@ -213,7 +308,10 @@
 
     <!-- ================ STEP 2 ================= -->
     <section class="card" id="step2" style="display:none">
-      <div class="card-title"><span class="section-tag">Step 2 · What-If (Live)</span><span class="hint">&nbsp;Use the ±1% buttons or type percentages (e.g., 5%).</span></div>
+      <div class="card-title">
+        <span class="section-tag">Step 2 · What-If (Live)</span>
+        <span class="hint">&nbsp;Use ±1% or type values like 5%.</span>
+      </div>
 
       <div class="grid cols-2">
         <!-- Left -->
@@ -221,7 +319,10 @@
           <div class="card">
             <div class="card-title"><span class="section-tag">Part A — Adjust Prices / Costs / Overhead</span></div>
             <div class="inputs pct">
-              <label for="W_price">Average Sale Value change</label>
+              <label class="label-help" for="W_price">
+                <span>Average Sale Value change</span>
+                <span class="help">?<span class="tip">Increase/decrease your average transaction size (%).</span></span>
+              </label>
               <div class="pct-control">
                 <input id="W_price" type="text" inputmode="decimal" value="0%">
                 <div class="pct-steps">
@@ -230,7 +331,10 @@
                 </div>
               </div>
 
-              <label for="W_cost">Cost of Sales change</label>
+              <label class="label-help" for="W_cost">
+                <span>Cost of Sales change</span>
+                <span class="help">?<span class="tip">Change in direct costs per sale (%).</span></span>
+              </label>
               <div class="pct-control">
                 <input id="W_cost" type="text" inputmode="decimal" value="0%">
                 <div class="pct-steps">
@@ -239,7 +343,10 @@
                 </div>
               </div>
 
-              <label for="W_overhead">Overhead change</label>
+              <label class="label-help" for="W_overhead">
+                <span>Overhead change</span>
+                <span class="help">?<span class="tip">Change in monthly operating expenses (%).</span></span>
+              </label>
               <div class="pct-control">
                 <input id="W_overhead" type="text" inputmode="decimal" value="0%">
                 <div class="pct-steps">
@@ -251,9 +358,12 @@
           </div>
 
           <div class="card">
-            <div class="card-title"><span class="section-tag">Part B — What if You also Increased Your Number of Sales?</span></div>
+            <div class="card-title"><span class="section-tag">Part B — What if you also increase your number of sales?</span></div>
             <div class="inputs pct">
-              <label for="W_volume">Change in Number of Sales</label>
+              <label class="label-help" for="W_volume">
+                <span>Change in Number of Sales</span>
+                <span class="help">?<span class="tip">Change sales volume (%). Can be negative or positive.</span></span>
+              </label>
               <div class="pct-control">
                 <input id="W_volume" type="text" inputmode="decimal" value="0%">
                 <div class="pct-steps">
@@ -283,18 +393,17 @@
                 <tr><td><strong>Cost of Sales</strong></td><td class="right mono" id="W_costOfSales">—</td></tr>
                 <tr><td><strong>Gross Profit Required</strong></td><td class="right mono" id="W_grossProfit">—</td></tr>
                 <tr><td><strong>Expenses</strong></td><td class="right mono" id="W_expenses">—</td></tr>
-                <tr><td><strong>New Net Profit</strong></td><td class="right mono primary3" id="W_newNP_row">—</td></tr>
+                <tr><td><strong>New Net Profit</strong></td><td class="right mono" id="W_newNP_row">—</td></tr>
               </tbody>
             </table>
 
             <div class="divider"></div>
 
-            <!-- Highlights in same KPI style as section 1, distinct tint -->
+            <!-- Highlights (same style family as Step 1, different tint) -->
             <div class="kpis">
-        
               <div class="kpi primary2"><div class="label">Increased Net Profit (adjust prices/costs)</div><div class="value mono" id="W_incNP_base">—</div></div>
               <div class="kpi primary2"><div class="label">Increased Net Profit by Increasing Sales Numbers</div><div class="value mono" id="W_incNP_salesOnly">—</div></div>
-              <div class="kpi primary2"><div class="label">Increased Net Profit by Adjusting Prices & Increasing Sales Numbers</div><div class="value mono" id="W_incNP_combo">—</div></div>
+              <div class="kpi primary2"><div class="label">Increased Net Profit by Adjusting Prices &amp; Increasing Sales Numbers</div><div class="value mono" id="W_incNP_combo">—</div></div>
               <div class="kpi primary2"><div class="label">Cost of Sales % (after changes)</div><div class="value mono" id="W_cosPct">—</div></div>
             </div>
 
@@ -316,12 +425,18 @@
 
     <!-- ================ STEP 3 ================= -->
     <section class="card" id="step3" style="display:none">
-      <div class="card-title"><span class="section-tag">Step 3 · Sales Conversions</span><span class="hint">&nbsp;Enter percentages (e.g., 15%).</span></div>
+      <div class="card-title">
+        <span class="section-tag">Step 3 · Sales Conversions</span>
+        <span class="hint">&nbsp;Enter percentages (e.g., 15%).</span>
+      </div>
 
       <div class="grid cols-2">
         <div>
           <div class="inputs pct">
-            <label for="C_clickLead">Clicks/Walk-ins → Leads</label>
+            <label class="label-help" for="C_clickLead">
+              <span>Initial enquiries → Leads</span>
+              <span class="help">?<span class="tip">% of initial contacts who become qualified leads.</span></span>
+            </label>
             <div class="pct-control">
               <input id="C_clickLead" type="text" inputmode="decimal" value="15%">
               <div class="pct-steps">
@@ -330,7 +445,10 @@
               </div>
             </div>
 
-            <label for="C_leadProspect">Leads → Prospects</label>
+            <label class="label-help" for="C_leadProspect">
+              <span>Leads → Prospects</span>
+              <span class="help">?<span class="tip">% of leads who are a genuine fit and move to sales conversations.</span></span>
+            </label>
             <div class="pct-control">
               <input id="C_leadProspect" type="text" inputmode="decimal" value="15%">
               <div class="pct-steps">
@@ -339,7 +457,10 @@
               </div>
             </div>
 
-            <label for="C_prospectProposal">Prospects → Proposals</label>
+            <label class="label-help" for="C_prospectProposal">
+              <span>Prospects → Proposals</span>
+              <span class="help">?<span class="tip">% of prospects who request or receive a proposal/quote.</span></span>
+            </label>
             <div class="pct-control">
               <input id="C_prospectProposal" type="text" inputmode="decimal" value="15%">
               <div class="pct-steps">
@@ -348,7 +469,10 @@
               </div>
             </div>
 
-            <label for="C_proposalSale">Proposals → Sales</label>
+            <label class="label-help" for="C_proposalSale">
+              <span>Proposals → Sales</span>
+              <span class="help">?<span class="tip">% of proposals that convert to paying customers.</span></span>
+            </label>
             <div class="pct-control">
               <input id="C_proposalSale" type="text" inputmode="decimal" value="70%">
               <div class="pct-steps">
@@ -396,7 +520,7 @@
       </div>
     </section>
 
-    <footer class="site">© Just Smart Business — This report reflects inputs provided by the client.</footer>
+    <footer class="site">© Just Smart Business — This report reflects inputs provided by the client. Brisbane, Australia.</footer>
   </div>
 
   <!-- Hidden snapshot root for PDF -->
@@ -416,9 +540,18 @@
     const pct1=v=>((Number(v)||0)*100).toFixed(1)+'%';
     const clamp01=x=>Math.max(0,Math.min(1,Number(x)||0));
 
+    /* Intro → show tabs + Step 1 */
+    $('startBtn').addEventListener('click',()=>{
+      $('intro').style.display='none';
+      $('tabs').style.display='flex';
+      $('step1').style.display='block';
+      setTimeout(()=>{$('step1').scrollIntoView({behavior:'smooth',block:'start'})},30);
+    });
+
     function showTab(tabId){
       qsa('.tab').forEach(b=>b.classList.toggle('active', b.dataset.tab===tabId));
       ['step1','step2','step3'].forEach(id => { const el=$(id); if(el) el.style.display = (id===tabId)?'block':'none'; });
+      window.scrollTo({top:0, behavior:'smooth'});
     }
 
     /* Percent helpers */
@@ -446,29 +579,52 @@
 
     function calculateStep1(){
       sanitizeStep1();
-      const G5=+$('G5').value||0, G6=+$('G6').value||0, G10=+$('G10').value||0, G11=+$('G11').value||48, G12=+$('G12').value||5, G13=+$('G13').value||0, G15=+$('G15').value||0, G16=+$('G16').value||1;
+      const G5=+$('G5').value||0, G6=+$('G6').value||0, G10=+$('G10').value||0,
+            G11=+$('G11').value||48, G12=+$('G12').value||5, G13=+$('G13').value||0,
+            G15=+$('G15').value||0, G16=+$('G16').value||1;
 
       const G7=Math.max(0,G5-G6), G8=(G5?G7/G5:0), G9=1-G8;
 
-      const J14=G10*12;
-      const J15=G13;
-      const J13=J14+J15;
-      const J12=(G8? J13*((1-G8)/G8) : 0);
-      const J11=J13+J12;
-      const J6 =(G5? ceil(J11/G5):0);
+      const J14=G10*12;                // Annual Expenses
+      const J15=G13;                   // Net Profit Goal
+      const J13=J14+J15;               // Gross Profit required
+      const J12=(G8? J13*((1-G8)/G8) : 0); // Annual Cost of Sales
+      const J11=J13+J12;               // Annual Sales Revenue required
+      const J6 =(G5? ceil(J11/G5):0);  // Sales/year (count)
       const K6=J6*G5, J7=ceil(J6/12), K7=J7*G5, J8=ceil(J6/G11), K8=J8*G5, J9=ceil(J6/G11/G12), K9=J9*G5;
 
-      const G17=Math.max(0, ceil((G16? (J6/G16) : 0) - G15));
+      const G17=Math.max(0, ceil((G16? (J6/G16) : 0) - G15)); // Additional Clients Needed
 
+      // Readouts
       $('G7_ro').textContent=aud0(G7);
       $('G8_ro').textContent=(G8*100).toFixed(0)+'%';
       $('G9_ro').textContent=(G9*100).toFixed(0)+'%';
       $('G17_ro').textContent=num0(G17);
 
-      $('J11').textContent=aud0(J11); $('J6').textContent=num0(J6); $('J13').textContent=aud0(J13); $('J12').textContent=aud0(J12);
-      $('J6_tbl').textContent=num0(J6); $('K6').textContent=aud0(K6); $('J7').textContent=num0(J7); $('K7').textContent=aud0(K7);
-      $('J8').textContent=num0(J8); $('K8').textContent=aud0(K8); $('J9').textContent=num0(J9); $('K9').textContent=aud0(K9);
-      $('J14').textContent=aud0(J14); $('J15').textContent=aud0(J15);
+      // KPI tiles
+      $('J11').textContent=aud0(J11);
+      $('J6').textContent=num0(J6);
+      $('J13').textContent=aud0(J13);
+      $('J12').textContent=aud0(J12);
+
+      // Mini P&L table
+      $('PL_sales').textContent=aud0(J11);
+      $('PL_cos').textContent  =aud0(J12);
+      $('PL_gp').textContent   =aud0(J13);
+      $('PL_exp').textContent  =aud0(J14);
+      $('PL_np').textContent   =aud0(J15);
+
+      // Sales numbers per period
+      $('T_year_num').textContent=num0(J6);     $('T_year_rev').textContent=aud0(K6);
+      $('T_month_num').textContent=num0(J7);    $('T_month_rev').textContent=aud0(K7);
+      $('T_week_num').textContent=num0(J8);     $('T_week_rev').textContent=aud0(K8);
+      $('T_day_num').textContent=num0(J9);      $('T_day_rev').textContent=aud0(K9);
+
+      // Monthly KPIs
+      $('KPI_asv').textContent=aud0(G5);
+      $('KPI_gpr').textContent=(G8*100).toFixed(0)+'%';
+      $('KPI_oh').textContent =aud0(G10);
+      $('KPI_sales_m').textContent=num0(J7);
 
       $('step1Results').style.display='block';
 
@@ -514,17 +670,13 @@
       $('W_grossProfit').textContent = aud0(gp_sameVol);
       $('W_expenses').textContent    = aud0(exp_adj);
       $('W_newNP_row').textContent   = aud0(np_adjustOnly);
-    
-
 
       $('W_addSalesCount_left').textContent = num0(addSalesCount);
       $('W_newSalesCount_left').textContent = num0(newSalesCount);
 
-      $('W_incNP_base').textContent = aud0(incNP_adjustOnly < 500 ? 0 : incNP_adjustOnly);
-
-
-      $('W_incNP_salesOnly').textContent  = aud0(incNP_salesOnly);
-      $('W_incNP_combo').textContent = aud0(incNP_combo < 500 ? 0 : incNP_combo);
+      $('W_incNP_base').textContent      = aud0(incNP_adjustOnly < 500 ? 0 : incNP_adjustOnly);
+      $('W_incNP_salesOnly').textContent = aud0(incNP_salesOnly);
+      $('W_incNP_combo').textContent     = aud0(incNP_combo < 500 ? 0 : incNP_combo);
       $('W_cosPct').textContent = pct1(cosPct);
 
       $('W_year').textContent  = num0(y);
@@ -546,6 +698,7 @@
 
     ['W_price','W_cost','W_overhead','W_volume','C_clickLead','C_leadProspect','C_prospectProposal','C_proposalSale'].forEach(id=>{
       const el=$(id);
+      if(!el) return;
       el.addEventListener('blur', ()=>{ percentSet(id, percentGet(id)); if(id.startsWith('W_')) recalcWhatIf(); });
       el.addEventListener('input', ()=>{ if(id.startsWith('W_')) recalcWhatIf(); });
     });
@@ -590,8 +743,7 @@
       $('step3Results').style.display='none';
     }
 
-    /* PDF snapshot — convert cloned number inputs to text
-       and format currency/percent so nothing goes blank */
+    /* PDF snapshot — convert cloned number inputs to text and format currency/percent */
     function snapshotOne(sectionId){
       const currentValues = {};
       qsa('#'+sectionId+' input').forEach(inp=> currentValues[inp.id]=inp.value);
@@ -607,10 +759,7 @@
       sec.querySelectorAll('input').forEach(inp=>{
         const id=inp.id;
         if(id && (id in currentValues)) inp.value = currentValues[id];
-
-        /* CRITICAL: switch numeric inputs to text so formatted values render */
         if(inp.getAttribute('type')==='number') inp.setAttribute('type','text');
-
         inp.classList.add('pdf-field');
 
         if(['G5','G6','G10','G13'].includes(id)){
@@ -645,7 +794,7 @@
         const ratio = Math.min(maxW/canvas.width, maxH/canvas.height);
         const drawW = canvas.width * ratio;
         const drawH = canvas.height * ratio;
-        const x = margin, y = margin; // top-left anchor
+        const x = margin, y = margin;
         if(i>0) pdf.addPage();
         pdf.addImage(canvas.toDataURL('image/jpeg',0.7),'JPEG',x,y,drawW,drawH,undefined,'MEDIUM');
       }
@@ -668,11 +817,33 @@
     $('downloadAllStep3').addEventListener('click', downloadPDF);
 
     /* Defaults */
-    showTab('step1');
     ['W_price','W_cost','W_overhead','W_volume'].forEach(id=>percentSet(id,0));
     ['C_clickLead','C_leadProspect','C_prospectProposal'].forEach(id=>percentSet(id,0.15));
     percentSet('C_proposalSale',0.70);
-    recalcWhatIf();
+
+   function showIntro(){
+  // hide calculator sections
+  ['step1','step2','step3'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  // hide tabs
+  const tabsEl = document.getElementById('tabs');
+  if (tabsEl) tabsEl.style.display = 'none';
+
+  // show intro
+  const intro = document.getElementById('intro');
+  if (intro) intro.style.display = 'block';
+
+  // scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// attach click
+document.getElementById('logoHome').addEventListener('click', showIntro);
+
+
   </script>
 </body>
 </html>
