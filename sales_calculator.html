@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Just Smart Business — Sales Calculator (Teaser · Step 1 Only)</title>
+<title>JSB — Profit Target Calculator</title>
 <style>
   :root{
     --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
@@ -18,7 +18,7 @@
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   }
 
-  /* Left align (room for SuiteDash sidebar) */
+  /* Left aligned (room for SuiteDash sidebar) */
   .wrap{max-width:1180px; margin:28px 0 60px 20px; padding:0 20px;}
 
   /* Header */
@@ -32,16 +32,31 @@
   .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 0 #f4f6f8; margin-bottom:14px}
   .card-title{display:flex; align-items:center; gap:10px; font-weight:800; margin:2px 0 12px}
   .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:#0e6f57; border:1px solid #eaf4f0}
-  .divider{height:1px; background:var(--line); margin:14px 0}
+  .divider{height:1px; background:var(--line); margin:12px 0}
   .hint{color:var(--muted); font-size:12px}
   .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+  .divider1{height:1px; background:var(--brand-mid); margin:2px 0}
 
   .grid{display:grid; gap:14px}
   @media (min-width:1000px){ .cols-2{grid-template-columns:1.2fr 1.8fr} .cols-2b{grid-template-columns:1fr 1fr} }
 
+  /* Intro (landing) */
+  .intro-hero{display:flex; flex-direction:column; gap:8px}
+  .intro-hero h1{margin:0; font-size:20px; color:var(--brand-mid); letter-spacing:.2px}
+  .lead{font-size:16px; color:#24322b}
+  .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:#f2fbf8; border:1px solid #d6efe4; color:#0e6f57; font-weight:700; font-size:12px}
+  .bullets{display:grid; gap:8px; margin-top:6px}
+  .bullets li{margin-left:18px}
+
+  /* Buttons */
+  .btn{appearance:none; border:1px solid var(--line); background:#fff; color:#20433a;
+       padding:11px 16px; border-radius:12px; font-weight:700; cursor:pointer}
+  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border-color:#10a772}
+
   /* Form */
   .inputs{display:grid; grid-template-columns:1.35fr 1.1fr; gap:10px 14px; align-items:center; min-width:0}
   label{font-size:14px; color:var(--muted)}
+  .label-help{display:flex; align-items:center; justify-content:space-between; gap:8px}
   input[type=number], input[type=text]{
     width:100%; height:44px; padding:10px 14px; border-radius:12px; border:1px solid var(--line); background:#fff;
     font-size:16px; outline:none; transition:border-color .15s, box-shadow .15s; min-width:0;
@@ -55,10 +70,15 @@
     display:flex; align-items:center; font-weight:700;
   }
 
-  /* Buttons */
-  .btn{appearance:none; border:1px solid var(--line); background:#fff; color:#20433a;
-       padding:11px 16px; border-radius:12px; font-weight:700; cursor:pointer}
-  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border-color:#10a772}
+  /* Help icon + tooltip */
+  .help{position:relative; display:inline-flex; align-items:center; justify-content:center;
+        width:18px; height:18px; border-radius:50%; background:#d7263d; color:#fff; font-size:12px; font-weight:800; cursor:help; flex:0 0 18px}
+  .help .tip{
+    display:none; position:absolute; top:-6px; right:-8px; transform:translate(100%,-100%);
+    background:#101418; color:#fff; padding:8px 10px; border-radius:10px; width:260px; font-size:12px; line-height:1.35; z-index:10;
+    box-shadow:0 8px 18px rgba(0,0,0,.18); border:1px solid #223;
+  }
+  .help:hover .tip{display:block}
 
   /* KPIs & Tables */
   .kpis{display:grid; gap:12px}
@@ -69,13 +89,18 @@
   .kpi.primary{border-color:var(--accent-border); background:linear-gradient(180deg,var(--accent-bg1),var(--accent-bg2))}
   .kpi.primary .value{color:#0e6f57}
 
-  table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:14px}
+  table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:14px; background:#fff}
   th,td{padding:10px 12px; border-bottom:1px solid var(--line)}
   thead th{background:#f7fbf9; text-align:left; color:#426159; font-weight:800}
   tbody tr:last-child td{border-bottom:0}
   td.right{text-align:right}
 
   footer.site{margin-top:18px; padding-top:12px; border-top:1px solid var(--line); color:#5e6b74; font-size:12px}
+
+  /* CTA block */
+  .cta{border:1px solid #dff2e8; background:linear-gradient(180deg,#f7fffb,#ffffff); border-radius:16px; padding:18px}
+  .cta h3{margin:0 0 6px; color:#0e6f57}
+  .cta ul{margin:10px 0 0 18px}
 </style>
 </head>
 <body>
@@ -85,113 +110,224 @@
       <div class="brand-pack">
         <img class="brand-logo" src="jsb_icon.svg" alt="Just Smart Business" />
         <div>
-          <div class="brand-title">Just Smart Business</div>
-          <div class="tagline">Clarity · Strategy · Growth</div>
+          <div class="brand-title">Profit Target Calculator</div>
+          <div class="tagline">Practical Strategy · Real Results</div>
         </div>
       </div>
     </header>
 
-    <!-- ===== STEP 1 ONLY (Teaser) ===== -->
-    <section class="card" id="step1">
+    <!-- ================== INTRO (Landing) ================== -->
+    <section class="card" id="intro">
+      <div class="intro-hero">
+        <h1>Know Your Numbers. Grow Your Profit.</h1>
+        <p class="lead">See how sales, margins, and costs work together—so you can set clear profit targets with confidence.</p>
+        <div class="divider1"></div>
+        <p><strong>What this does:</strong> We take your current numbers and show you the exact actions needed to hit your profit goal. No guesswork, no overwhelm—just clear targets you can act on.</p>
+        <p><strong>We focus on four key drivers of success:</strong></p>
+        <ul class="bullets">
+          <li><strong>Average Sale Value</strong> – how much each customer spends</li>
+          <li><strong>Number of Sales</strong> – the volume you need to sustain growth</li>
+          <li><strong>Gross Profit Rate</strong> – the margin that fuels your business</li>
+          <li><strong>Overheads</strong> – the costs that can quietly eat away at profit</li>
+        </ul>
+        <div class="divider1"></div>
+        <p><strong>Things to consider:</strong></p>
+        <ul class="bullets">
+          <li><strong>Average Sale Value</strong> – If 10 sales total $5,500, your average sale is $550.</li>
+          <li><strong>Average Cost of Sale</strong> – Direct costs tied to delivering that sale.</li>
+          <li><strong>Overheads</strong> – Monthly costs you pay to keep the business running, even with no sales.</li>
+        </ul>
+        <p class="lead">👉 Take a few minutes to run the calculation—you might be closer to your next profit milestone than you think.</p>
+        <div>
+          <button id="startBtn" class="btn btn-primary">Start My Calculation</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================== STEP 1 (Inputs + Results) ================== -->
+    <section class="card" id="step1" style="display:none">
       <div class="card-title">
-        <span class="section-tag">Step 1 · Data Input</span>
-        <span class="hint">&nbsp;Use dollars (ex GST). Click Calculate to preview your baseline.</span>
+        <span class="section-tag">Step 1 · Your Numbers</span>
+        <span class="hint">&nbsp;Enter figures (ex GST). Hit <strong>Calculate My Baseline</strong> to see your starting point.</span>
       </div>
 
       <div class="grid cols-2">
         <!-- Inputs -->
         <div>
           <div class="inputs">
-            <label for="G5">Average Sale Value (ex GST)</label>
+            <label class="label-help" for="G5">
+              <span>Average Sale Value (ex GST)</span>
+              <span class="help">?
+                <span class="tip"><strong>Average Sale Value</strong> is your typical transaction size. Example: 10 sales totalling $5,500 ⇒ average $550.</span>
+              </span>
+            </label>
             <input id="G5" type="number" min="0" step="0.01" value="550">
 
-            <label for="G6">Average Cost of Sale (ex GST)</label>
+            <label class="label-help" for="G6">
+              <span>Average Cost per Sale (ex GST)</span>
+              <span class="help">?
+                <span class="tip"><strong>Average Cost of Sale</strong> is the direct cost to deliver one sale (materials, subcontractors, etc.).</span>
+              </span>
+            </label>
             <input id="G6" type="number" min="0" step="0.01" value="150">
 
-            <label>Gross Profit per Sale (ex GST)</label>
+            <label class="label-help">
+              <span>Gross Profit per Sale</span>
+              <span class="help">?
+                <span class="tip"><strong>Gross Profit per Sale</strong> = Average Sale Value − Average Cost of Sale.</span>
+              </span>
+            </label>
             <div class="readonly mono" id="G7_ro">—</div>
 
-            <label>Gross Profit %</label>
+            <label class="label-help">
+              <span>Gross Profit %</span>
+              <span class="help">?
+                <span class="tip"><strong>Gross Profit Rate</strong> is your gross margin (profit before overheads) as a percentage of the sale.</span>
+              </span>
+            </label>
             <div class="readonly mono" id="G8_ro">—</div>
 
-            <label>Cost of Sale %</label>
+            <label class="label-help">
+              <span>Cost of Sale %</span>
+              <span class="help">?
+                <span class="tip">The proportion of the sale that goes to direct costs. It complements your gross profit %.</span>
+              </span>
+            </label>
             <div class="readonly mono" id="G9_ro">—</div>
 
-            <label for="G10">Monthly Expenses (ex GST)</label>
+            <label class="label-help" for="G10">
+              <span>Monthly Operating Expenses (ex GST)</span>
+              <span class="help">?
+                <span class="tip"><strong>Overheads</strong> are monthly costs to keep the doors open (rent, admin, software), even if you make no sales.</span>
+              </span>
+            </label>
             <input id="G10" type="number" min="0" step="0.01" value="8211">
 
-            <label for="G11">Number of weeks per year</label>
+            <label for="G11">Number of Weeks per Year</label>
             <input id="G11" type="number" min="1" step="1" value="48">
 
-            <label for="G12">Number of days per week</label>
+            <label for="G12">Number of Working Days per Week</label>
             <input id="G12" type="number" min="1" step="1" value="5">
 
-            <label for="G13">Desired Net Profit (year)</label>
+            <label for="G13">Net Profit Goal (annual)</label>
             <input id="G13" type="number" min="0" step="0.01" value="100000">
 
-            <label for="G15">Existing Clients</label>
+            <label for="G15">Current Active Clients</label>
             <input id="G15" type="number" min="0" step="1" value="36">
 
-            <label for="G16">Purchases per Client / year</label>
+            <label for="G16">Purchases per Client / Year</label>
             <input id="G16" type="number" min="1" step="1" value="3">
 
-            <label>Total New Clients Required</label>
+            <label>Additional Clients Needed</label>
             <div class="readonly mono" id="G17_ro">—</div>
           </div>
 
           <div class="divider"></div>
-          <button id="calcBtn" class="btn btn-primary">Calculate (Preview Baseline)</button>
-          <button id="reset1" class="btn">Reset</button>
-          <p class="hint">Negative values are blocked. Counts round up to match the workbook.</p>
+          <button id="calcBtn" class="btn btn-primary">Calculate My Baseline</button>
+          <button id="reset1" class="btn">Clear Inputs</button>
+          <p class="hint">No nonsense: negative values are blocked. Counts round up to match real-world planning.</p>
         </div>
 
         <!-- Results -->
         <div>
           <div class="card" id="step1Results" style="display:none">
-            <div class="card-title"><span class="section-tag">Baseline Results (Preview)</span></div>
+            <div class="card-title"><span class="section-tag">Your Baseline Results (Preview)</span></div>
 
+            <!-- TOP KPIs -->
             <div class="kpis">
-              <div class="kpi primary"><div class="label">Total Sales</div><div class="value mono" id="J11">—</div></div>
-              <div class="kpi primary"><div class="label">Sales Required / Year</div><div class="value mono" id="J6">—</div></div>
+              <div class="kpi primary"><div class="label">Annual Sales Revenue Required</div><div class="value mono" id="J11">—</div></div>
+              <div class="kpi primary"><div class="label">Sales Required per Year</div><div class="value mono" id="J6">—</div></div>
               <div class="kpi primary"><div class="label">Gross Profit Required</div><div class="value mono" id="J13">—</div></div>
-              <div class="kpi primary"><div class="label">Cost of Sales</div><div class="value mono" id="J12">—</div></div>
+              <div class="kpi primary"><div class="label">Annual Cost of Sales</div><div class="value mono" id="J12">—</div></div>
             </div>
 
             <div class="divider"></div>
-            <table>
-              <thead><tr><th>Metric</th><th class="right">Number</th><th class="right">Revenue (Ex GST)</th></tr></thead>
-              <tbody>
-                <tr><td>Sales Required per Year</td><td class="right mono" id="J6_tbl">—</td><td class="right mono" id="K6">—</td></tr>
-                <tr><td>Sales Required per Month</td><td class="right mono" id="J7">—</td><td class="right mono" id="K7">—</td></tr>
-                <tr><td>Sales Required per Week</td><td class="right mono" id="J8">—</td><td class="right mono" id="K8">—</td></tr>
-                <tr><td>Sales Required per Day</td><td class="right mono" id="J9">—</td><td class="right mono" id="K9">—</td></tr>
-              </tbody>
-            </table>
 
-            <div class="divider"></div>
+            <!-- TABLE 1: Mini Profit & Loss Estimate -->
+            <div class="card" style="padding:0; overflow:hidden">
+              <table>
+                <thead><tr><th colspan="2">Mini Profit and Loss Estimate</th></tr></thead>
+                <tbody>
+                  <tr><td>Sales</td><td class="right mono" id="PL_sales">—</td></tr>
+                  <tr><td>Cost of Sales</td><td class="right mono" id="PL_cos">—</td></tr>
+                  <tr><td>Gross Profit Required</td><td class="right mono" id="PL_gp">—</td></tr>
+                  <tr><td>Expenses</td><td class="right mono" id="PL_exp">—</td></tr>
+                  <tr><td>Desired Net Profit</td><td class="right mono" id="PL_np">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- TABLE 2: Sales Numbers per period + Monthly KPIs (two-column layout) -->
             <div class="grid cols-2b">
-              <div class="card"><div class="hint">Expenses (per year)</div><div class="mono" id="J14">—</div></div>
-              <div class="card"><div class="hint">Desired Net Profit</div><div class="mono" id="J15">—</div></div>
+              <div class="card" style="padding:0; overflow:hidden">
+                <table>
+                  <thead>
+                    <tr><th colspan="3">Sales Numbers per period</th></tr>
+                    <tr><th>Period</th><th class="right">Number</th><th class="right">Revenue</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Yearly</td><td class="right mono" id="T_year_num">—</td><td class="right mono" id="T_year_rev">—</td></tr>
+                    <tr><td>Monthly</td><td class="right mono" id="T_month_num">—</td><td class="right mono" id="T_month_rev">—</td></tr>
+                    <tr><td>Weekly</td><td class="right mono" id="T_week_num">—</td><td class="right mono" id="T_week_rev">—</td></tr>
+                    <tr><td>Daily</td><td class="right mono" id="T_day_num">—</td><td class="right mono" id="T_day_rev">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card" style="padding:0; overflow:hidden">
+                <table>
+                  <thead><tr><th colspan="2">Monthly KPIs*</th></tr></thead>
+                  <tbody>
+                    <tr><td>Average Sale Value</td><td class="right mono" id="KPI_asv">—</td></tr>
+                    <tr><td>Gross Profit Rate</td><td class="right mono" id="KPI_gpr">—</td></tr>
+                    <tr><td>Overhead Expenses</td><td class="right mono" id="KPI_oh">—</td></tr>
+                    <tr><td>Number of Sales</td><td class="right mono" id="KPI_sales_m">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
+            <p class="hint">*Based on these targets, hitting your monthly KPIs keeps you on track for your net profit goal.</p>
+
             <div class="divider"></div>
-            <p class="hint">Love what you see? Unlock live “What-If” analysis & conversion planning with the full version.</p>
+
+            <!-- CTA (after calculation) -->
+            <div class="cta">
+              <h3>Book Your Profit Reality Check</h3>
+              <p>You’ve seen the numbers. Now it’s time for a reality check.</p>
+              <p>Reaching your profit goal isn’t just about knowing the KPIs—it’s about testing what’s truly possible and mapping the actions to get you there. In a 1-on-1 Live Profit Reality Check you’ll get:</p>
+              <ul>
+                <li><strong>What-If Analysis</strong> — test different sales, margin, and cost scenarios</li>
+                <li><strong>Full Cashflow Forecasting</strong> — see how profit flows through your business</li>
+                <li><strong>Action Planning</strong> — a clear, step-by-step roadmap forward</li>
+              </ul>
+              <p>This is a paid session designed to deliver real value. By the end, you’ll have a customised profit strategy you can execute.</p>
+              <button class="btn btn-primary" id="ctaBook">Book my Reality Check</button>
+            </div>
+
           </div>
         </div>
       </div>
     </section>
 
-    <footer class="site">© Just Smart Business — Teaser view. Full calculator available for clients.</footer>
+    <footer class="site">© Just Smart Business — Helping small businesses grow with practical, no-nonsense strategy. Brisbane, Australia.</footer>
   </div>
 
 <script>
-  /* Helpers */
+  /* ===== Helpers ===== */
   const $=id=>document.getElementById(id);
-  const qsa=sel=>Array.prototype.slice.call(document.querySelectorAll(sel));
   const aud0=v=>new Intl.NumberFormat(undefined,{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(Number(v)||0);
   const num0=v=>new Intl.NumberFormat(undefined,{maximumFractionDigits:0}).format(Number(v)||0);
   const ceil=v=>Math.ceil(Number(v)||0);
 
+  /* Intro → Step 1 */
+  $('startBtn').addEventListener('click', ()=>{
+    $('intro').style.display='none';
+    $('step1').style.display='block';
+    setTimeout(()=>{ $('step1').scrollIntoView({behavior:'smooth', block:'start'}); }, 30);
+  });
+
+  /* Step 1 calculation */
   function sanitizeStep1(){
     ['G5','G6','G10','G11','G12','G13','G15','G16'].forEach(id=>{
       const v=parseFloat($(id).value||'0'); if(v<0) $(id).value=0;
@@ -203,7 +339,9 @@
 
   function calculateStep1(){
     sanitizeStep1();
-    const G5=+$('G5').value||0, G6=+$('G6').value||0, G10=+$('G10').value||0, G11=+$('G11').value||48, G12=+$('G12').value||5, G13=+$('G13').value||0, G15=+$('G15').value||0, G16=+$('G16').value||1;
+    const G5=+$('G5').value||0, G6=+$('G6').value||0, G10=+$('G10').value||0,
+          G11=+$('G11').value||48, G12=+$('G12').value||5, G13=+$('G13').value||0,
+          G15=+$('G15').value||0, G16=+$('G16').value||1;
 
     const G7=Math.max(0,G5-G6), G8=(G5?G7/G5:0), G9=1-G8;
 
@@ -217,27 +355,54 @@
 
     const G17=Math.max(0, ceil((G16? (J6/G16) : 0) - G15));
 
+    // Readouts
     $('G7_ro').textContent=aud0(G7);
     $('G8_ro').textContent=(G8*100).toFixed(0)+'%';
     $('G9_ro').textContent=(G9*100).toFixed(0)+'%';
     $('G17_ro').textContent=num0(G17);
 
-    $('J11').textContent=aud0(J11); $('J6').textContent=num0(J6); $('J13').textContent=aud0(J13); $('J12').textContent=aud0(J12);
-    $('J6_tbl').textContent=num0(J6); $('K6').textContent=aud0(K6); $('J7').textContent=num0(J7); $('K7').textContent=aud0(K7);
-    $('J8').textContent=num0(J8); $('K8').textContent=aud0(K8); $('J9').textContent=num0(J9); $('K9').textContent=aud0(K9);
-    $('J14').textContent=aud0(J14); $('J15').textContent=aud0(J15);
+    // KPI tiles
+    $('J11').textContent=aud0(J11);
+    $('J6').textContent=num0(J6);
+    $('J13').textContent=aud0(J13);
+    $('J12').textContent=aud0(J12);
+
+    // Mini P&L table
+    $('PL_sales').textContent=aud0(J11);
+    $('PL_cos').textContent  =aud0(J12);
+    $('PL_gp').textContent   =aud0(J13);
+    $('PL_exp').textContent  =aud0(J14);
+    $('PL_np').textContent   =aud0(J15);
+
+    // Sales numbers per period
+    $('T_year_num').textContent=num0(J6);     $('T_year_rev').textContent=aud0(K6);
+    $('T_month_num').textContent=num0(J7);    $('T_month_rev').textContent=aud0(K7);
+    $('T_week_num').textContent=num0(J8);     $('T_week_rev').textContent=aud0(K8);
+    $('T_day_num').textContent=num0(J9);      $('T_day_rev').textContent=aud0(K9);
+
+    // Monthly KPIs table on the right
+    $('KPI_asv').textContent=aud0(G5);
+    $('KPI_gpr').textContent=(G8*100).toFixed(0)+'%';
+    $('KPI_oh').textContent =aud0(G10);   // monthly overhead
+    $('KPI_sales_m').textContent=num0(J7);
 
     $('step1Results').style.display='block';
   }
 
-  /* Wire up */
   $('calcBtn').addEventListener('click', calculateStep1);
   $('reset1').addEventListener('click', ()=>{
     ['G5','G6','G10','G11','G12','G13','G15','G16'].forEach(id=>{ const el=$(id); el.value = el.defaultValue || 0; });
-    $('step1Results').style.display='none';
     ['G7_ro','G8_ro','G9_ro','G17_ro'].forEach(id=>$(id).textContent='—');
+    $('step1Results').style.display='none';
+  });
+
+  // Optional CTA button hook (link it to your booking page in SuiteDash)
+  $('ctaBook').addEventListener('click', ()=>{
+     window.location.href = 'https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100'; // <-- replace with your URL
+    alert('Great! We’ll take you to booking next.');
   });
 </script>
 </body>
 </html>
+
 
