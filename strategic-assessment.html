@@ -4,30 +4,44 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>JSB Strategic Assessment</title>
+<link rel="icon" type="image/svg+xml" href="jsb_icon.svg" />
+<meta name="theme-color" content="#0d3b2e" />
 <style>
   :root{
-    --brand-dark:#0d3b2e; --brand-mid:#0e6f57; --brand-light:#22c28a;
-    --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7;
+    --brand-dark:#0d3b2e;   --brand-mid:#0e6f57;    --brand-light:#22c28a;
+    --ink:#0b0b0b; --paper:#ffffff; --muted:#5e6b74; --line:#e6eaee; --chip:#f5f8f7; --glow: rgba(34,194,138,.20);
   }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-    color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale
-  }
-  .wrap{max-width:900px; margin:32px 0 48px 20px; padding:0 20px;} /* left aligned for SuiteDash */
-  header.brand{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px;}
-  .brand-side{display:flex; align-items:center; gap:12px}
-  .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:20px;}
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale}
+  .wrap{max-width:1120px; margin:20px auto 48px; padding:0 20px; padding-top:92px; padding-bottom:80px;}
+  header.brand{position:fixed; inset:0 0 auto 0; background:#fff; z-index:1000; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); box-shadow:0 8px 32px rgba(13,59,46,.06); backdrop-filter:saturate(140%) blur(2px)}
+  .brand-left{display:flex; align-items:center; gap:12px}
+  .brand-logo{height:44px; width:auto}
+  .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:20px}
   .subtle{color:var(--muted); font-size:14px}
-  .card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px; box-shadow:0 1px 0 #f4f6f8;}
-  .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0;}
-  .title{font-weight:800; font-size:22px; margin:12px 0 10px; color:var(--brand-dark)}
-  .lead{color:#20332b; font-size:16px; line-height:1.5}
-  .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
-  .btn{appearance:none; border:0; border-radius:12px; padding:12px 16px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:10px; letter-spacing:.2px; text-decoration:none}
-  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border:1px solid #10a772}
-  .btn-ghost{background:#fff; color:var(--brand-mid); border:1px solid var(--line)}
+  .card{background:#fff; border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(13,59,46,.05)}
+  .card-title{display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:700; margin:2px 0 14px}
+  .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0}
+  .divider{height:1px; background:var(--line); margin:16px 0}
+  .mono{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+
+  /* Intro */
+  #intro{display:block; position:relative; overflow:hidden}
+  .intro-hero{position:relative; padding:24px; border-radius:14px; background:
+    radial-gradient(1200px 600px at 0% 0%, rgba(13,59,46,.06), transparent 60%),
+    radial-gradient(1200px 600px at 100% 0%, rgba(34,194,138,.10), transparent 60%),
+    linear-gradient(180deg, #f9fffc, #ffffff 40%, #ffffff); border:1px solid var(--line)}
+  .intro-header{display:flex; align-items:flex-start; gap:14px}
+  .intro-badge{font-size:12px; padding:6px 10px; border-radius:999px; color:#083524; background:#ccf2e4; border:1px solid #b9eddc; white-space:nowrap}
+  .intro h1{font-size:26px; margin:6px 0 10px; color:var(--brand-mid); letter-spacing:.2px}
+  .intro p{margin:10px 0; line-height:1.6}
+  .intro-grid{display:grid; gap:14px; margin-top:12px}
+  @media (min-width:840px){ .intro-grid{grid-template-columns:1.2fr .8fr} }
+  .icon-list{margin:8px 0 4px; padding-left:0; list-style:none; display:grid; gap:6px}
+  .icon-li{display:flex; align-items:flex-start; gap:10px}
+  .icon{flex:0 0 auto; width:18px; height:18px; border-radius:6px; display:inline-grid; place-items:center; border:1px solid #b9eddc; background:#dff8ee}
+
+  /* Q flow */
   .q-label{font-size:18px; font-weight:700; margin:6px 0 12px}
   .choices{display:grid; grid-template-columns:1fr; gap:10px; margin-top:6px}
   @media (min-width:680px){ .choices{grid-template-columns:1fr 1fr} }
@@ -35,60 +49,23 @@
   .chip-choice input{position:absolute; inset:0; opacity:0; cursor:pointer}
   .chip-choice:has(input:checked){border-color:#10a772; box-shadow:0 0 0 3px rgba(16,167,114,.18); background:#f4fff9}
   .nav-row{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:16px}
-  .spacer{flex:1}
-  .site-footer {
-    position: fixed;        /* stick to bottom */
-  bottom: 0;
-  left: 20px;
-  right: 20px;
-  margin-top: 40px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  font-size: 14px;
-  color: var(--muted);
-}
+  .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+  .btn{appearance:none; border:0; border-radius:12px; padding:12px 16px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:10px; letter-spacing:.2px}
+  .btn-primary{background:linear-gradient(180deg,var(--brand-light),#10a772); color:#083524; border:1px solid #10a772; box-shadow:0 6px 20px rgba(16,167,114,.25)}
+  .btn-ghost{background:#fff; color:var(--brand-mid); border:1px solid var(--line)}
 
-.footer-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+ 
+  #resultText { white-space: pre-line; }
 
-.footer-left img {
-  height: 20px;
-  width: auto;
-}
-
-.footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-links a {
-  color: var(--brand-mid);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-  /* Progress strip */
-  .progress-wrap{margin-top:16px; border:1px solid var(--line); border-radius:12px; padding:8px 12px; display:flex; align-items:center; gap:12px; background:#fafdfc}
-  .progress-label{font-size:13px; color:var(--muted); white-space:nowrap}
-  .progress-bar{position:relative; flex:1; height:10px; background:#edf5f1; border-radius:999px; overflow:hidden}
-  .progress-fill{position:absolute; top:0; left:0; height:100%; width:0%; background:linear-gradient(90deg,#22c28a,#0e6f57)}
-  /* Results */
+  /* KPIs + banner */
   .kpis{display:grid; gap:12px; margin-top:4px}
   @media (min-width:720px){ .kpis{grid-template-columns:repeat(4,1fr)} }
   .kpi{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff}
   .kpi .label{font-size:12px; color:var(--muted)}
-  .kpi .value{font-weight:800; font-size:20px; color:#0e6f57}
-  .banner{border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff; display:flex; gap:12px; align-items:flex-start; margin-top:14px}
+  .kpi .value{font-weight:800; font-size:20px; color:var(--ink)}
+  .kpi.primary{border-color:#cef3e3; background:linear-gradient(180deg,#f7fffb,#ffffff)}
+  .kpi.primary .value{color:var(--brand-mid)}
+  .banner{border:1px solid var(--line); border-radius:14px; padding:16px; background:#fff; display:flex; gap:12px; align-items:flex-start}
   .badge{font-size:12px; padding:6px 10px; border-radius:999px; color:#083524; background:#ccf2e4; border:1px solid #b9eddc}
   .banner.low{border-color:#ffe5c0; background:#fff9f0}
   .banner.low .badge{background:#ffe5c0; border-color:#ffd79c; color:#5a3d0a}
@@ -96,42 +73,94 @@
   .banner.mid .badge{background:#d9f4f3; border-color:#c2ecea; color:#0e6b66}
   .banner.high{border-color:#cfeedd; background:#f6fffa}
   .banner.high .badge{background:#cfeedd; border-color:#b8e7ce; color:#115e38}
-  .hidden{display:none !important}
-  @media print{ .actions,.progress-wrap{display:none !important} .wrap{margin:0; padding:0} header.brand{margin-bottom:8px} }
+
+  .progress-wrap{margin-top:16px; border:1px solid var(--line); border-radius:12px; padding:8px 12px; display:flex; align-items:center; gap:12px; background:#fafdfc}
+  .progress-label{font-size:13px; color:var(--muted); white-space:nowrap}
+  .progress-bar{position:relative; flex:1; height:10px; background:#edf5f1; border-radius:999px; overflow:hidden}
+  .progress-fill{position:absolute; top:0; left:0; height:100%; width:0%; background:linear-gradient(90deg,#22c28a,#0e6f57)}
+
+  .site-footer{position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 20px; z-index:1000; box-shadow:0 -8px 24px rgba(13,59,46,.05)}
+  .footer-left{display:flex; align-items:center; gap:10px}
+  .footer-left img{height:20px; width:auto}
+  .footer-links{display:flex; gap:20px}
+  .footer-links a{color:var(--brand-mid); font-weight:600; text-decoration:none}
+  .footer-links a:hover{text-decoration:underline}
+
+  @media print{ .actions{display:none !important} .card{box-shadow:none} .wrap{margin:0; padding:0} header.brand{margin-bottom:8px} .kpi .value{font-size:18px} }
+
+  /* PDF (hidden report) */
+  .print-wrap{font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color:#0b0b0b; font-size:12.5px; line-height:1.45; padding:0; margin:0; width:100%; display:block}
+  .print-wrap > *:first-child{margin-top:0!important}
+  .print-header{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:0 0 10px; border-bottom:1px solid #e6eaee; margin-bottom:12px}
+  .print-brand{display:flex; align-items:center; gap:10px}
+  .print-brand img{height:28px; width:auto}
+  .print-title{font-weight:800; color:#0e6f57}
+  .print-meta{color:#5e6b74; font-size:12px}
+  .print-section{margin:12px 0}
+  .print-h2{font-weight:800; color:#0e6f57; margin:6px 0}
+  .print-kpis{display:grid; gap:8px; grid-template-columns:repeat(2,1fr)}
+  .print-kpi{border:1px solid #e6eaee; border-radius:10px; padding:10px; background:#fff}
+  .print-kpi .label{font-size:11px; color:#5e6b74}
+  .print-kpi .value{font-size:18px; font-weight:800}
+  .print-banner.low{border:1px solid #ffd79c; background:#fff9f0; border-radius:10px; padding:10px}
+  .print-banner.mid{border:1px solid #c2ecea; background:#f2fbfb; border-radius:10px; padding:10px}
+  .print-banner.high{border:1px solid #b8e7ce; background:#f6fffa; border-radius:10px; padding:10px}
+  .print-table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid #e6eaee; border-radius:10px; overflow:hidden; font-size:12px}
+  .print-table th,.print-table td{padding:8px 10px; border-bottom:1px solid #e6eaee; text-align:left}
+  .print-table thead th{background:#f0faf7; color:#426159; font-weight:800}
 </style>
 </head>
 <body>
-  <div class="wrap" id="app">
-    <header class="brand">
-      <div class="brand-side">
-        <img src="jsb_icon.svg" alt="JSB" height="32" onerror="this.style.display='none'"/>
-        <div class="brand-title">Just Smart Business</div>
+  <div class="wrap" id="pageRoot">
+    <header class="brand" aria-label="Just Smart Business">
+      <div class="brand-left">
+        <img src="jsb_icon.svg" alt="Just Smart Business" class="brand-logo" />
+        <div>
+          <div class="brand-title">Strategic Assessment</div>
+          <div class="subtle">Create clarity. Choose priorities. Act with confidence.</div>
+        </div>
       </div>
-      <div class="subtle">Strategic Assessment — one step at a time</div>
     </header>
 
     <!-- INTRO -->
-    <section class="card" id="intro">
-      <span class="section-tag">Welcome</span>
-      <h1 class="title">Ready for your strategic assessment with JSB?</h1>
-      <p class="lead">
-        Answer <strong>14 quick questions</strong> to get a clear snapshot of where your business is today—then see
-        your tailored recommendations and next steps. It takes just a few minutes.
-      </p>
-      <div class="actions">
-        <button class="btn btn-primary" id="startBtn">Start your assessment</button>
+    <section class="card intro" id="intro" aria-labelledby="introTitle">
+      <div class="card-title">
+        <span class="section-tag" id="introTitle">Introduction</span>
+        <span class="subtle">Why strategy matters</span>
+      </div>
+
+      <div class="intro-hero">
+        <div class="intro-header">
+          <h1>Build a stronger, safer, more profitable business</h1>
+        </div>
+
+        <div class="intro-grid">
+          <div>
+            <p><strong>Running a business is more than managing today—it’s about preparing for tomorrow.</strong></p>
+            <p>Unexpected challenges—whether cashflow pressures, supply chain disruptions, or shifting customer expectations—can quickly derail even the best-run businesses. Without preparation, small problems can become serious risks.</p>
+            <p><strong>This Strategic Assessment helps you:</strong></p>
+            <ul class="icon-list">
+              <li class="icon-li"><span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Identify vulnerabilities before they become critical.</span></li>
+              <li class="icon-li"><span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Measure strengths and uncover growth opportunities.</span></li>
+              <li class="icon-li"><span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Build clarity and confidence to make better decisions.</span></li>
+            </ul>
+            <p>By completing this assessment, you’ll get a clear picture of where your business stands today—and what steps to take to strengthen it tomorrow.</p>
+            <div class="actions" style="margin-top:14px">
+              <button class="btn btn-primary" id="startBtn" type="button">Start my assessment</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- QUESTION FLOW -->
-    <section class="card hidden" id="quiz">
+    <section class="card" id="quiz" style="display:none">
       <div class="q-label" id="qText">Question text loads here</div>
       <div class="choices" id="choices"></div>
 
       <div class="nav-row">
         <button class="btn btn-ghost" id="backBtn" type="button">Back</button>
-        <div class="spacer"></div>
-        <button class="btn btn-primary" id="nextBtn" type="button">Next</button>
+        <div class="actions"><button class="btn btn-primary" id="nextBtn" type="button">Next</button></div>
       </div>
 
       <div class="progress-wrap" aria-live="polite">
@@ -143,317 +172,292 @@
     </section>
 
     <!-- RESULTS -->
-    <section class="card hidden" id="results">
-      <div class="title" style="margin-top:0">Your Results</div>
+    <section class="card" id="results" style="display:none" aria-labelledby="resultsTitle">
+      <div class="card-title">
+        <span class="section-tag" id="resultsTitle">Results</span>
+        <span class="subtle">Calculated from your answers</span>
+      </div>
+
       <div class="kpis">
-        <div class="kpi">
-          <div class="label">Total Score</div>
-          <div class="value" id="overallScore">—</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Overall (%)</div>
-          <div class="value" id="overallPct">—</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Questions</div>
-          <div class="value">14</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Max Score</div>
-          <div class="value">140</div>
-        </div>
+        <div class="kpi primary"><div class="label">Overall Score (%)</div><div class="value mono" id="overallPct">—</div></div>
+        <div class="kpi"><div class="label">Total Score</div><div class="value mono" id="overallScore">—</div></div>
+        <div class="kpi"><div class="label">Questions</div><div class="value mono" id="qCount">—</div></div>
+        <div class="kpi"><div class="label">Max Score</div><div class="value mono" id="maxScore">—</div></div>
       </div>
 
-      <div class="banner" id="resultBanner">
-        <span class="badge">Status</span>
-        <div id="resultText">—</div>
-      </div>
+      <div class="divider"></div>
 
-      <div class="actions" style="margin-top:16px">
-        <!-- Update this link to your live booking URL -->
-        <a class="btn btn-primary" href="https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100" target="_blank" rel="noopener">Book a Strategy Session</a>
-        <button class="btn btn-ghost" id="resetBtn" type="button">Reset &amp; start again</button>
-      </div>
+      <div class="banner" id="resultBanner"><span class="badge">Status</span><div id="resultText">—</div></div>
+
+      <div class="divider"></div>
+
+      <!-- NEXT STEP -->
+      <section aria-labelledby="nextStepTitle" id="nextStep">
+        <div class="card-title" style="margin-top:0">
+          <span class="section-tag" id="nextStepTitle">Your Next Step</span>
+          <span class="subtle">Turn insight into action</span>
+        </div>
+        <p><strong>Your results give you valuable insight—now it’s time to turn that insight into action.</strong></p>
+        <p>The most effective next step is a one-on-one Strategy Session with a JSB Strategic Advisor. In this session, we’ll:</p>
+        <ul class="icon-list">
+          <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Review your assessment results in detail.</span></li>
+          <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Identify the top priorities holding your business back.</span></li>
+          <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Map out practical, tailored actions to move forward with clarity and confidence.</span></li>
+        </ul>
+        <div class="actions" style="margin-top:12px">
+          <a class="btn btn-primary" href="https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100" target="_blank" rel="noopener">Book a Strategy Session</a>
+          <button class="btn btn-ghost" id="downloadBtn" type="button">Download PDF</button>
+          <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
+        </div>
+        <p class="subtle" style="margin-top:8px"><strong>Reminder:</strong> If you want to book an appointment, please <strong>download this PDF</strong> and <strong>upload it to your file</strong> in the portal.</p>
+      </section>
     </section>
+
+    <!-- Hidden report root -->
+    <section id="printReport" aria-hidden="true" style="display:none"></section>
+
     <footer class="site-footer">
-  <div class="footer-left">
-    <img src="jsb_icon.svg" alt="JSB icon" />
-    <span class="subtle">© <span id="year"></span> Just Smart Business</span>
-  </div>
-  <div class="footer-links">
-    <a href="https://justsmartbusiness.com.au" target="_blank" rel="noopener">Website</a>
-    <a href="https://justsmartbusiness.com.au/contact" target="_blank" rel="noopener">Contact Us</a>
-  </div>
-</footer>
+      <div class="footer-left"><img src="jsb_icon.svg" alt="JSB icon" /><span class="subtle">© <span id="year"></span> Just Smart Business</span></div>
+      <div class="footer-links"><a href="https://justsmartbusiness.com.au" target="_blank" rel="noopener">Website</a><a href="https://justsmartbusiness.com.au/contact" target="_blank" rel="noopener">Contact Us</a></div>
+    </footer>
   </div>
 
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 <script>
+  const $ = (s,scope=document)=>scope.querySelector(s);
   document.getElementById("year").textContent = new Date().getFullYear();
-  // ===== Content =====
+
+  /* === QUESTIONS from Excel: Look ups (2..10 scoring) === */
   const QUESTIONS = [
     { q: 'Do you have a clear vision (Big Goal) of where the company is going? (Do you have it written down)',
       options: [
-        ['You have some idea',2],
-        ['You know what you want  but it is not written',4],
-        ['It is written down but it is not measureable',6],
-        ['It is clear and written but you are a bit off track',8],
-        ['It is clear, written and you are on track',10],
+        ['You have a general idea, but it is not yet clear or defined',2],
+        ['You have a general idea, but it has not been documented',4],
+        ['Your goal is documented, but lacks measurable criteria',6],
+        ['Your goal is clear, but current progress is not fully aligned',8],
+        ['Your goal is clear, documented, and progress is aligned',10],
       ]},
     { q: 'Can you describe clearly the purpose of your business in about 30 words (who you are, what you do and why)?',
       options: [
-        ['To some extent but it is not completely clear',2],
-        ['You  have it clearly stated but focus on sales',4],
-        ['You have it clear and use it on marketing material',6],
-        ['You are clear but often do things beyond this',8],
-        ['It is clear, written and it guides our decisions',10],
+        ['No purpose defined',2],
+        ['General idea exists, but not documented',4],
+        ['Documented purpose, but not concise or clear',6],
+        ['Purpose is clear but not consistently communicated',8],
+        ['Purpose is clear, concise, and consistently used in communication and decisions',10],
       ]},
     { q: 'Do you know what issues are holding you back from achieving your “Big Goal”?',
       options: [
-        ['I don’t have enough time to consider the big picture',2],
-        ['I have an idea where I want to go but lack the tools to identify the issues',4],
-        ['I know what is holding me back but I need to allocate time to work out the steps to get where I want to be.',6],
-        ['I know what they are and I am actively taking steps to address them so I can achieve my "Big Goal"',8],
-        ['I have a coach/mentor and we are working on them',10],
+        ['Unaware of issues',2],
+        ['Some issues identified, but not documented',4],
+        ['Issues identified but lack prioritisation',6],
+        ['Issues clearly defined and prioritised',8],
+        ['Issues identified and supported with action plans',10],
       ]},
     { q: 'How does your service delivery rate, what are the level of complaints?',
       options: [
-        ['Too many but they  are just a part of the business',2],
-        ['A few a week but we manage to juggle them',4],
-        ['You get a few complaints but don’t keep track',6],
-        ['One now and then but it’s a chance to do better',8],
-        ['You measure complaints against a target.',10],
+        ['Frequent complaints and inconsistent service',2],
+        ['Generally acceptable service with frequent complaints',4],
+        ['Service is consistent, though recurring complaints exist',6],
+        ['Service is reliable with minimal complaints',8],
+        ['Service delivery is excellent, complaints rare and resolved quickly',10],
       ]},
     { q: 'How’s your business knowledge?',
       options: [
-        ['You have just started out & just learning',2],
-        ['You have a business degree but little experience',4],
-        ['You have experience but no formal qualifications',6],
-        ['Extensive business experience',8],
-        ['Extensive experience and formal support network',10],
+        ['Minimal business knowledge',2],
+        ['Basic knowledge, limited to some areas',4],
+        ['Moderate knowledge with important gaps',6],
+        ['Strong knowledge across most areas',8],
+        ['Comprehensive knowledge across all business areas',10],
       ]},
     { q: 'Do you have a list of projects that you need to complete this year?',
       options: [
-        ['You focus on the things that need to be done right now',2],
-        ['You have a list but can never seem to find the time',4],
-        ['There are things to be done but no plans made',6],
-        ['Working on a couple of projects right now',8],
-        ['Project plans are in place for this year',10],
+        ['No project list documented',2],
+        ['Projects noted informally but not documented',4],
+        ['Projects documented but lack prioritisation',6],
+        ['Projects documented and prioritised with timelines',8],
+        ['Projects fully documented, prioritised, resourced, and scheduled',10],
       ]},
     { q: 'Do you know what net profit you want to achieve next financial year?',
       options: [
-        ['You are just worried about this year',2],
-        ['You want to increase your profit by a % each year',4],
-        ['You have a target but not measuring where we are',6],
-        ['You have a target but your accounts are a bit behind',8],
-        ['You have a target and you know you are on track',10],
+        ['No profit target defined',2],
+        ['Rough target exists but not documented',4],
+        ['Target documented but not reviewed regularly',6],
+        ['Target documented and reviewed occasionally',8],
+        ['Target documented, tracked, and used in decision-making',10],
       ]},
     { q: 'Do you know how many sales per year you need to achieve your net profit goal?',
       options: [
-        ['You don’t look at sale numbers but revenue',2],
-        ['Our range is so broad this is hard to do',4],
-        ['You have a target but not measuring where you are',6],
-        ['You have a target but are a bit behind',8],
-        ['You  have a target and you know you are on track',10],
+        ['Unaware of required sales volume',2],
+        ['Rough estimate but not validated',4],
+        ['Sales requirement calculated but not monitored',6],
+        ['Sales requirement calculated and reviewed occasionally',8],
+        ['Sales requirement calculated, tracked, and reviewed regularly',10],
       ]},
     { q: 'Do you know average value per sale you need to achieve your net profit goal?',
       options: [
-        ['Our range is too big to calculate an average',2],
-        ['You try to maximise the sale revenue every time',4],
-        ['You do but don’t follow through with measuring',6],
-        ['You do but your results are below target',8],
-        ['You do and are achieving this average or above',10],
+        ['Unaware of required average sale value',2],
+        ['Rough estimate but not documented',4],
+        ['Average sale value calculated but not reviewed',6],
+        ['Average sale value reviewed occasionally',8],
+        ['Average sale value calculated, tracked, and used in decisions',10],
       ]},
     { q: 'Do you know the gross profit rate you need to achieve your net profit goal?',
       options: [
-        ['You know what it is but don’t have a target',2],
-        ['You focus on net profit',4],
-        ['Yes and look at it when the books are done',6],
-        ['Yes  and measure it weekly or monthly',8],
-        ['Yes and measure per sale and per week or month',10],
+        ['Unaware of required gross profit margin',2],
+        ['Rough estimate but not documented',4],
+        ['Gross profit margin calculated but not reviewed',6],
+        ['Gross profit margin reviewed occasionally',8],
+        ['Gross profit margin calculated, tracked, and used in decisions',10],
       ]},
     { q: 'Do you have a budget for overhead expenses in order to achieve your net profit goal?',
       options: [
-        ['No but you try to minimise costs where possible',2],
-        ['Yes but we spend what we need to spend',4],
-        ['Yes and we are over budget',6],
-        ['Yes and we are over/below budget',8],
-        ['Yes and you monitor costs and are on target',10],
+        ['No budget prepared',2],
+        ['Overheads estimated but not formalised',4],
+        ['Overhead budget prepared but not monitored',6],
+        ['Overhead budget reviewed occasionally',8],
+        ['Overhead budget monitored and adjusted regularly',10],
       ]},
     { q: 'What is holding you back. What are the issues stopping you from achieving your day to day goals?',
       options: [
-        ['You address issues as they arise',2],
-        ['You have a list and review it when there is time',4],
-        ['You look at issues and plan to do the urgent items',6],
-        ['You look at issues as they arise and create goals to address them',8],
-        ['You do an analysis, create goals and action plans',10],
+        ['Unaware of specific barriers',2],
+        ['Some issues recognised, no action taken',4],
+        ['Issues recognised, limited action',6],
+        ['Issues recognised, some corrective actions applied',8],
+        ['Issues fully identified with action plans implemented',10],
       ]},
     { q: 'Do you know when Cashflow is going to be a problem for you?',
       options: [
-        ['It is always a problem',2],
-        ['We check the bank daily so we can pay the bills',4],
-        ['Things are a bit tight right now',6],
-        ['You always have a bit of a problem some months',8],
-        ['You have peaks and troughs and you plan for this',10],
+        ['Unaware of cashflow risks',2],
+        ['Some awareness of risks, but not tracked',4],
+        ['Cashflow tracked occasionally',6],
+        ['Cashflow monitored regularly with potential shortfalls identified',8],
+        ['Cashflow forecasted, monitored, and proactively managed',10],
       ]},
     { q: 'Using your own business knowledge honestly how do you think your business is going?',
       options: [
-        ['It’s a day to day proposition',2],
-        ['Things are tough',4],
-        ['Okay but working long hours in the business',6],
-        ['Good but little time for family',8],
-        ['Great and it fits with what we want to do privately',10],
+        ['Poor performance with major issues',2],
+        ['Business struggling in multiple areas',4],
+        ['Average performance, significant room for improvement',6],
+        ['Strong performance in most areas',8],
+        ['Excellent performance, positioned for growth',10],
       ]},
   ];
 
+  /* === THRESHOLDS from Excel: Score-results === */
   const THRESHOLDS = [
-    [0.9, "Congratulations, you are doing well and are on track building a business just the way you want. Keep up the great work!"],
-    [0.75, "You are okay so far but may really benefit from some more guidance to help you maximise your profitability and reduce the time you are working in the business rather than on the business. We recommend our one-on-one strategy session to see if our small business Intensive – “Focus on Growth - Today!” is suitable for your needs (no cost)."],
-    [0.5, "While you are getting by you could possibly be doing better. We definitely recommend our one-on-one strategy session to see if our small business Intensive – “Focus on Growth - Today!” is suitable for your needs (no cost)."],
-    [0.3, "Great potential to improve and there’s no time like the present. A simple plan can make a big difference. Book a one-on-one strategy session to explore your next steps (no cost)."],
-    [0.01, "Your strategic approach needs focus. If you want to grow and reduce stress, start with a no-cost one-on-one strategy session to see if our small business intensive “Focus on Growth Today!” is right for you."]
+    [0.90, "Congratulations—your business is performing strongly. The challenge now is to sustain momentum and stay ahead of change. Even well-performing businesses risk losing ground if you’re not prepared.\n\nWhy act now?\n- Competitors and market changes can quickly erode strong performance if you’re not prepared.\n- By taking deliberate action, you can maximise profit, strengthen resilience, and unlock new growth opportunities.\n- A Strategy Session will help you understand how you can move from operational stability to strategic growth with clarity and confidence."],
+    [0.75, "Your business is performing reasonably well and you’re on track in key areas. There are opportunities to tighten systems and build stronger foundations that support sustainable growth.\n\nWhy act now?\n- At this stage, addressing gaps before they widen is the difference between plateauing and scaling.\n- Fine-tuning systems and strategy ensures that your current success is sustainable.\n- A Strategy Session will help you target the exact areas that need attention so you can accelerate momentum safely."],
+    [0.50, "Your business has some solid foundations, but there are significant gaps limiting performance. With focus and support, you can make meaningful improvements quickly.\n\nWhy act now?\n- The right structure and priorities will increase profit and reduce stress.\n- Clarifying goals and making decisions with data will improve day-to-day control.\n- A Strategy Session will help you identify your key constraints, set priorities, and establish systems that reduce risk and increase stability."],
+    [0.30, "Your score indicates that your business is at serious risk. Core systems or strategy may be unclear, inconsistent, or reactive—leaving you vulnerable to shocks—like a cashflow squeeze, staff turnover, or lost customers.\n\nWhy act now?\n- Without corrective action, these risks will grow and may put your business viability at stake.\n- By addressing these issues early, you can quickly stabilise operations and reduce stress.\n- A Strategy Session will help you define urgent priorities and create a roadmap to regain control."],
+    [0.01, "Your business urgently needs a clear strategic approach. Now is the time to establish focus, direction, and accountability.\n\nWhy act now?\n- Without immediate intervention, ongoing issues may escalate and threaten business survival.\n- Establishing a strategy will provide stability and a clear roadmap for recovery.\n- A Strategy Session will help you set priorities and begin rebuilding with confidence."]
   ];
 
-  // ===== Helpers =====
-  const $ = (s,scope=document)=>scope.querySelector(s);
-  const create = (tag, attrs={}, html='')=>{
-    const el = document.createElement(tag);
-    for (const [k,v] of Object.entries(attrs)) {
-      if (k === 'class') el.className = v; else if (k === 'for') el.htmlFor = v; else el.setAttribute(k,v);
-    }
-    if (html) el.innerHTML = html;
-    return el;
-  };
+  /* === State & elements === */
+  let idx = 0; const n = QUESTIONS.length;
+  const answers = new Array(n).fill(null); const labels = new Array(n).fill(null);
 
-  // ===== State =====
-  let idx = 0; // 0..(n-1)
-  const n = QUESTIONS.length;
-  const answers = new Array(n).fill(null); // store numeric values
+  const intro = $("#intro"), quiz = $("#quiz"), results = $("#results");
+  const qText = $("#qText"), choices = $("#choices");
+  const backBtn = $("#backBtn"), nextBtn = $("#nextBtn");
+  const progressLabel = $("#progressLabel"), progressFill = $("#progressFill");
+  const overallPct = $("#overallPct"), overallScore = $("#overallScore");
+  const resultBanner = $("#resultBanner"), resultText = $("#resultText");
+  const qCountEl = $("#qCount"), maxScoreEl = $("#maxScore");
 
-  // ===== Elements =====
-  const intro   = $('#intro');
-  const quiz    = $('#quiz');
-  const qText   = $('#qText');
-  const choices = $('#choices');
-  const backBtn = $('#backBtn');
-  const nextBtn = $('#nextBtn');
-  const progressLabel = $('#progressLabel');
-  const progressFill  = $('#progressFill');
-  const results = $('#results');
-  const overallScore = $('#overallScore');
-  const overallPct   = $('#overallPct');
-  const resultBanner = $('#resultBanner');
-  const resultText   = $('#resultText');
-
-  // ===== UI control =====
-  function showIntro(){ intro.classList.remove('hidden'); quiz.classList.add('hidden'); results.classList.add('hidden'); }
-  function showQuiz(){ intro.classList.add('hidden'); results.classList.add('hidden'); quiz.classList.remove('hidden'); }
-  function showResults(){ intro.classList.add('hidden'); quiz.classList.add('hidden'); results.classList.remove('hidden'); }
+  function showIntro(){ intro.style.display="block"; quiz.style.display="none"; results.style.display="none"; }
+  function showQuiz(){ intro.style.display="none"; quiz.style.display="block"; results.style.display="none"; }
+  function showResults(){ intro.style.display="none"; quiz.style.display="none"; results.style.display="block"; }
 
   function renderQuestion(){
     const { q, options } = QUESTIONS[idx];
     qText.textContent = q;
-
-    // build choices
-    choices.innerHTML = '';
+    choices.innerHTML = "";
     options.forEach(([label, val], i) => {
       const id = `opt-${idx}-${i}`;
-      const wrap = create('label', { class:'chip-choice', for:id });
-      wrap.append(
-        create('input', { type:'radio', id, name:'q', value:String(val) }),
-      );
-      wrap.append(document.createTextNode(label));
-      choices.append(wrap);
+      const wrap = document.createElement("label"); wrap.className = "chip-choice"; wrap.setAttribute("for", id);
+      const input = document.createElement("input"); input.type="radio"; input.id=id; input.name="q"; input.value=String(val); input.setAttribute("data-label", label);
+      wrap.append(input, document.createTextNode(label)); choices.appendChild(wrap);
     });
-
-    // restore selection if present
-    if (answers[idx] != null) {
-      const pre = choices.querySelector(`input[value="${answers[idx]}"]`);
-      if (pre) pre.checked = true;
-    }
-
-    // nav buttons
-    backBtn.disabled = idx === 0;
-    nextBtn.textContent = (idx === n - 1) ? 'Finish' : 'Next';
-
-    // progress
-    const pct = Math.round((idx)/n*100);
-    progressLabel.textContent = `Question ${idx+1} of ${n}`;
-    progressFill.style.width = `${((idx)/n)*100}%`;
-    const bar = progressFill.parentElement;
-    bar.setAttribute('aria-valuenow', String(pct));
+    if (answers[idx] != null) { const pre = choices.querySelector(`input[value="${answers[idx]}"]`); if (pre) pre.checked = true; }
+    backBtn.disabled = idx === 0; nextBtn.textContent = (idx === n-1) ? "Finish" : "Next";
+    const pct = Math.round((idx)/n*100); progressLabel.textContent = `Question ${idx+1} of ${n}`; progressFill.style.width = `${((idx)/n)*100}%`; progressFill.parentElement.setAttribute('aria-valuenow', String(pct));
   }
 
-  function getSelected(){
-    const sel = choices.querySelector('input[name="q"]:checked');
-    return sel ? parseInt(sel.value,10) : null;
-  }
+  function selected(){ const sel = choices.querySelector('input[name="q"]:checked'); return sel ? { value: parseInt(sel.value,10), label: sel.getAttribute('data-label')||'' } : null; }
 
-  function computeAndShowResults(){
+  function computeResults(){
     const total = answers.reduce((a,b)=>a+(b||0),0);
-    const max = n * 10;
-    const percent = Math.round((total/max)*100);
-
-    overallScore.textContent = `${total} / ${max}`;
-    overallPct.textContent = `${percent}%`;
-
-    let msg = "Thank you for completing the assessment.";
-    let band = "mid";
-    for (const [thr, text] of THRESHOLDS){
-      if ((percent/100) >= thr){ msg = text; band = (thr>=0.9?'high' : thr>=0.5 ? 'mid' : 'low'); break; }
-    }
-    resultBanner.classList.remove('low','mid','high');
-    resultBanner.classList.add(band);
-    resultText.textContent = msg;
-
-    showResults();
-    window.scrollTo({top:results.offsetTop - 8, behavior:'smooth'});
+    const max = n*10; let percent = Math.round((total/max)*100); if(percent>100) percent=100;
+    overallPct.textContent = `${percent}%`; overallScore.textContent = `${total} / ${max}`; qCountEl.textContent = String(n); maxScoreEl.textContent = String(max);
+    let msg = "Thanks for completing the assessment.", band="mid";
+    for (const [thr, txt] of THRESHOLDS){ if ((percent/100) >= thr){ msg = txt; band = (thr>=0.9?'high':thr>=0.5?'mid':'low'); break; } }
+    resultBanner.classList.remove('low','mid','high'); resultBanner.classList.add(band); resultText.textContent = msg;
   }
 
-  // ===== Events =====
-  document.addEventListener('click', (e)=>{
-    const id = e.target.id;
-
-    if (id === 'startBtn'){
-      idx = 0;
-      showQuiz();
-      renderQuestion();
+  /* PDF helpers (same working flow as resiliency) */
+  function collectAnswered(){ const out=[]; QUESTIONS.forEach((q,i)=>{ if(labels[i]) out.push({question:q.q, answer:labels[i]}); }); return out; }
+  function buildReportHTML(){
+    const dateStr = new Date().toLocaleString();
+    const overall = (overallPct.textContent||'—').trim(), total = (overallScore.textContent||'—').trim();
+    const bannerClass = resultBanner.classList.contains("high") ? "print-banner high" : resultBanner.classList.contains("low") ? "print-banner low" : "print-banner mid";
+    const answered = collectAnswered();
+    let qaHTML = "";
+    if (answered.length){
+      qaHTML = `<table class="print-table"><thead><tr><th style="width:60%">Question</th><th>Selected answer</th></tr></thead><tbody>` + answered.map(it=>`<tr><td>${it.question}</td><td>${it.answer}</td></tr>`).join("") + `</tbody></table>`;
+    } else { qaHTML = '<div class="print-meta">No answers selected.</div>'; }
+    return `
+      <div class="print-wrap">
+        <div class="print-header">
+          <div class="print-brand"><img src="jsb_icon.svg" alt="JSB"/><div><div class="print-title">JSB Strategic Assessment Report</div><div class="print-meta">Generated ${dateStr}</div></div></div>
+          <div class="print-meta">justsmartbusiness.com.au</div>
+        </div>
+        <div class="print-section"><div class="print-h2">Summary</div>
+          <div class="print-kpis"><div class="print-kpi"><div class="label">Overall Score</div><div class="value">${overall}</div></div>
+          <div class="print-kpi"><div class="label">Total</div><div class="value">${total}</div></div></div>
+        </div>
+        <div class="print-section"><div class="print-h2">Result Interpretation</div><div class="${bannerClass}">${(document.getElementById('resultText').textContent||'').replace(/\n/g,'<br>')}</div></div>
+        <div class="print-section"><div class="print-h2">Your Answers (answered items only)</div>${qaHTML}</div>
+        <div class="print-section"><div class="print-h2">Your Next Step</div>
+          <div>Book a one-on-one Strategy Session with a JSB Strategic Advisor to review your results, confirm priorities, and map clear actions forward.</div>
+        </div>
+      </div>`;
+  }
+  async function addBrandedFooters(pdf){
+    const total = pdf.internal.getNumberOfPages();
+    for(let i=1;i<=total;i++){
+      pdf.setPage(i);
+      const w = pdf.internal.pageSize.getWidth(), h = pdf.internal.pageSize.getHeight();
+      pdf.setDrawColor(230,234,238); pdf.setLineWidth(0.2); pdf.line(8, h-12, w-8, h-12);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(9); pdf.setTextColor(14,111,87);
+      pdf.text(`Just Smart Business  |  justsmartbusiness.com.au  |  Page ${i} of ${total}`, 8, h-6);
     }
+  }
+  async function downloadPDF(){
+    if(typeof window.html2pdf==="undefined"){ alert("PDF engine couldn’t load. Please check your connection or CSP."); return; }
+    if ($("#results").style.display !== "block"){ alert("Please complete the assessment first."); return; }
+    const container = $("#printReport"); container.innerHTML = buildReportHTML(); container.style.display="block";
+    const d=new Date(), pad=n=>String(n).padStart(2,"0");
+    const filename = `JSB_Strategic_Assessment_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.pdf`;
+    const opt={ margin:[6,8,16,8], filename, image:{type:'jpeg', quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:'#ffffff', scrollY:0}, jsPDF:{unit:'mm', format:'a4', orientation:'portrait'}, pagebreak:{mode:['css','legacy']} };
+    try{ await html2pdf().set(opt).from(container).toPdf().get('pdf').then(pdf=>{ addBrandedFooters(pdf); }).save(); } finally { container.style.display="none"; container.innerHTML=""; }
+  }
 
-    if (id === 'backBtn'){
-      if (idx > 0){ idx--; renderQuestion(); }
+  /* Events */
+  document.addEventListener("click",(e)=>{
+    if (e.target.id === "startBtn"){ idx=0; showQuiz(); renderQuestion(); }
+    if (e.target.id === "backBtn"){ if(idx>0){ idx--; renderQuestion(); } else { showIntro(); } }
+    if (e.target.id === "nextBtn"){
+      const sel = selected(); if(!sel){ alert("Please select an option to continue."); return; }
+      answers[idx]=sel.value; labels[idx]=sel.label;
+      if (idx < n-1){ idx++; renderQuestion(); }
+      else { progressFill.style.width='100%'; progressLabel.textContent=`Question ${n} of ${n}`; computeResults(); showResults(); window.scrollTo({ top: $("#pageRoot").offsetTop, behavior:"smooth" }); }
     }
-
-    if (id === 'nextBtn'){
-      const value = getSelected();
-      if (value == null){
-        alert('Please select an option to continue.');
-        return;
-      }
-      answers[idx] = value;
-      if (idx < n - 1){
-        idx++; renderQuestion();
-      } else {
-        // last question -> compute
-        progressFill.style.width = '100%';
-        progressLabel.textContent = `Question ${n} of ${n}`;
-        computeAndShowResults();
-      }
-    }
-
-    if (id === 'resetBtn'){
-      // reset everything back to intro
-      for (let i=0;i<n;i++) answers[i] = null;
-      idx = 0;
-      // reset progress
-      progressFill.style.width = '0%';
-      progressLabel.textContent = `Question 1 of ${n}`;
-      showIntro();
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
+    if (e.target.id === "downloadBtn"){ downloadPDF(); }
+    if (e.target.id === "resetBtn"){ for(let i=0;i<n;i++){ answers[i]=null; labels[i]=null; } idx=0; showIntro(); window.scrollTo({top:0, behavior:"smooth"}); }
   });
 
-  // Initial view
   showIntro();
 </script>
 </body>
 </html>
+
