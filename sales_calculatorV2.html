@@ -628,62 +628,99 @@
 
       $('step1Results').style.display='block';
 
-      baseline={ G5,G6,G7,G8,G9,G10,G11,G12,G13,G15:G15,G16,
-                 J11,J12,J13,J14,J15,J6,J7,J8,J9,G17 };
+     baseline = {
+  G5,G6,G7,G8,G9,G10,G11,G12,G13,G15:G15,G16,
+  J11,J12,J13,J14,J15,J6,J7,J8,J9,G17,
+  salesExact: (G5 ? (J11 / G5) : 0)   // <-- add this
+};
       recalcWhatIf();
     }
 
     /* Step 2 */
     function recalcWhatIf(){
-      const b=baseline||{};
-      const baseAvg=+b.G5||0, baseCostTotal=+b.J12||0, baseSales=+b.J6||0, baseOverhead=+b.J14||0, targetNP=+b.G13||0;
-      const weeks=+b.G11||48, days=+b.G12||5;
+  if(!baseline) return;
+  const b = baseline;
 
-      const p=percentGet('W_price'), c=percentGet('W_cost'), o=percentGet('W_overhead'), v=percentGet('W_volume');
+  // ===== Baseline (from Step 1) =====
+  const baseAvg       = +b.G5 || 0;      // average sale value
+  const baseUnitCost  = +b.G6 || 0;      // average cost per sale
+  const baseOverheadY = +b.J14 || 0;     // annual overhead (12 * monthly)
+  const targetNP      = +b.G13 || 0;     // desired NP
+  const salesExact    = +b.salesExact || 0;   // <-- exact (non-rounded) count
+  const baseSalesCnt  = +b.J6 || 0;      // rounded count (for cadence display)
+  const weeks         = +b.G11 || 48;
+  const days          = +b.G12 || 5;
 
-      const newAvg = baseAvg*(1+p);
-      const sales_sameVol = newAvg*baseSales;
-      const cos_sameVol   = baseCostTotal*(1+c);
-      const gp_sameVol    = sales_sameVol - cos_sameVol;
-      const exp_adj       = baseOverhead*(1+o);
-      const np_adjustOnly = gp_sameVol - exp_adj;
-      const incNP_adjustOnly = np_adjustOnly - targetNP;
+  // ===== Inputs (Step 2 controls) =====
+  const p = percentGet('W_price');    // price change %
+  const c = percentGet('W_cost');     // cost change %
+  const o = percentGet('W_overhead'); // overhead change %
+  const v = percentGet('W_volume');   // sales volume change %
 
-      const cosPct = (sales_sameVol? (cos_sameVol/sales_sameVol) : 0);
+  // ===== Part A: price/cost/overhead changes, volume unchanged =====
+  const unitPrice  = baseAvg      * (1 + p);
+  const unitCost   = baseUnitCost * (1 + c);
 
-      const addSalesCount = baseSales * v;
-      const newSalesCount = Math.max(0, Math.ceil(baseSales*(1+v)));
+  // Use exact baseline sales count for finance math (no rounding drift)
+  const sales_sameVol = unitPrice * salesExact;
+  const cos_sameVol   = unitCost  * salesExact;
+  const gp_sameVol    = sales_sameVol - cos_sameVol;
+  const exp_adj       = baseOverheadY * (1 + o);
+  const np_adjustOnly = gp_sameVol - exp_adj;
+  const incNP_adjustOnly = np_adjustOnly - targetNP;
 
-      const addRevenue    = addSalesCount * newAvg;
-      const addCost       = addSalesCount * (cosPct * newAvg);
-      const incNP_salesOnly = addRevenue - addCost;
-      const np_combo      = np_adjustOnly + incNP_salesOnly;
-      const incNP_combo   = np_combo - targetNP;
+  // Cost-of-sales % after changes (using same volume)
+  const cosPct = sales_sameVol ? (cos_sameVol / sales_sameVol) : 0;
 
-      const y = newSalesCount;
-      const m = Math.ceil(y/12);
-      const w = Math.ceil(y/(weeks||1));
-      const d = Math.ceil(w/(days||1));
+  // ===== Part B: volume change =====
+  // For finance math: use exact additional sales (can be fractional)
+  const addSalesExact = salesExact * v;
 
-      $('W_totalSales').textContent  = aud0(sales_sameVol);
-      $('W_costOfSales').textContent = aud0(cos_sameVol);
-      $('W_grossProfit').textContent = aud0(gp_sameVol);
-      $('W_expenses').textContent    = aud0(exp_adj);
-      $('W_newNP_row').textContent   = aud0(np_adjustOnly);
+  // For UI (cadence): show clean whole numbers
+  const newSalesCountUI = Math.max(0, Math.ceil(salesExact * (1 + v)));
+  const baseSalesCountUI = Math.ceil(salesExact);
+  const addSalesCountUI  = Math.max(0, newSalesCountUI - baseSalesCountUI);
 
-      $('W_addSalesCount_left').textContent = num0(addSalesCount);
-      $('W_newSalesCount_left').textContent = num0(newSalesCount);
+  // NP uplift from additional sales (using unitPrice/unitCost)
+  const addRevenue        = addSalesExact * unitPrice;
+  const addCost           = addSalesExact * unitCost;
+  const incNP_salesOnly   = addRevenue - addCost;
 
-      $('W_incNP_base').textContent      = aud0(incNP_adjustOnly < 500 ? 0 : incNP_adjustOnly);
-      $('W_incNP_salesOnly').textContent = aud0(incNP_salesOnly);
-      $('W_incNP_combo').textContent     = aud0(incNP_combo < 500 ? 0 : incNP_combo);
-      $('W_cosPct').textContent = pct1(cosPct);
+  // Combined (Part A + Part B)
+  const np_combo    = np_adjustOnly + incNP_salesOnly;
+  const incNP_combo = np_combo - targetNP;
 
-      $('W_year').textContent  = num0(y);
-      $('W_month').textContent = num0(m);
-      $('W_week').textContent  = num0(w);
-      $('W_day').textContent   = num0(d);
-    }
+  // Cadence numbers (use the UI-rounded count)
+  const y = newSalesCountUI;
+  const m = Math.ceil(y / 12);
+  const w = Math.ceil(y / (weeks || 1));
+  const d = Math.ceil(w / (days  || 1));
+
+  // ===== Write to UI =====
+  // Right-side finance table (Part A)
+  $('W_totalSales').textContent  = aud0(sales_sameVol);
+  $('W_costOfSales').textContent = aud0(cos_sameVol);
+  $('W_grossProfit').textContent = aud0(gp_sameVol);
+  $('W_expenses').textContent    = aud0(exp_adj);
+  $('W_newNP_row').textContent   = aud0(np_adjustOnly);
+
+  // Part B counts (left)
+  $('W_addSalesCount_left').textContent = num0(addSalesCountUI);
+  $('W_newSalesCount_left').textContent = num0(newSalesCountUI);
+
+  // Highlights
+  $('W_incNP_base').textContent      = aud0(incNP_adjustOnly < 500 ? 0 : incNP_adjustOnly);
+  $('W_incNP_salesOnly').textContent = aud0(incNP_salesOnly);
+  $('W_incNP_combo').textContent     = aud0(incNP_combo < 500 ? 0 : incNP_combo);
+  $('W_cosPct').textContent          = ((cosPct*100).toFixed(1)) + '%';
+
+  // Cadence
+  $('W_year').textContent  = num0(y);
+  $('W_month').textContent = num0(m);
+  $('W_week').textContent  = num0(w);
+  $('W_day').textContent   = num0(d);
+}
+
 
     document.addEventListener('click',(e)=>{
       const btn = e.target.closest('.pct-btn');
