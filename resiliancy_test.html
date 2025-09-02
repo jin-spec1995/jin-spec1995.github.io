@@ -195,6 +195,18 @@
 
     /* Attention highlight (if user tries to calc too early) */
     .attention { outline: 3px solid rgba(16,167,114,.25); border-radius: 12px; }
+    /* When embedded inside SuiteDash, shrink header/footer */
+html.embedded header.brand {
+  display: none;   /* hide the big JSB header */
+}
+html.embedded footer.site-footer {
+  display: none;   /* hide the footer inside the card */
+}
+html.embedded main.wrap {
+  padding-top: 12px;  /* less wasted space */
+  padding-bottom: 16px;
+}
+
   </style>
 </head>
 <body>
@@ -930,3 +942,4 @@
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </body>
 </html>
+
