@@ -127,16 +127,11 @@
     td.right{text-align:right}
 
     /* Footer */
-    .site-footer {
-  position: static;      /* was fixed */
-  border-top: 1px solid var(--line);
-  background:#fff;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:16px; padding:12px 20px;
-  box-shadow:none;       /* remove the shadow since it’s inline now */
-  margin-top:24px;       /* add some breathing room above footer */
-}
-
+    .site-footer{
+      position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 20px; z-index:1000;
+      box-shadow:0 -8px 24px rgba(13,59,46,.05);
+    }
     .footer-left{display:flex; align-items:center; gap:10px}
     .footer-left img{height:20px; width:auto}
     .footer-links{display:flex; gap:20px}
@@ -245,6 +240,63 @@ input, button { font-size: 16px; }
   .site-footer { position: static; box-shadow: none; }
 }
 .attention { outline: 3px solid rgba(16,167,114,.25); border-radius: 12px; }
+/* ===== Embed-safe / Portal-safe overrides ===== */
+html.embedded body {
+  background: transparent;   /* blend with SuiteDash card bg */
+  height: auto;              /* don't force 100% of outer viewport */
+}
+
+html.embedded .wrap {
+  margin: 0;                 /* remove outer margins that fight the portal's card padding */
+  padding: 16px;             /* lighter padding so more content fits on phones */
+  padding-top: 12px;
+  padding-bottom: 24px;
+  max-width: 100%;           /* avoid horizontal overflow inside the portal column */
+}
+
+/* Fixed bars cause double scroll in portals. Make them static when embedded. */
+html.embedded header.brand {
+  position: static;          /* was fixed */
+  border-bottom: 1px solid var(--line);
+  box-shadow: none;
+  margin-bottom: 8px;
+}
+
+html.embedded .site-footer {
+  position: static;          /* was fixed */
+  box-shadow: none;
+  margin-top: 16px;
+}
+
+/* Collapse 2-column layout to single column by default inside portal */
+html.embedded .grid.cols {
+  grid-template-columns: 1fr;
+}
+
+/* Make choices easier to tap in narrow columns */
+html.embedded .choices {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 420px){
+  html.embedded .choices { grid-template-columns: 1fr; }
+}
+
+/* Prevent inner scroll areas; let the portal handle scrolling */
+html.embedded #intro,
+html.embedded #questions,
+html.embedded #results {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Small tidy-ups for tight spaces */
+html.embedded .card { box-shadow: none; }
+html.embedded .brand-logo { height: 32px; }
+html.embedded .brand-title { font-size: 18px; }
+@media (max-width: 840px){
+  .grid.cols { grid-template-columns: 1fr; }
+  .wrap { padding-left: 16px; padding-right: 16px; }
+}
 
   </style>
 </head>
@@ -700,6 +752,17 @@ input, button { font-size: 16px; }
 
 <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
   <script>
+    // If the page is inside an iframe (SuiteDash widget/card), add a class to the <html>
+  (function(){
+    try {
+      if (window.top !== window.self) {
+        document.documentElement.classList.add('embedded');
+      }
+    } catch (e) {
+      // Some portals block cross-window access; assume embedded in that case
+      document.documentElement.classList.add('embedded');
+    }
+  })();
     // Configs
     const BOOKING_URL = "https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100";
 
@@ -1032,7 +1095,15 @@ compute = function(){
   }
   _compute();
 };
+
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
 
