@@ -118,6 +118,54 @@
     background:#f7fbf9; border:1px solid #dfe9e4; font-weight:700; color:#0b2f24;
     pointer-events:none; text-align:right;
   }
+  /* ===== Mobile-first improvements ===== */
+
+/* Make layout single-column on phones */
+@media (max-width: 900px){
+  .wrap{max-width:100%; margin:16px 0 36px 10px; padding:0 12px;}
+  .grid.cols-2, .grid.cols-2b{grid-template-columns:1fr !important}
+  .card{padding:14px}
+}
+
+/* Inputs stack nicely; bigger tap targets */
+@media (max-width: 720px){
+  .inputs{grid-template-columns:1fr !important; gap:8px 12px}
+  .inputs.pct{grid-template-columns:1fr !important}
+  .label-help{gap:10px}
+  input[type=text], input[type=number]{height:50px; font-size:16px}
+
+  /* Percentage controls: make steppers chunky and easy to hit */
+  .pct-control{grid-template-columns:1fr !important; gap:8px}
+  .pct-steps{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+  .pct-btn{padding:12px 14px; font-size:16px; border-radius:12px}
+  .pct-control > input[type=text]{text-align:right; padding-right:14px}
+  .help{transform:scale(1.05)}
+}
+
+/* Tables: make them scroll instead of squashing */
+.table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.table-wrap > table{min-width:640px}     /* gives breathing room so columns don't crush */
+@media (max-width: 420px){
+  .table-wrap > table{min-width:560px}
+}
+
+/* On very small screens, keep KPI tiles readable */
+@media (max-width: 720px){
+  .kpis{grid-template-columns:1fr !important}
+}
+
+/* Keep “highlight rows” obvious on mobile too */
+#step2Results table tbody tr:last-child td{
+  color:var(--brand-dark); font-weight:800;
+}
+#step2Results .card > table, #step3 .card > table { display:block; overflow-x:auto }
+#step2Results .card > table { min-width:640px }
+@media (max-width: 720px){
+  #tabs{gap:6px}
+  .tab{padding:10px 12px; font-size:14px}
+  .btn{padding:12px 16px; font-size:15px}
+}
+
 </style>
 </head>
 <body>
@@ -884,4 +932,3 @@ document.getElementById('logoHome').addEventListener('click', showIntro);
   </script>
 </body>
 </html>
-
