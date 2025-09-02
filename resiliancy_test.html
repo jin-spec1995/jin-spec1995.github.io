@@ -127,11 +127,16 @@
     td.right{text-align:right}
 
     /* Footer */
-    .site-footer{
-      position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--line);
-      display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 20px; z-index:1000;
-      box-shadow:0 -8px 24px rgba(13,59,46,.05);
-    }
+    .site-footer {
+  position: static;      /* was fixed */
+  border-top: 1px solid var(--line);
+  background:#fff;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding:12px 20px;
+  box-shadow:none;       /* remove the shadow since it’s inline now */
+  margin-top:24px;       /* add some breathing room above footer */
+}
+
     .footer-left{display:flex; align-items:center; gap:10px}
     .footer-left img{height:20px; width:auto}
     .footer-links{display:flex; gap:20px}
@@ -1030,3 +1035,4 @@ compute = function(){
 </script>
 </body>
 </html>
+
