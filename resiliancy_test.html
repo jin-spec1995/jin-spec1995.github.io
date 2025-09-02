@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" class="embedded" data-embed="1">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>JSB Resiliency Test</title>
   <link rel="icon" type="image/svg+xml" href="jsb_icon.svg" />
   <meta name="theme-color" content="#0d3b2e" />
- 
+  <script>
+/* Robust embedded detection + manual override via ?embed=1 */
+(function () {
+  const qs = new URLSearchParams(location.search);
+  const fromQS = qs.has("embed") || qs.has("embedded") || qs.get("mode") === "embed";
+
+  // Heuristic: iframe/embed OR referrer looks like a portal (whitelabels included)
+  let inFrame = false;
+  try { inFrame = (window.top !== window.self); } catch (e) { inFrame = true; }
+
+  const refHost = (document.referrer && new URL(document.referrer).hostname) || "";
+  const looksPortal = /suitedash|clientportal|portal|dashboard/i.test(refHost);
+
+  if (fromQS || inFrame || looksPortal) {
+    document.documentElement.classList.add("embedded");
+    document.documentElement.setAttribute("data-embed", "1");
+  }
+})();
+</script>
 
   <style>
     :root{
@@ -197,52 +215,10 @@
 
     /* Attention highlight (if user tries to calc too early) */
     .attention { outline: 3px solid rgba(16,167,114,.25); border-radius: 12px; }
-    /* ====== SuiteDash / embedded overrides (win CSS specificity) ====== */
-/* ===== SuiteDash / embedded overrides (final say) ===== */
-html.embedded header.brand,
-html[data-embed="1"] header.brand { display:none !important; }
-
-html.embedded footer.site-footer,
-html[data-embed="1"] footer.site-footer { display:none !important; }
-
-/* tighter paddings so the card isn't cramped */
-html.embedded main.wrap,
-html[data-embed="1"] main.wrap {
-  padding-top:12px !important;
-  padding-bottom:16px !important;
-}
-
-/* kill heavy shadows inside portal card to avoid inner scrollbars */
-html.embedded .card,
-html[data-embed="1"] .card { box-shadow:none !important; }
-
-/* friendlier choices grid in narrow portal columns */
-html.embedded .choices,
-html[data-embed="1"] .choices { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
-@media (max-width:420px){
-  html.embedded .choices,
-  html[data-embed="1"] .choices { grid-template-columns:1fr !important; }
-}
-
-
+    
   </style>
 </head>
 <body>
-  
-<script>
-(function () {
-  const qs = new URLSearchParams(location.search);
-  const manual = qs.has("embed") || qs.has("embedded") || qs.get("mode")==="embed";
-  let inFrame=false; try{ inFrame = (window.top!==window.self); }catch(e){ inFrame=true; }
-  const ref = document.referrer||"", looksPortal=/suitedash|clientportal|portal|dashboard/i.test(ref);
-  if (manual || inFrame || looksPortal) {
-    document.documentElement.classList.add("embedded");
-    document.documentElement.setAttribute("data-embed","1");
-  }
-})();
-</script>
-<!-- your header starts here -->
-
   <!-- Header (not fixed) -->
   <header class="brand" aria-label="Just Smart Business">
     <div class="brand-left">
@@ -281,11 +257,11 @@ html[data-embed="1"] .choices { grid-template-columns:repeat(2,minmax(0,1fr)) !i
 
             <p>This assessment will guide you through five critical areas of resilience:</p>
             <div class="pillars">
-              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Planning & Preparedness</strong> – your ability to anticipate and respond to crises</div>
-              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Financial Resilience</strong> – ensuring cashflow, forecasting, and reserves are sufficient</div>
-              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Risk Management</strong> – identifying, managing, and insuring against key risks</div>
-              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>IT & Communications</strong> – protecting systems, data, and maintaining continuity</div>
-              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Business Growth & Adaptability</strong> – ensuring resources, strategy, and leadership are ready for future challenges</div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Planning & Preparedness</strong></div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Financial Resilience</strong> </div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Risk Management</strong></div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>IT & Communications</strong></div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Business Growth & Adaptability</strong></div>
             </div>
 
             <p style="margin-top:10px">This calculator provides a clear, evidence-based picture of where your business stands today—so you know exactly what requires attention to make your business stronger, safer, and more sustainable.</p>
@@ -296,19 +272,7 @@ html[data-embed="1"] .choices { grid-template-columns:repeat(2,minmax(0,1fr)) !i
           </div>
 
           <!-- Brand block -->
-          <div class="card" style="border-radius:14px; border:1px dashed #cfeedd; background:linear-gradient(180deg,#f7fffb,#ffffff)">
-            <div class="card-title" style="margin-top:2px">
-              <span class="section-tag">About JSB</span>
-              <span class="subtle">Create • Refine • Achieve</span>
-            </div>
-            <p class="subtle" style="margin:8px 0 0">Practical, no-nonsense support for SME owners. We turn numbers into decisions and strategy into weekly action.</p>
-            <ul class="icon-list" style="margin-top:10px">
-              <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>KPI-driven planning</span></li>
-              <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Cashflow & profit focus</span></li>
-              <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Accountability & momentum</span></li>
-            </ul>
-          </div>
-        </div>
+          
       </div>
     </section>
 
@@ -975,6 +939,5 @@ html[data-embed="1"] .choices { grid-template-columns:repeat(2,minmax(0,1fr)) !i
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </body>
 </html>
-
 
 
