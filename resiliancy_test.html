@@ -53,15 +53,7 @@
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
 
-    header.brand{
-      position:static; /* not fixed */
-      background:#fff;
-      padding:14px 20px;
-      display:flex; align-items:center; justify-content:space-between;
-      border-bottom:1px solid var(--line);
-      box-shadow:0 4px 16px rgba(13,59,46,.06);
-      z-index:1;
-    }
+header.brand{position:fixed; inset:0 0 auto 0; background:#fff; z-index:1000; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); box-shadow:0 8px 32px rgba(13,59,46,.06); backdrop-filter:saturate(140%) blur(2px)}
     .brand-left{display:flex; align-items:center; gap:12px}
     .brand-logo{height:44px; width:auto}
     .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:20px}
@@ -75,7 +67,7 @@
       padding:24px 20px 32px;   /* comfortable spacing */
     }
 
-    .card{background:#fff; border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(13,59,46,.05)}
+    .card{background:#fff; border:1px solid var(--line); margin-top: 70px; border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(13,59,46,.05)}
     .card-title{display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:700; margin:2px 0 14px}
     .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0}
     .divider{height:1px; background:var(--line); margin:16px 0}
@@ -939,5 +931,6 @@
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </body>
 </html>
+
 
 
