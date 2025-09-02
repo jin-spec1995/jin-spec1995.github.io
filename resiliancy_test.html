@@ -8,9 +8,9 @@
   <meta name="theme-color" content="#0d3b2e" />
   <style>
     :root{
-      --brand-dark:#0d3b2e;   /* JSB dark green */
-      --brand-mid:#0e6f57;    /* deep green */
-      --brand-light:#22c28a;  /* accent green */
+      --brand-dark:#0d3b2e;
+      --brand-mid:#0e6f57;
+      --brand-light:#22c28a;
       --ink:#0b0b0b;
       --paper:#ffffff;
       --muted:#5e6b74;
@@ -19,31 +19,43 @@
       --glow: rgba(34,194,138,.20);
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html, body { height: 100%; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    /* Page skeleton: header + flexible main + sticky (non-fixed) footer */
     body{
       margin:0;
+      display:flex;
+      flex-direction:column;
+      min-height:100svh;
       font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--ink); background:var(--paper);
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
 
-    /* Header & layout */
-    .wrap{max-width:900px; margin:20px auto 48px; padding:0 20px; padding-top:92px; padding-bottom:80px;}
     header.brand{
-      position:fixed; inset:0 0 auto 0; background:#fff; z-index:1000;
-      padding:14px 20px; display:flex; align-items:center; justify-content:space-between;
+      position:static; /* not fixed */
+      background:#fff;
+      padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between;
       border-bottom:1px solid var(--line);
-      box-shadow:0 8px 32px rgba(13,59,46,.06);
-      backdrop-filter: saturate(140%) blur(2px);
+      box-shadow:0 4px 16px rgba(13,59,46,.06);
+      z-index:1;
     }
     .brand-left{display:flex; align-items:center; gap:12px}
     .brand-logo{height:44px; width:auto}
     .brand-title{font-weight:800; letter-spacing:.2px; color:var(--brand-mid); font-size:20px}
     .subtle{color:var(--muted); font-size:14px}
 
-    /* Cards & tags */
-    .card{background:#fff; border:1px solid var(--line); border-radius:18px; padding:20px;
-          box-shadow:0 10px 30px rgba(13,59,46,.05)}
+    main.wrap{
+      flex:1 0 auto;            /* grow to push footer to bottom if content is short */
+      max-width:1120px;
+      width:100%;
+      margin:0 auto;
+      padding:24px 20px 32px;   /* comfortable spacing */
+    }
+
+    .card{background:#fff; border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(13,59,46,.05)}
     .card-title{display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:700; margin:2px 0 14px}
     .section-tag{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--chip); border-radius:24px; font-size:12px; color:var(--brand-mid); border:1px solid #eaf4f0}
     .divider{height:1px; background:var(--line); margin:16px 0}
@@ -66,8 +78,6 @@
     .intro p{margin:10px 0; line-height:1.6}
     .intro-grid{display:grid; gap:14px; margin-top:12px}
     @media (min-width:840px){ .intro-grid{grid-template-columns:1.2fr .8fr} }
-
-    /* Icon bullets & pillar chips */
     .icon-list{margin:8px 0 4px; padding-left:0; list-style:none; display:grid; gap:6px}
     .icon-li{display:flex; align-items:flex-start; gap:10px}
     .icon{flex:0 0 auto; width:18px; height:18px; border-radius:6px; display:inline-grid; place-items:center; border:1px solid #b9eddc; background:#dff8ee}
@@ -75,13 +85,13 @@
     .pillar{display:flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--line); border-radius:12px; background:#fff}
     .pillar .dot{width:8px; height:8px; border-radius:999px; background:var(--brand-light); box-shadow:0 0 0 4px var(--glow)}
 
-    /* Two-column Q/A layout */
+    /* Two-column layout switches to single on small screens */
     .grid{display:grid; gap:16px}
     .grid.cols{grid-template-columns:1.2fr 1.8fr}
     #layout.results-only{grid-template-columns:1fr; max-width:780px; margin-inline:auto}
     #questions, #results{display:none}
 
-    /* Question blocks */
+    /* Questions */
     details.block{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff}
     details.block + details.block{margin-top:10px}
     summary{list-style:none; cursor:pointer; user-select:none; padding:14px 16px; display:flex; align-items:center; gap:10px; font-weight:700; background:#f7fbf9; color:#426159}
@@ -126,11 +136,13 @@
     tbody tr:last-child td{border-bottom:0}
     td.right{text-align:right}
 
-    /* Footer */
-    .site-footer{
-      position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--line);
-      display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 20px; z-index:1000;
-      box-shadow:0 -8px 24px rgba(13,59,46,.05);
+    /* Footer (non-fixed, sticky bottom via flex layout) */
+    footer.site-footer{
+      position:static;        /* not fixed */
+      flex-shrink:0;
+      background:#fff; border-top:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 20px;
+      box-shadow:0 -4px 12px rgba(13,59,46,.05);
     }
     .footer-left{display:flex; align-items:center; gap:10px}
     .footer-left img{height:20px; width:auto}
@@ -138,180 +150,67 @@
     .footer-links a{color:var(--brand-mid); font-weight:600; text-decoration:none}
     .footer-links a:hover{text-decoration:underline}
 
-    @media print{
-      .actions{display:none !important}
-      .card, table{box-shadow:none}
-      .wrap{margin:0; padding:0}
-      header.brand{margin-bottom:8px}
-      .kpi .value{font-size:18px}
+    /* Mobile enhancements */
+    input, button { font-size:16px; } /* prevent iOS zoom on focus */
+    @media (max-width: 840px){
+      .grid.cols { grid-template-columns: 1fr; }
+      main.wrap { padding-left:16px; padding-right:16px; }
+      #layout.results-only { max-width:100%; }
     }
-   /* ===== PDF report styling (used in hidden #printReport) ===== */
-.print-wrap{
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  color:#0b0b0b; font-size:12.5px; line-height:1.45;
-  padding:0;               /* was 16px — remove inner padding */
-  margin:0;                /* ensure no outer margins */
-  width:100%; display:block;
-}
+    @media (max-width: 720px){
+      .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      footer.site-footer { box-shadow:none; }
+    }
+    @media (max-width: 400px){
+      .choices { grid-template-columns: 1fr; }
+    }
 
-/* remove any accidental top margin on the first block */
-.print-wrap > *:first-child{ margin-top:0 !important; }
+    /* ===== PDF report styling (hidden container) ===== */
+    .print-wrap{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:#0b0b0b; font-size:12.5px; line-height:1.45;
+      padding:0; margin:0; width:100%; display:block;
+    }
+    .print-wrap > *:first-child{ margin-top:0 !important; }
+    .print-header{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:0 0 10px; border-bottom:1px solid #e6eaee; margin-bottom:12px}
+    .print-brand{display:flex; align-items:center; gap:10px}
+    .print-brand img{height:28px; width:auto}
+    .print-title{font-weight:800; color:#0e6f57}
+    .print-meta{color:#5e6b74; font-size:12px}
+    .print-section{margin:12px 0}
+    .print-h2{font-weight:800; color:#0e6f57; margin:6px 0}
+    .print-kpis{display:grid; gap:8px; grid-template-columns:repeat(3,1fr)}
+    .print-kpi{border:1px solid #e6eaee; border-radius:10px; padding:10px; background:#fff}
+    .print-kpi .label{font-size:11px; color:#5e6b74}
+    .print-kpi .value{font-size:18px; font-weight:800}
+    .print-banner.low{border:1px solid #ffd79c; background:#fff9f0; border-radius:10px; padding:10px}
+    .print-banner.mid{border:1px solid #c2ecea; background:#f2fbfb; border-radius:10px; padding:10px}
+    .print-banner.high{border:1px solid #b8e7ce; background:#f6fffa; border-radius:10px; padding:10px}
+    .print-table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid #e6eaee; border-radius:10px; overflow:hidden; font-size:12px}
+    .print-table th, .print-table td{padding:8px 10px; border-bottom:1px solid #e6eaee; text-align:left}
+    .print-table thead th{background:#f0faf7; color:#426159; font-weight:800}
+    .print-qa{margin:8px 0 0; display:grid; gap:8px}
+    .print-q{font-weight:600}
+    .print-a{margin:2px 0 0}
 
-
-.print-header{
-  display:flex; align-items:center; justify-content:space-between; gap:14px;
-  padding:0 0 10px; border-bottom:1px solid #e6eaee; margin-bottom:12px;
-}
-.print-brand{display:flex; align-items:center; gap:10px}
-.print-brand img{height:28px; width:auto}
-.print-title{font-weight:800; color:#0e6f57}
-.print-meta{color:#5e6b74; font-size:12px}
-.print-section{margin:12px 0}
-.print-h2{font-weight:800; color:#0e6f57; margin:6px 0}
-.print-kpis{display:grid; gap:8px; grid-template-columns:repeat(3,1fr)}
-.print-kpi{border:1px solid #e6eaee; border-radius:10px; padding:10px; background:#fff}
-.print-kpi .label{font-size:11px; color:#5e6b74}
-.print-kpi .value{font-size:18px; font-weight:800}
-.print-banner.low{border:1px solid #ffd79c; background:#fff9f0; border-radius:10px; padding:10px}
-.print-banner.mid{border:1px solid #c2ecea; background:#f2fbfb; border-radius:10px; padding:10px}
-.print-banner.high{border:1px solid #b8e7ce; background:#f6fffa; border-radius:10px; padding:10px}
-.print-table{width:100%; border-collapse:separate; border-spacing:0; border:1px solid #e6eaee; border-radius:10px; overflow:hidden; font-size:12px}
-.print-table th, .print-table td{padding:8px 10px; border-bottom:1px solid #e6eaee; text-align:left}
-.print-table thead th{background:#f0faf7; color:#426159; font-weight:800}
-.print-qa{margin:8px 0 0; display:grid; gap:8px}
-.print-q{font-weight:600}
-.print-a{margin:2px 0 0}
-/* ==== Mobile enhancements ==== */
-
-/* Prevent iOS zoom on input focus */
-html { -webkit-text-size-adjust: 100%; }
-input, button { font-size: 16px; }
-
-/* Stack the two-column layout on phones */
-@media (max-width: 840px){
-  .grid.cols { grid-template-columns: 1fr; }
-  #layout.results-only { max-width: 100%; }
-  .wrap { padding-top: 84px; padding-left: 16px; padding-right: 16px; }
-}
-
-/* Softer header on scroll + smaller logo on mobile */
-@media (max-width: 600px){
-  header.brand { padding: 10px 14px; }
-  .brand-logo { height: 32px; }
-  .brand-title { font-size: 18px; }
-}
-
-/* Intro: tighter hero spacing on mobile */
-@media (max-width: 600px){
-  .intro-hero { padding: 16px; }
-  .intro h1 { font-size: 22px; line-height: 1.25; }
-  .intro p { margin: 8px 0; }
-}
-
-/* Questions: make choices easy to tap */
-@media (max-width: 720px){
-  /* 2 columns on small tablets, 1 col on narrow phones */
-  .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 400px){
-  .choices { grid-template-columns: 1fr; }
-}
-
-/* Bigger touch targets, clearer selection */
-.chip-choice { padding: 12px; min-height: 44px; }
-.chip-choice:has(input:checked){ box-shadow: 0 0 0 4px rgba(16,167,114,.18); }
-
-/* Make the Calculate button easy to reach */
-@media (max-width: 600px){
-  .actions { position: sticky; bottom: 12px; z-index: 100; }
-  .actions .btn { flex: 1 1 auto; justify-content: center; }
-}
-
-/* Results cards & table: compact on mobile */
-@media (max-width: 600px){
-  .kpis { grid-template-columns: 1fr 1fr; }
-  .kpis .kpi .value { font-size: 18px; }
-  table { font-size: 13px; }
-  th, td { padding: 8px 10px; }
-}
-
-/* Footer: avoid covering content on phones */
-@media (max-width: 720px){
-  .site-footer { position: static; box-shadow: none; }
-}
-.attention { outline: 3px solid rgba(16,167,114,.25); border-radius: 12px; }
-/* ===== Embed-safe / Portal-safe overrides ===== */
-html.embedded body {
-  background: transparent;   /* blend with SuiteDash card bg */
-  height: auto;              /* don't force 100% of outer viewport */
-}
-
-html.embedded .wrap {
-  margin: 0;                 /* remove outer margins that fight the portal's card padding */
-  padding: 16px;             /* lighter padding so more content fits on phones */
-  padding-top: 12px;
-  padding-bottom: 24px;
-  max-width: 100%;           /* avoid horizontal overflow inside the portal column */
-}
-
-/* Fixed bars cause double scroll in portals. Make them static when embedded. */
-html.embedded header.brand {
-  position: static;          /* was fixed */
-  border-bottom: 1px solid var(--line);
-  box-shadow: none;
-  margin-bottom: 8px;
-}
-
-html.embedded .site-footer {
-  position: static;          /* was fixed */
-  box-shadow: none;
-  margin-top: 16px;
-}
-
-/* Collapse 2-column layout to single column by default inside portal */
-html.embedded .grid.cols {
-  grid-template-columns: 1fr;
-}
-
-/* Make choices easier to tap in narrow columns */
-html.embedded .choices {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-@media (max-width: 420px){
-  html.embedded .choices { grid-template-columns: 1fr; }
-}
-
-/* Prevent inner scroll areas; let the portal handle scrolling */
-html.embedded #intro,
-html.embedded #questions,
-html.embedded #results {
-  max-height: none;
-  overflow: visible;
-}
-
-/* Small tidy-ups for tight spaces */
-html.embedded .card { box-shadow: none; }
-html.embedded .brand-logo { height: 32px; }
-html.embedded .brand-title { font-size: 18px; }
-@media (max-width: 840px){
-  .grid.cols { grid-template-columns: 1fr; }
-  .wrap { padding-left: 16px; padding-right: 16px; }
-}
-
+    /* Attention highlight (if user tries to calc too early) */
+    .attention { outline: 3px solid rgba(16,167,114,.25); border-radius: 12px; }
   </style>
 </head>
 <body>
-  <div class="wrap" id="pageRoot">
-    <header class="brand" aria-label="Just Smart Business">
-      <div class="brand-left">
-        <img src="jsb_icon.svg" alt="Just Smart Business" class="brand-logo" />
-        <div>
-          <div class="brand-title">Resiliency Assessment</div>
-          <div class="subtle">Assess & Improve Business Resilience</div>
-        </div>
+  <!-- Header (not fixed) -->
+  <header class="brand" aria-label="Just Smart Business">
+    <div class="brand-left">
+      <img src="jsb_icon.svg" alt="Just Smart Business" class="brand-logo" />
+      <div>
+        <div class="brand-title">Just Smart Business</div>
+        <div class="subtle">Resiliency Test — Assess & Improve Business Resilience</div>
       </div>
-    </header>
+    </div>
+  </header>
 
+  <!-- Main content -->
+  <main class="wrap" id="pageRoot">
     <!-- INTRO -->
     <section class="card intro" id="intro" aria-labelledby="introTitle">
       <div class="card-title">
@@ -321,7 +220,7 @@ html.embedded .brand-title { font-size: 18px; }
 
       <div class="intro-hero">
         <div class="intro-header">
-          
+          <span class="intro-badge">Start here</span>
           <h1>Build a stronger, safer, more sustainable business</h1>
         </div>
 
@@ -330,30 +229,18 @@ html.embedded .brand-title { font-size: 18px; }
             <p>Running a business is not only about today’s results—it is about being prepared for tomorrow’s uncertainties. From cashflow pressures to supply interruptions or technology failures, unexpected events can arise suddenly—and without planning, they can put your business at risk</p>
             <p>Business resilience is the ability to withstand shocks, adapt quickly, and continue moving forward. By assessing your current level of resilience, you can:</p>
             <ul class="icon-list">
-              <li class="icon-li">
-                <span class="icon" aria-hidden="true">
-                  <!-- check icon -->
-                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                <span>Identify vulnerabilities before they become serious problems</span>
-              </li>
-              <li class="icon-li">
-                <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span>Strengthen the core systems that support your business</span>
-              </li>
-              <li class="icon-li">
-                <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span>Build confidence in your ability to handle disruption and change</span>
-              </li>
+              <li class="icon-li"><span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Identify vulnerabilities before they become serious problems</span></li>
+              <li class="icon-li"><span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Strengthen the core systems that support your business</span></li>
+              <li class="icon-li"><span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Build confidence in your ability to handle disruption and change</span></li>
             </ul>
 
             <p>This assessment will guide you through five critical areas of resilience:</p>
             <div class="pillars">
-              <div class="pillar"><span class="" aria-hidden="true"></span><strong>Planning & Preparedness</strong></div>
-              <div class="pillar"><span class="" aria-hidden="true"></span><strong>Financial Resilience</strong></div>
-              <div class="pillar"><span class="" aria-hidden="true"></span><strong>Risk Management</strong></div>
-              <div class="pillar"><span class="" aria-hidden="true"></span><strong>IT & Communications</strong></div>
-              <div class="pillar"><span class="" aria-hidden="true"></span><strong>Business Growth & Adaptability</strong></div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Planning & Preparedness</strong> – your ability to anticipate and respond to crises</div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Financial Resilience</strong> – ensuring cashflow, forecasting, and reserves are sufficient</div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Risk Management</strong> – identifying, managing, and insuring against key risks</div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>IT & Communications</strong> – protecting systems, data, and maintaining continuity</div>
+              <div class="pillar"><span class="dot" aria-hidden="true"></span><strong>Business Growth & Adaptability</strong> – ensuring resources, strategy, and leadership are ready for future challenges</div>
             </div>
 
             <p style="margin-top:10px">This calculator provides a clear, evidence-based picture of where your business stands today—so you know exactly what requires attention to make your business stronger, safer, and more sustainable.</p>
@@ -363,8 +250,19 @@ html.embedded .brand-title { font-size: 18px; }
             </div>
           </div>
 
-          <!-- Decorative / brand block -->
-          
+          <!-- Brand block -->
+          <div class="card" style="border-radius:14px; border:1px dashed #cfeedd; background:linear-gradient(180deg,#f7fffb,#ffffff)">
+            <div class="card-title" style="margin-top:2px">
+              <span class="section-tag">About JSB</span>
+              <span class="subtle">Create • Refine • Achieve</span>
+            </div>
+            <p class="subtle" style="margin:8px 0 0">Practical, no-nonsense support for SME owners. We turn numbers into decisions and strategy into weekly action.</p>
+            <ul class="icon-list" style="margin-top:10px">
+              <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>KPI-driven planning</span></li>
+              <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Cashflow & profit focus</span></li>
+              <li class="icon-li"><span class="icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#0e6f57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Accountability & momentum</span></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -711,8 +609,6 @@ html.embedded .brand-title { font-size: 18px; }
         </table>
 
         <div class="divider"></div>
-        <!-- Hidden report root that we render into a PDF -->
-<section id="printReport" aria-hidden="true" style="display:none"></section>
 
         <!-- YOUR NEXT STEP -->
         <section aria-labelledby="nextStepTitle" id="nextStep">
@@ -729,44 +625,40 @@ html.embedded .brand-title { font-size: 18px; }
           </ul>
           <div class="actions" style="margin-top:12px">
             <a class="btn btn-primary" id="bookBtn" href="https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100" target="_blank" rel="noopener">Book a 20-minute free call</a>
-             <button class="btn btn-ghost" id="downloadBtn" type="button">Download PDF</button>
+            <button class="btn btn-ghost" id="downloadBtn" type="button">Download PDF</button>
             <button class="btn btn-ghost" id="resetBtnR" type="button">Reset</button>
-            <p class="subtle" style="margin-top:8px"><strong>Reminder:</strong> If you want to book an appointment, please <strong>download this PDF</strong> and <strong>upload it to your file</strong> in the portal.</p>
           </div>
         </section>
       </section>
     </div>
+  </main>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <div class="footer-left">
-        <img src="jsb_icon.svg" alt="JSB icon" />
-        <span class="subtle">© <span id="year"></span> Just Smart Business</span>
-      </div>
-      <div class="footer-links">
-        <a href="https://justsmartbusiness.com.au" target="_blank" rel="noopener">Website</a>
-        
-      </div>
-    </footer>
-  </div>
+  <!-- Footer (not fixed; stays at bottom) -->
+  <footer class="site-footer">
+    <div class="footer-left">
+      <img src="jsb_icon.svg" alt="JSB icon" />
+      <span class="subtle">© <span id="year"></span> Just Smart Business</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://justsmartbusiness.com.au" target="_blank" rel="noopener">Website</a>
+      <a href="https://justsmartbusiness.com.au/contact" target="_blank" rel="noopener">Contact Us</a>
+    </div>
+  </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <!-- Hidden report root for PDF -->
+  <section id="printReport" aria-hidden="true" style="display:none"></section>
+
   <script>
-    // If the page is inside an iframe (SuiteDash widget/card), add a class to the <html>
-  (function(){
-    try {
-      if (window.top !== window.self) {
-        document.documentElement.classList.add('embedded');
-      }
-    } catch (e) {
-      // Some portals block cross-window access; assume embedded in that case
-      document.documentElement.classList.add('embedded');
-    }
-  })();
-    // Configs
+    // Detect embedded (e.g., SuiteDash) to apply optional embed-specific tweaks
+    (function(){
+      try { if (window.top !== window.self) document.documentElement.classList.add('embedded'); }
+      catch(e){ document.documentElement.classList.add('embedded'); }
+    })();
+
+    // Config
     const BOOKING_URL = "https://portal.justsmartbusiness.com.au/portal/dashboard/view/150100";
 
-    // Sections with dynamic question ids (5 per section)
+    // Sections (5 each)
     const sections = [
       { key:"Planning & Preparedness",    ids:["q-1-1","q-1-2","q-1-3","q-1-4","q-1-5"] },
       { key:"Financial Resilience",       ids:["q-2-1","q-2-2","q-2-3","q-2-4","q-2-5"] },
@@ -775,7 +667,7 @@ html.embedded .brand-title { font-size: 18px; }
       { key:"Business Growth & Adaptability", ids:["q-5-1","q-5-2","q-5-3","q-5-4","q-5-5"] },
     ];
 
-    // Result texts by bands (from your copy doc)
+    // Result texts by band
     const bandTexts = [
       "Your current resilience score is low, but this is a valuable starting point. The good news is that there are many simple steps you can take to strengthen your business and reduce risk. With the right plan, you can quickly improve your ability to respond to challenges.",
       "You have some resilience strategies in place, but there are still significant gaps that could leave your business exposed. Many owners want certainty in uncertain times—and the best way to create it is by putting stronger systems and plans in place.",
@@ -787,21 +679,25 @@ html.embedded .brand-title { font-size: 18px; }
     const $ = (sel,scope=document)=>scope.querySelector(sel);
     const $$ = (sel,scope=document)=>Array.from(scope.querySelectorAll(sel));
     const sum = a => a.reduce((x,y)=>x+y,0);
-    const cap80 = (x)=> Math.min(x, 80); // display cap per your preference
+    const cap80 = (x)=> Math.min(x, 80); // display cap per your earlier preference
     const pct = (x, max) => Math.round((x/max)*100);
 
     function getValue(name){
       const el = document.querySelector(`input[name="${name}"]:checked`);
       return el ? parseInt(el.value,10) : 0;
     }
-
     function allAnswered(){
       const allIds = sections.flatMap(s=>s.ids);
       return allIds.every(id => !!getValue(id));
     }
+    function firstUnansweredId(){
+      for (const s of sections){ for (const id of s.ids){
+        if (!document.querySelector(`input[name="${id}"]:checked`)) return id;
+      }}
+      return null;
+    }
 
     function start(){
-      // Hide intro, show questions
       $("#intro").style.display = "none";
       $("#questions").style.display = "block";
       $("#results").style.display = "none";
@@ -810,7 +706,15 @@ html.embedded .brand-title { font-size: 18px; }
     }
 
     function compute(){
-      if(!allAnswered()){ alert("Please answer all questions before calculating."); return; }
+      if(!allAnswered()){
+        const id = firstUnansweredId();
+        const container = document.querySelector(`.choices[data-name="${id}"]`);
+        container?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        container?.classList.add('attention');
+        setTimeout(()=>container?.classList.remove('attention'), 1200);
+        alert("Please answer all questions before calculating.");
+        return;
+      }
 
       const secScores = sections.map(s=>{
         const values = s.ids.map(id=>getValue(id));
@@ -818,15 +722,13 @@ html.embedded .brand-title { font-size: 18px; }
       });
       const overallRaw = sum(secScores.map(s=>s.raw));
       const overallMax = sum(secScores.map(s=>s.max));
-      const overallPercent = pct(overallRaw, overallMax);   // true %
-      const overallDisplay = cap80(overallPercent);         // display-capped
+      const overallPercent = pct(overallRaw, overallMax);
+      const overallDisplay = cap80(overallPercent);
 
-      // KPIs
       $("#overallPct").textContent = `${overallDisplay}%`;
 
       // Breakdown
-      const tb = $("#breakdownBody");
-      tb.innerHTML = "";
+      const tb = $("#breakdownBody"); tb.innerHTML = "";
       secScores.forEach(s=>{
         const p = cap80(pct(s.raw, s.max));
         const tr = document.createElement("tr");
@@ -834,13 +736,13 @@ html.embedded .brand-title { font-size: 18px; }
         tb.appendChild(tr);
       });
 
-      // Strongest / weakest (based on raw, not capped)
+      // Strongest / weakest
       const strongest = secScores.slice().sort((a,b)=> b.raw-a.raw)[0];
       const weakest   = secScores.slice().sort((a,b)=> a.raw-b.raw)[0];
       $("#strongest").textContent = strongest.key;
       $("#weakest").textContent   = weakest.key;
 
-      // Band & text (use uncapped % for classification)
+      // Band & text
       const p = overallPercent;
       const banner  = $("#resultBanner");
       banner.classList.remove("low","mid","high");
@@ -851,7 +753,7 @@ html.embedded .brand-title { font-size: 18px; }
       else { idx = 3; banner.classList.add("high"); }
       $("#resultText").textContent = bandTexts[idx];
 
-      // Show results-only panel
+      // Show results
       $("#layout").classList.add("results-only");
       $("#questions").style.display = "none";
       $("#results").style.display = "block";
@@ -874,236 +776,157 @@ html.embedded .brand-title { font-size: 18px; }
       window.scrollTo({top:0,behavior:"smooth"});
     }
 
+    // ---- PDF helpers ----
+    function getSelectedLabel(name){
+      const input = document.querySelector(`input[name="${name}"]:checked`);
+      if(!input) return null;
+      const label = input.closest('label');
+      return label ? label.textContent.trim() : null;
+    }
+    function collectAnswered(){
+      const answered = [];
+      sections.forEach(sec=>{
+        sec.ids.forEach((id)=>{
+          const group = document.querySelector(`.choices[data-name="${id}"]`);
+          if(!group) return;
+          const qLabel = group.previousElementSibling?.textContent?.trim() || "";
+          const aText = getSelectedLabel(id);
+          if(aText){ answered.push({ section: sec.key, question: qLabel, answer: aText }); }
+        });
+      });
+      return answered;
+    }
+    function buildReportHTML(){
+      const overall = $("#overallPct")?.textContent?.trim() || "—";
+      const strongest = $("#strongest")?.textContent?.trim() || "—";
+      const weakest = $("#weakest")?.textContent?.trim() || "—";
+      const resultText = $("#resultText")?.textContent?.trim() || "";
+      const bannerClass = $("#resultBanner")?.classList.contains('high') ? 'high'
+                        : $("#resultBanner")?.classList.contains('mid') ? 'mid' : 'low';
+
+      const rows = Array.from(document.querySelectorAll("#breakdownBody tr")).map(tr=>{
+        const tds = tr.querySelectorAll("td");
+        return { section: tds[0]?.textContent?.trim() || "", pct: tds[1]?.textContent?.trim() || "" };
+      });
+
+      const qa = collectAnswered().reduce((acc, item)=>{
+        (acc[item.section] ||= []).push(item);
+        return acc;
+      }, {});
+
+      const today = new Date();
+      const dateStr = today.toLocaleString(undefined, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+
+      const breakdownHTML = `
+        <table class="print-table" aria-label="Section breakdown">
+          <thead><tr><th>Section</th><th>%</th></tr></thead>
+          <tbody>${rows.map(r=>`<tr><td>${r.section}</td><td>${r.pct}</td></tr>`).join("")}</tbody>
+        </table>`;
+
+      let qaHTML = "";
+      Object.keys(qa).forEach(sec=>{
+        qaHTML += `<div class="print-section"><div class="print-h2">${sec}</div><div class="print-qa">`;
+        qa[sec].forEach(item=>{
+          qaHTML += `<div><div class="print-q">${item.question}</div><div class="print-a">Answer: <strong>${item.answer}</strong></div></div>`;
+        });
+        qaHTML += `</div></div>`;
+      });
+
+      return `
+        <div class="print-wrap">
+          <div class="print-header">
+            <div class="print-brand">
+              <img src="jsb_icon.svg" alt="JSB" />
+              <div>
+                <div class="print-title">JSB Resiliency Assessment Report</div>
+                <div class="print-meta">Generated ${dateStr}</div>
+              </div>
+            </div>
+            <div class="print-meta">justsmartbusiness.com.au</div>
+          </div>
+
+          <div class="print-section">
+            <div class="print-h2">Summary</div>
+            <div class="print-kpis">
+              <div class="print-kpi"><div class="label">Overall Resiliency Score</div><div class="value">${overall}</div></div>
+              <div class="print-kpi"><div class="label">Strongest Area</div><div class="value">${strongest}</div></div>
+              <div class="print-kpi"><div class="label">Biggest Gap</div><div class="value">${weakest}</div></div>
+            </div>
+          </div>
+
+          <div class="print-section">
+            <div class="print-h2">Result Interpretation</div>
+            <div class="print-banner ${bannerClass}">${resultText}</div>
+          </div>
+
+          <div class="print-section">
+            <div class="print-h2">Section Breakdown</div>
+            ${breakdownHTML}
+          </div>
+
+          <div class="print-section">
+            <div class="print-h2">Your Answers (answered items only)</div>
+            ${qaHTML || '<div class="print-meta">No answers selected.</div>'}
+          </div>
+        </div>
+      `;
+    }
+    function addBrandedFooters(pdf){
+      const total = pdf.internal.getNumberOfPages();
+      for(let i = 1; i <= total; i++){
+        pdf.setPage(i);
+        const pageWidth  = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        pdf.setDrawColor(230, 234, 238); pdf.setLineWidth(0.2);
+        pdf.line(8, pageHeight - 12, pageWidth - 8, pageHeight - 12);
+        pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9); pdf.setTextColor(14, 111, 87);
+        const footer = `Just Smart Business  |  justsmartbusiness.com.au  |  Page ${i} of ${total}`;
+        pdf.text(footer, 8, pageHeight - 6);
+      }
+    }
+    async function downloadPDF_real(){
+      if($("#results").style.display !== "block"){
+        alert("Please calculate your results first."); return;
+      }
+      if (typeof window.html2pdf === "undefined"){
+        alert("PDF engine couldn’t load. Check your internet connection or CSP."); return;
+      }
+      const container = $("#printReport");
+      container.innerHTML = buildReportHTML();
+      container.style.display = "block";
+
+      const d = new Date(), pad = n=>String(n).padStart(2,"0");
+      const filename = `JSB_Resiliency_Assessment_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.pdf`;
+
+      const opt = {
+        margin: [6,8,16,8], // [top,left,bottom,right] mm
+        filename,
+        image: { type:'jpeg', quality:0.98 },
+        html2canvas: { scale:2, useCORS:true, backgroundColor:'#ffffff', scrollY:0 },
+        jsPDF: { unit:'mm', format:'a4', orientation:'portrait' },
+        pagebreak: { mode:['css','legacy'] }
+      };
+
+      try{
+        await html2pdf().set(opt).from(container).toPdf().get('pdf').then(pdf=>{ addBrandedFooters(pdf); }).save();
+      } finally {
+        container.style.display = "none"; container.innerHTML = "";
+      }
+    }
+
     // Events
     document.addEventListener("click", (e)=>{
       if (e.target.id === "startBtn") start();
       if (e.target.id === "calcBtn") compute();
-      if (e.target.id === "resetBtnR") resetAll(true);   // from results → intro
-      if (e.target.id === "resetBtnQ") resetAll(false);  // from questions → keep on questions
+      if (e.target.id === "resetBtnR") resetAll(true);
+      if (e.target.id === "resetBtnQ") resetAll(false);
+      if (e.target.id === "downloadBtn") downloadPDF_real();
     });
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-    
-// ── Helpers reused from earlier code ─────────────────────────
-function getSelectedLabel(name){
-  const input = document.querySelector(`input[name="${name}"]:checked`);
-  if(!input) return null;
-  const label = input.closest('label');
-  return label ? label.textContent.trim() : null;
-}
-function collectAnswered(){
-  const answered = [];
-  sections.forEach(sec=>{
-    sec.ids.forEach((id)=>{
-      const group = document.querySelector(`.choices[data-name="${id}"]`);
-      if(!group) return;
-      const qLabel = group.previousElementSibling?.textContent?.trim() || "";
-      const aText = getSelectedLabel(id);
-      if(aText){ answered.push({ section: sec.key, question: qLabel, answer: aText }); }
-    });
-  });
-  return answered;
-}
+    $("#year").textContent = new Date().getFullYear();
+  </script>
 
-// Build a clean HTML report for PDF (vector text, not an image)
-function buildReportHTML(){
-  const overall = document.getElementById("overallPct")?.textContent?.trim() || "—";
-  const strongest = document.getElementById("strongest")?.textContent?.trim() || "—";
-  const weakest = document.getElementById("weakest")?.textContent?.trim() || "—";
-  const resultText = document.getElementById("resultText")?.textContent?.trim() || "";
-  const bannerClass = document.getElementById("resultBanner")?.classList.contains('high') ? 'high'
-                      : document.getElementById("resultBanner")?.classList.contains('mid') ? 'mid'
-                      : 'low';
-
-  // read breakdown rows
-  const rows = Array.from(document.querySelectorAll("#breakdownBody tr")).map(tr=>{
-    const tds = tr.querySelectorAll("td");
-    return { section: tds[0]?.textContent?.trim() || "", pct: tds[1]?.textContent?.trim() || "" };
-  });
-
-  // answered only
-  const qa = collectAnswered().reduce((acc, item)=>{
-    acc[item.section] = acc[item.section] || [];
-    acc[item.section].push(item);
-    return acc;
-  }, {});
-
-  const today = new Date();
-  const dateStr = today.toLocaleString(undefined, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
-
-  const breakdownHTML = `
-    <table class="print-table" aria-label="Section breakdown">
-      <thead><tr><th>Section</th><th>%</th></tr></thead>
-      <tbody>
-        ${rows.map(r=>`<tr><td>${r.section}</td><td>${r.pct}</td></tr>`).join("")}
-      </tbody>
-    </table>`;
-
-  let qaHTML = "";
-  Object.keys(qa).forEach(sec=>{
-    qaHTML += `<div class="print-section"><div class="print-h2">${sec}</div><div class="print-qa">`;
-    qa[sec].forEach(item=>{
-      qaHTML += `
-        <div>
-          <div class="print-q">${item.question}</div>
-          <div class="print-a">Answer: <strong>${item.answer}</strong></div>
-        </div>`;
-    });
-    qaHTML += `</div></div>`;
-  });
-
-  return `
-    <div class="print-wrap">
-      <div class="print-header">
-        <div class="print-brand">
-          <img src="jsb_icon.svg" alt="JSB" />
-          <div>
-            <div class="print-title">JSB Resiliency Assessment Report</div>
-            <div class="print-meta">Generated ${dateStr}</div>
-          </div>
-        </div>
-        <div class="print-meta">justsmartbusiness.com.au</div>
-      </div>
-
-      <div class="print-section">
-        <div class="print-h2">Summary</div>
-        <div class="print-kpis">
-          <div class="print-kpi"><div class="label">Overall Resiliency Score</div><div class="value">${overall}</div></div>
-          <div class="print-kpi"><div class="label">Strongest Area</div><div class="value">${strongest}</div></div>
-          <div class="print-kpi"><div class="label">Biggest Gap</div><div class="value">${weakest}</div></div>
-        </div>
-      </div>
-
-      <div class="print-section">
-        <div class="print-h2">Result Interpretation</div>
-        <div class="print-banner ${bannerClass}">${resultText}</div>
-      </div>
-
-      <div class="print-section">
-        <div class="print-h2">Section Breakdown</div>
-        ${breakdownHTML}
-      </div>
-
-      <div class="print-section">
-        <div class="print-h2">Your Answers (answered items only)</div>
-        ${qaHTML || '<div class="print-meta">No answers selected.</div>'}
-      </div>
-    </div>
-  `;
-}
-
-// Turn the report HTML into a **real PDF** (no print dialog)
-async function downloadPDF_real(){
-  if (typeof window.html2pdf === "undefined") {
-  console.error("html2pdf failed to load");
-  alert("PDF engine couldn’t load. Check your internet connection or content security policy.");
-  return;
-}
-
-  // Require results first
-  if(document.getElementById("results").style.display !== "block"){
-    alert("Please calculate your results first.");
-    return;
-  }
-  const container = document.getElementById("printReport");
-  container.innerHTML = buildReportHTML();
-  container.style.display = "block"; // must be in the DOM for html2pdf layout
-
-  const filename = (() => {
-    const d = new Date();
-    const pad = n => String(n).padStart(2,"0");
-    return `JSB_Resiliency_Assessment_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.pdf`;
-  })();
-
-  // html2pdf options: A4 portrait, small margins, vector text
-  const opt = {
-  margin:       [6, 8, 16, 8], // [top, left, bottom, right] in mm
-  filename,
-  image:        { type: 'jpeg', quality: 0.98 },
-  html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollY: 0 },
-  jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-  pagebreak:    { mode: ['css','legacy'] }
-};
-
-
-  try{
-   await html2pdf()
-  .set(opt)
-  .from(container)
-  .toPdf()
-  .get('pdf')
-  .then(pdf => { addBrandedFooters(pdf); })
-  .save();
-
-  } finally {
-    // Clean up DOM
-    container.style.display = "none";
-    container.innerHTML = "";
-  }
-}
-
-// Wire the button
-document.addEventListener("click",(e)=>{
-  if(e.target && e.target.id === "downloadBtn"){
-    downloadPDF_real();
-  }
-});
-function addBrandedFooters(pdf){
-  const total = pdf.internal.getNumberOfPages();
-  for(let i = 1; i <= total; i++){
-    pdf.setPage(i);
-
-    const pageWidth  = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-
-    // divider line above footer
-    pdf.setDrawColor(230, 234, 238); // #e6eaee
-    pdf.setLineWidth(0.2);
-    pdf.line(8, pageHeight - 12, pageWidth - 8, pageHeight - 12);
-
-    // footer text
-    pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(9);
-    pdf.setTextColor(14, 111, 87); // JSB green
-    const footer = `Just Smart Business  |  justsmartbusiness.com.au  |  Page ${i} of ${total}`;
-    pdf.text(footer, 8, pageHeight - 6); // left-aligned
-  }
-}
-// Scroll the first unanswered question into view if user tries to Calculate too early
-function firstUnansweredId(){
-  for (const s of sections){
-    for (const id of s.ids){
-      if (!document.querySelector(`input[name="${id}"]:checked`)) return id;
-    }
-  }
-  return null;
-}
-
-// Enhance compute() to nudge users on phones
-const _compute = compute;
-compute = function(){
-  if (!allAnswered()){
-    const id = firstUnansweredId();
-    if (id){
-      const container = document.querySelector(`.choices[data-name="${id}"]`);
-      container?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      container?.classList.add('attention');
-      setTimeout(()=>container?.classList.remove('attention'), 1200);
-    }
-    alert("Please answer all questions before calculating.");
-    return;
-  }
-  _compute();
-};
-
-</script>
+  <!-- PDF libs: html2pdf (bundles html2canvas + jsPDF) -->
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
