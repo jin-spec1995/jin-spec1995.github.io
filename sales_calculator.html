@@ -101,6 +101,98 @@
   .cta{border:1px solid #dff2e8; background:linear-gradient(180deg,#f7fffb,#ffffff); border-radius:16px; padding:18px}
   .cta h3{margin:0 0 6px; color:#0e6f57}
   .cta ul{margin:10px 0 0 18px}
+  /* ===== Mobile-first improvements ===== */
+
+/* Stack grids on phones; tighten outer margins slightly */
+@media (max-width: 900px){
+  .wrap{max-width:100%; margin:16px 0 36px 10px; padding:0 12px;}
+  .grid.cols-2, .grid.cols-2b{grid-template-columns:1fr !important}
+  .card{padding:14px}
+}
+
+/* Inputs & steppers: larger tap targets */
+@media (max-width: 720px){
+  .inputs{grid-template-columns:1fr !important; gap:8px 12px}
+  .inputs.pct{grid-template-columns:1fr !important}
+  input[type=text], input[type=number]{height:50px; font-size:16px}
+  .label-help{gap:10px}
+
+  /* Percentage controls: put steppers below the field (two wide) */
+  .pct-control{grid-template-columns:1fr !important; gap:8px}
+  .pct-steps{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+  .pct-btn{padding:12px 14px; font-size:16px; border-radius:12px}
+  .pct-control > input[type=text]{text-align:right; padding-right:14px}
+}
+
+/* Tables: wrap in a scroller so columns stay readable on small screens */
+.table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.table-wrap > table{min-width:640px}
+@media (max-width: 420px){
+  .table-wrap > table{min-width:560px}
+}
+
+/* KPI tiles: one per row on phones */
+@media (max-width: 720px){
+  .kpis{grid-template-columns:1fr !important}
+}
+
+/* Keep Step 2 emphasis row strong on mobile, too */
+#step2Results table tbody tr:last-child td{
+  color:var(--brand-dark); font-weight:800;
+}
+
+/* Tooltips: allow tap-to-open on mobile */
+.help{touch-action:manipulation}
+.help[aria-expanded="true"] .tip{display:block}
+/* ==== FIT-TO-SCREEN (phones) ==== */
+@media (max-width: 720px){
+  /* 1) Let cards breathe a bit and reduce inner padding */
+  .wrap{max-width:100%; margin:12px 0 28px 10px; padding:0 10px;}
+  .card{padding:12px}
+
+  /* 2) Tables should fit, not scroll */
+  .table-wrap{overflow-x:visible}                  /* stop forcing a scroller */
+  .table-wrap > table{
+    width:100%;
+    min-width:0;                                   /* kill previous min-width:640px */
+    table-layout:fixed;                            /* let columns shrink evenly */
+    font-size:13px;
+  }
+  .table-wrap th,
+  .table-wrap td{
+    padding:8px 10px;
+    white-space:normal;                            /* allow wrapping */
+    word-break:break-word;
+  }
+
+  /* 3) Make 3-column KPI/period tables fit predictable widths */
+  .table-wrap table tr > *:nth-child(1){width:42%} /* Period/label */
+  .table-wrap table tr > *:nth-child(2){width:28%} /* Number */
+  .table-wrap table tr > *:nth-child(3){width:30%} /* Revenue */
+
+  /* 4) Headlines/titles shrink a touch on small screens */
+  .card-title{gap:8px}
+  .card-title .section-tag{font-size:11px; padding:5px 8px}
+
+  /* 5) Buttons (e.g., Book Session) become clean full-width blocks */
+  .cta{padding:14px}
+  .cta .btn{
+    display:block; width:100%; max-width:100%;
+    text-align:center; white-space:normal;
+    padding:14px 16px; font-size:16px; border-radius:14px;
+  }
+}
+
+/* ultra-small (older iPhones) */
+@media (max-width: 380px){
+  .table-wrap > table{font-size:12px}
+  .table-wrap th, .table-wrap td{padding:7px 8px}
+  .table-wrap table tr > *:nth-child(1){width:44%}
+  .table-wrap table tr > *:nth-child(2){width:26%}
+  .table-wrap table tr > *:nth-child(3){width:30%}
+}
+
+
 </style>
 </head>
 <body>
@@ -245,6 +337,7 @@
 
             <!-- TABLE 1: Mini Profit & Loss Estimate -->
             <div class="card" style="padding:0; overflow:hidden">
+              <div class="table-wrap">
               <table>
                 <thead><tr><th colspan="2">Mini Profit and Loss Estimate</th></tr></thead>
                 <tbody>
@@ -255,11 +348,13 @@
                   <tr><td>Desired Net Profit</td><td class="right mono" id="PL_np">—</td></tr>
                 </tbody>
               </table>
+              </div>
             </div>
 
             <!-- TABLE 2: Sales Numbers per period + Monthly KPIs (two-column layout) -->
             <div class="grid cols-2b">
               <div class="card" style="padding:0; overflow:hidden">
+                <div class="table-wrap">
                 <table>
                   <thead>
                     <tr><th colspan="3">Sales Numbers per period</th></tr>
@@ -272,9 +367,11 @@
                     <tr><td>Daily</td><td class="right mono" id="T_day_num">—</td><td class="right mono" id="T_day_rev">—</td></tr>
                   </tbody>
                 </table>
+                </div>
               </div>
 
               <div class="card" style="padding:0; overflow:hidden">
+                <div class="table-wrap">
                 <table>
                   <thead><tr><th colspan="2">Monthly KPIs*</th></tr></thead>
                   <tbody>
@@ -284,6 +381,7 @@
                     <tr><td>Number of Sales</td><td class="right mono" id="KPI_sales_m">—</td></tr>
                   </tbody>
                 </table>
+                </div>
               </div>
             </div>
 
@@ -402,6 +500,3 @@
 </script>
 </body>
 </html>
-
-
-
