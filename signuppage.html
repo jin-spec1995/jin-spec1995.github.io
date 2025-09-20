@@ -38,8 +38,8 @@
       font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--jsb-ink);
       background:
-        radial-gradient(1200px 560px at -10% -10%, #e8f3ed 0%, transparent 55%),
-        radial-gradient(900px 420px at 120% 0%, #e9f5ef 0%, transparent 60%),
+        radial-gradient(1200px 560px at -10% -10%, #e6e6e6 0%, transparent 55%),
+        radial-gradient(900px 420px at 120% 0%, #cfcfcf 0%, transparent 80%),
         var(--jsb-bg);
     }
 
@@ -170,6 +170,7 @@
       font-size:1.4rem; font-weight:800; color:var(--jsb-green-800); letter-spacing:.2px;
     }
     .mini{ font-size:.86rem; color:var(--jsb-muted) }
+     .smini{ font-weight: bold; }
 
     .cta{
       background:linear-gradient(135deg, var(--jsb-green-700), var(--jsb-green-900));
@@ -204,6 +205,28 @@
       .card,.tile,.hero{ transition: transform .2s ease }
       .card:hover,.tile:hover{ transform: translateY(-2px) }
     }
+   .signup-note{
+  margin-left:auto;
+  font-size:.85rem;
+  font-weight:500;
+
+  padding:6px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.signup-note .highlight-free{
+  font-weight:800;
+  color:var(--jsb-green-900);
+}
+@media (max-width:600px){
+  .signup-note{
+    display:block;
+    margin-left:0;
+    margin-top:6px;
+    white-space:normal;
+    font-size:.8rem;
+  }
+}
   </style>
 </head>
 <body>
@@ -232,6 +255,7 @@
         <div class="card-head">
           <img src="jsb_icon.svg" alt="" height="22" onerror="this.style.display='none'">
           <div id="formTitle" class="card-title">Sign Up</div>
+           <span class="signup-note">Sign up now and get <strong class="highlight-free">FREE</strong> access to the Resilience Assessment</span>
         </div>
 
         <div class="card-body">
@@ -287,9 +311,9 @@
           <div class="stat">
             <div>
               <div class="big">4 key KPIs</div>
-              <div class="mini">Dial in the numbers that matter</div>
+              <div class="mini">Calculate yours with the Sales Calculator</div>
             </div>
-            <div class="mini">Start today</div>
+         
           </div>
         </div>
 
@@ -343,4 +367,3 @@
   </script>
 </body>
 </html>
-
