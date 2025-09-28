@@ -204,28 +204,69 @@
         const ROWS = 5;
         const COLS = 4;
 
-        const levels = [
-            // Level 1: (2 Specials) Simple S-path.
-            { start: { r: 4, c: 0 }, specials: [{ r: 3, c: 3, val: 5 }, { r: 2, c: 2, val: 11 }] },
-            // Level 2: (2 Specials) Path around the border.
-            { start: { r: 0, c: 0 }, specials: [{ r: 3, c: 3, val: 7 }, { r: 3, c: 1, val: 13 }] },
-            // Level 3: (3 Specials) Fill two columns, then the other two.
-            { start: { r: 3, c: 1 }, specials: [{ r: 1, c: 0, val: 6 }, { r: 0, c: 2, val: 11 }, { r: 4, c: 2, val: 17 }] },
-            // Level 4: (3 Specials) Spiral path.
-            { start: { r: 2, c: 2 }, specials: [{ r: 3, c: 1, val: 5 }, { r: 0, c: 1, val: 12 }, { r: 4, c: 2, val: 19 }] },
-            // Level 5: (3 Specials) Requires trapping yourself and backtracking mentally.
-            { start: { r: 0, c: 3 }, specials: [{ r: 2, c: 3, val: 3 }, { r: 4, c: 1, val: 10 }, { r: 1, c: 0, val: 18 }] },
-            // Level 6: (4 Specials) A winding path that forces you to use the whole board early.
-            { start: { r: 4, c: 3 }, specials: [{ r: 2, c: 3, val: 3 }, { r: 0, c: 2, val: 8 }, { r: 1, c: 0, val: 13 }, { r: 4, c: 0, val: 17 }] },
-            // Level 7: (4 Specials) Deceptive path, seems easy but the specials constrain heavily.
-            { start: { r: 2, c: 0 }, specials: [{ r: 0, c: 1, val: 4 }, { r: 2, c: 2, val: 9 }, { r: 4, c: 3, val: 15 }, { r: 0, c: 3, val: 20 }] },
-            // Level 8: (4 Specials) Forces a route through the middle, then requires clearing the edges.
-            { start: { r: 0, c: 0 }, specials: [{ r: 1, c: 2, val: 5 }, { r: 3, c: 1, val: 8 }, { r: 3, c: 3, val: 16 }, { r: 0, c: 3, val: 19 }] },
-            // Level 9: (5 Specials) Nearly the entire path is dictated by the constraints. Very little room for error.
-            { start: { r: 4, c: 0 }, specials: [{ r: 2, c: 0, val: 3 }, { r: 0, c: 1, val: 7 }, { r: 2, c: 2, val: 11 }, { r: 4, c: 3, val: 15 }, { r: 0, c: 3, val: 20 }] },
-            // Level 10: (5 Specials) The ultimate challenge. Requires visiting corners at specific times, forcing a complex weave.
-            { start: { r: 2, c: 1 }, specials: [{ r: 1, c: 3, val: 4 }, { r: 1, c: 0, val: 9 }, { r: 3, c: 1, val: 14 }, { r: 4, c: 2, val: 18 }, { r: 4, c: 3, val: 20 }] },
-        ];
+       const levels = [
+    // EASY LEVELS (1-2 specials, more forgiving paths)
+    
+    // Level 1: Simple introduction - just one special constraint
+      { start: { r: 2, c: 2 }, specials: [
+    { r: 0, c: 0, val: 5 }, { r: 3, c: 3, val: 17 }
+  ]},
+
+  // L12
+  { start: { r: 3, c: 3 }, specials: [
+    { r: 1, c: 3, val: 13 }, { r: 3, c: 2, val: 18 }
+  ]},
+
+  // L13
+  { start: { r: 1, c: 1 }, specials: [
+    { r: 0, c: 2, val: 15 }, { r: 1, c: 3, val: 19 }
+  ]},
+
+  // L14
+  { start: { r: 4, c: 3 }, specials: [
+    { r: 4, c: 0, val: 6 }, { r: 0, c: 0, val: 14 }
+  ]},
+
+  // L15
+  { start: { r: 0, c: 0 }, specials: [
+    { r: 2, c: 1, val: 10 }, { r: 1, c: 2, val: 18 }
+  ]},
+
+  // L16
+  { start: { r: 1, c: 2 }, specials: [
+    { r: 1, c: 1, val: 6 }, { r: 3, c: 1, val: 8 }
+  ]},
+
+  // L17
+  { start: { r: 3, c: 2 }, specials: [
+    { r: 0, c: 1, val: 13 }, { r: 0, c: 2, val: 16 }
+  ]},
+
+  // L18
+  { start: { r: 4, c: 1 }, specials: [
+    { r: 2, c: 1, val: 5 }, { r: 1, c: 1, val: 14 }
+  ]},
+
+  // L19
+  { start: { r: 0, c: 3 }, specials: [
+    { r: 1, c: 1, val: 14 }, { r: 2, c: 2, val: 16 }
+  ]},
+
+  // L20
+  { start: { r: 1, c: 2 }, specials: [
+    { r: 0, c: 2, val: 2 }, { r: 0, c: 1, val: 11 }
+  ]},
+
+  // L21 (3 specials)
+  { start: { r: 3, c: 2 }, specials: [
+    { r: 3, c: 3, val: 4 }, { r: 1, c: 1, val: 12 }, { r: 0, c: 1, val: 17 }
+  ]},
+
+  // L22
+  { start: { r: 0, c: 2 }, specials: [
+    { r: 0, c: 1, val: 10 }, { r: 3, c: 3, val: 19 }
+  ]}
+];
 
         let currentLevelIndex = 0;
         let playerPos = { r: 0, c: 0 };
