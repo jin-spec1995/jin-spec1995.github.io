@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSB Knight's Path Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            touch-action: manipulation;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            padding: 8px;
+            background-color: #0f172a; /* Dark Blue */
+            border-radius: 12px;
+            border: 4px solid #1e3a8a; /* Mid Dark Blue */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .grid-cell {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(1.25rem, 5vw, 2rem);
+            font-weight: 700;
+            color: #ffffff;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, background-color 0.2s;
+        }
+        /* Checkerboard pattern */
+        .grid-cell.light { background-color: #60a5fa; } /* Light Blue */
+        .grid-cell.dark { background-color: #2563eb; } /* Darker Light Blue */
+
+        .grid-cell.valid-move {
+            box-shadow: inset 0 0 0 4px #fbbf24; /* Yellow inner highlight */
+            z-index: 10;
+        }
+         .grid-cell.valid-move:hover {
+            filter: brightness(1.1);
+        }
+
+        .grid-cell.special-unvisited {
+            border: 2px dashed #fde047;
+        }
+        .step-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 700;
+            pointer-events: none; /* Make sure it doesn't interfere with clicks */
+        }
+        .step-number.top-right {
+            top: 2px;
+            right: 6px;
+            left: auto;
+            transform: none;
+            font-size: clamp(0.75rem, 3vw, 1rem);
+            font-weight: 600;
+        }
+        .player {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(1.8rem, 7vw, 3rem);
+            transition: all 0.3s ease-in-out;
+            pointer-events: none;
+            color: #fef08a;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .grid-cell.visited {
+            cursor: default; /* Change cursor for visited cells */
+        }
+        .grid-cell.visited.light { background-color: #1e3a8a; color: #60a5fa; }
+        .grid-cell.visited.dark { background-color: #0f172a; color: #60a5fa; }
+        
+        .shake { animation: shake 0.5s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .modal {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe; margin: auto; padding: 24px; border: 1px solid #888;
+            width: 80%; max-width: 400px; border-radius: 12px; text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .message-box {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background-color: #dc2626; color: white; padding: 8px 16px; border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); opacity: 0;
+            transition: opacity 0.3s, transform 0.3s; pointer-events: none; z-index: 101;
+        }
+        .message-box.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+    </style>
+</head>
+<body class="bg-[#0f172a] min-h-screen flex flex-col p-4 text-slate-100">
+
+    <header class="w-full max-w-6xl #6a994e mx-auto px-4 py-2">
+        <img src="ratio-JSB_PNG_WHITE_2507.png" alt="Just Smart Business Logo" class="h-12" onerror="this.onerror=null;this.src='https://placehold.co/200x50/e0f2fe/0c4a6e?text=JSB+Logo';">
+    </header>
+
+    <main class="w-full max-w-6xl mx-auto flex-grow flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mt-4">
+        <!-- How to Play Section -->
+        <div class="w-full md:w-1/3 p-6 bg-[#1e3a8a] rounded-lg shadow-lg border-2 border-[#2563eb]">
+            <h2 class="text-3xl font-bold mb-4 text-center text-slate-100">How to Play 🧐</h2>
+            <ul class="space-y-3 text-lg text-slate-200">
+                <li class="flex items-start">
+                    <span class="mr-2">♘</span>
+                    <div>Your noble knight must visit <strong class="font-semibold text-white">every single square</strong> on the board.</div>
+                </li>
+                 <li class="flex items-start">
+                    <span class="mr-2">🎯</span>
+                    <div>Land on special squares (e.g., <span class="font-bold bg-[#60a5fa] text-black px-1 rounded">10</span>) at the <strong class="font-semibold text-white">exact step number</strong>.</div>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2">💡</span>
+                    <div>Possible moves are shown with a <strong class="text-yellow-400 font-bold">yellow</strong> outline.</div>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2">⏪</span>
+                    <div>Use the <strong class="font-semibold text-white">Undo</strong> button or <strong class="font-semibold text-white">Backspace</strong> key to go back one step.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Game Section -->
+        <div class="w-full max-w-sm mx-auto">
+            <div class="text-center mb-4">
+                <h1 class="text-4xl font-bold text-slate-100">Knight's Path</h1>
+                <p class="text-lg text-slate-300">Level: <span id="level-display">1</span></p>
+            </div>
+
+            <div id="game-board" class="grid-container"></div>
+            
+            <div class="mt-4 text-center">
+                <p class="text-xl text-slate-200">Squares Visited: <span id="steps-taken" class="font-bold text-3xl">0</span></p>
+            </div>
+
+            <div class="mt-6 flex justify-center gap-4">
+                 <button id="undo-button" class="bg-yellow-400 text-[#0f172a] font-bold py-2 px-6 rounded-full shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-105">Undo</button>
+                 <button id="reset-button" class="bg-slate-200 text-[#0f172a] font-bold py-2 px-6 rounded-full shadow-lg hover:bg-slate-300 transition-transform transform hover:scale-105">Reset Level</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full max-w-6xl mx-auto text-center py-4 mt-8 text-sm text-slate-400">
+        <p>&copy; <span id="current-year"></span> Just Smart Business.</p>
+    </footer>
+
+    <div id="message-box" class="message-box"></div>
+
+    <!-- Win Modal -->
+    <div id="win-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Victory!</h2>
+            <p id="win-message" class="text-gray-700 mb-6">A masterful tour of the board!</p>
+            <div id="modal-buttons" class="flex justify-center gap-4">
+                 <button id="next-level-button" class="bg-green-500 text-white font-bold py-2 px-6 rounded-full hover:bg-green-600">Next Level</button>
+                 <button id="restart-game-button" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-600">Restart Game</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const gameBoard = document.getElementById('game-board');
+        const levelDisplay = document.getElementById('level-display');
+        const stepsTakenDisplay = document.getElementById('steps-taken');
+        const resetButton = document.getElementById('reset-button');
+        const undoButton = document.getElementById('undo-button');
+        const winModal = document.getElementById('win-modal');
+        const winMessage = document.getElementById('win-message');
+        const nextLevelButton = document.getElementById('next-level-button');
+        const restartGameButton = document.getElementById('restart-game-button');
+        const messageBox = document.getElementById('message-box');
+
+        const BOARD_SIZE = 5;
+        const TOTAL_SQUARES = BOARD_SIZE * BOARD_SIZE;
+
+        const levels = [
+  // Level 1 — 7 specials (easiest) — Tour A (distinct)
+  { start: { r: 2, c: 2 }, specials: [
+    { r: 0, c: 1, val: 2 },
+    { r: 4, c: 2, val: 5 },
+    { r: 0, c: 3, val: 8 },
+    { r: 3, c: 1, val: 11 },
+    { r: 1, c: 4, val: 14 },
+    { r: 1, c: 2, val: 18 },
+    { r: 4, c: 0, val: 23 },
+  ]},
+
+  // Level 2 — 6 specials — Tour B (distinct)
+  { start: { r: 1, c: 3 }, specials: [
+    { r: 4, c: 2, val: 3 },
+    { r: 2, c: 4, val: 7 },
+    { r: 1, c: 0, val: 10 },
+    { r: 3, c: 3, val: 15 },
+    { r: 1, c: 2, val: 20 },
+    { r: 3, c: 2, val: 24 },
+  ]},
+
+  // Level 3 — 5 specials — Tour C (distinct)
+  { start: { r: 0, c: 0 }, specials: [
+    { r: 3, c: 2, val: 4 },
+    { r: 2, c: 4, val: 9 },
+    { r: 0, c: 2, val: 13 },
+    { r: 2, c: 0, val: 17 },
+    { r: 3, c: 0, val: 22 },
+  ]},
+
+  // Level 4 — 4 specials — Tour D (distinct)
+  { start: { r: 0, c: 4 }, specials: [
+    { r: 3, c: 2, val: 6 },
+    { r: 1, c: 4, val: 12 },
+    { r: 0, c: 1, val: 16 },
+    { r: 1, c: 1, val: 21 },
+  ]},
+
+  // Level 5 — 2 specials (hardest) — Tour E (distinct)
+  { start: { r: 3, c: 3 }, specials: [
+    { r: 3, c: 1, val: 5 },
+    { r: 1, c: 2, val: 20 },
+  ]},
+];
+        
+        const victoryMessages = [
+            "A brilliant opening gambit! Level 1 is complete.",
+            "Masterful maneuvering! You've navigated the board with the skill of a grandmaster.",
+            "A true tour de force! That was a puzzle worthy of a champion.",
+            "Incredible! You have conquered the ultimate Knight's challenge. A legendary performance!"
+        ];
+
+        let currentLevelIndex = 0;
+        let playerPos = { r: 0, c: 0 };
+        let history = [];
+        let boardData = [];
+
+        function showMessage(text, duration = 2000) {
+            messageBox.textContent = text;
+            messageBox.classList.add('show');
+            setTimeout(() => { messageBox.classList.remove('show'); }, duration);
+        }
+
+        function initLevel(levelIndex) {
+            const level = levels[levelIndex];
+            if (!level) return;
+
+            history = [];
+            boardData = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null).map(() => ({
+                visited: false, specialNumber: null, revealedNumber: 0
+            })));
+
+            level.specials.forEach(s => { boardData[s.r][s.c].specialNumber = s.val; });
+
+            playerPos = { ...level.start };
+            history.push(playerPos);
+            boardData[playerPos.r][playerPos.c].visited = true;
+            boardData[playerPos.r][playerPos.c].revealedNumber = 1;
+
+            levelDisplay.textContent = levelIndex + 1;
+            stepsTakenDisplay.textContent = `${history.length} / ${TOTAL_SQUARES}`;
+            renderBoard();
+        }
+
+        function getValidMoves(pos) {
+            const moves = [
+                [-2, -1], [-2, 1], [-1, -2], [-1, 2],
+                [1, -2], [1, 2], [2, -1], [2, 1]
+            ];
+            const valid = [];
+            for (const [dr, dc] of moves) {
+                const newR = pos.r + dr;
+                const newC = pos.c + dc;
+                if (newR >= 0 && newR < BOARD_SIZE && newC >= 0 && newC < BOARD_SIZE) {
+                    if (!boardData[newR][newC].visited) {
+                       valid.push({ r: newR, c: newC });
+                    }
+                }
+            }
+            return valid;
+        }
+
+        function renderBoard() {
+            gameBoard.innerHTML = '';
+            stepsTakenDisplay.textContent = `${history.length} / ${TOTAL_SQUARES}`;
+            const validMoves = getValidMoves(playerPos);
+
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('grid-cell');
+                    cell.classList.add((r + c) % 2 === 0 ? 'light' : 'dark');
+                    cell.dataset.r = r;
+                    cell.dataset.c = c;
+                    
+                    const cellData = boardData[r][c];
+
+                    if (cellData.visited) {
+                        cell.classList.add('visited');
+                        
+                        const numberEl = document.createElement('div');
+                        numberEl.classList.add('step-number');
+                        numberEl.textContent = cellData.revealedNumber;
+                        
+                        if (playerPos && playerPos.r === r && playerPos.c === c) {
+                            numberEl.classList.add('top-right');
+                        }
+                        cell.appendChild(numberEl);
+
+                    } else {
+                        if (cellData.specialNumber) {
+                            cell.classList.add('special-unvisited');
+                            cell.textContent = cellData.specialNumber;
+                        }
+                        if (validMoves.some(m => m.r === r && m.c === c)) {
+                            cell.classList.add('valid-move');
+                        }
+                    }
+                    
+                    if (playerPos && playerPos.r === r && playerPos.c === c) {
+                        const player = document.createElement('div');
+                        player.classList.add('player');
+                        player.textContent = '♘';
+                        cell.appendChild(player);
+                    }
+                    gameBoard.appendChild(cell);
+                }
+            }
+        }
+
+        function handleMove(newR, newC) {
+            const isValidMove = getValidMoves(playerPos).some(m => m.r === newR && m.c === newC);
+            if (!isValidMove) {
+                 gameBoard.classList.add('shake');
+                 setTimeout(() => gameBoard.classList.remove('shake'), 500);
+                 return;
+            }
+
+            const targetCellData = boardData[newR][newC];
+            const nextStep = history.length + 1;
+
+            if (targetCellData.specialNumber && targetCellData.specialNumber !== nextStep) {
+                showMessage(`Must land here on step ${targetCellData.specialNumber}!`);
+                gameBoard.classList.add('shake');
+                setTimeout(() => gameBoard.classList.remove('shake'), 500);
+                return;
+            }
+
+            playerPos = { r: newR, c: newC };
+            history.push(playerPos);
+            
+            targetCellData.visited = true;
+            targetCellData.revealedNumber = nextStep;
+            
+            renderBoard();
+
+            if (history.length === TOTAL_SQUARES) {
+                setTimeout(() => showWinModal(), 500);
+            }
+        }
+
+        function handleBacktrack() {
+            if (history.length <= 1) return; // Can't undo the first move
+
+            const lastPos = history.pop();
+            const cellData = boardData[lastPos.r][lastPos.c];
+            cellData.visited = false;
+            cellData.revealedNumber = 0;
+
+            playerPos = { ...history[history.length - 1] };
+
+            renderBoard();
+        }
+        
+        function showWinModal() {
+            winModal.style.display = 'flex';
+            
+            const message = victoryMessages[currentLevelIndex] || "A masterful tour of the board!";
+            winMessage.textContent = message;
+
+            if (currentLevelIndex >= levels.length - 1) {
+                nextLevelButton.style.display = 'none';
+                restartGameButton.textContent = "Play Again?";
+            } else {
+                nextLevelButton.style.display = 'inline-block';
+                restartGameButton.textContent = "Restart Game";
+            }
+        }
+        
+        gameBoard.addEventListener('click', (e) => {
+            const cell = e.target.closest('.grid-cell');
+            if (!cell) return;
+            
+            const r = parseInt(cell.dataset.r);
+            const c = parseInt(cell.dataset.c);
+            const cellData = boardData[r][c];
+
+            if (cellData.visited) {
+                return;
+            }
+            handleMove(r, c);
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace') {
+                handleBacktrack();
+            }
+        });
+
+        resetButton.addEventListener('click', () => initLevel(currentLevelIndex));
+        undoButton.addEventListener('click', handleBacktrack);
+
+        nextLevelButton.addEventListener('click', () => {
+            currentLevelIndex++;
+            if (currentLevelIndex < levels.length) {
+                initLevel(currentLevelIndex);
+                winModal.style.display = 'none';
+            }
+        });
+        restartGameButton.addEventListener('click', () => {
+            currentLevelIndex = 0;
+            initLevel(currentLevelIndex);
+            winModal.style.display = 'none';
+        });
+
+        initLevel(currentLevelIndex);
+    </script>
+
+</body>
+</html>
+
+
