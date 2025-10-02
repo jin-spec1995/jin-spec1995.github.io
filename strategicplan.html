@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Strategic Plan Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <style>
+    body { background:#f6f7f9; font-family: sans-serif; }
+    .card { background:#fff; border-radius:16px; box-shadow:0 6px 28px rgba(0,0,0,.06); }
+    .section-title { border-left:4px solid #0e6f57; padding-left:.75rem; }
+    .muted { color:#64748b; }
+    .btn { border-radius:9999px; padding:.7rem 1.2rem; font-weight:600; cursor:pointer; transition: background-color 0.2s; }
+    .btn-primary { background:#0e6f57; color:#fff; }
+    .btn-primary:hover { background:#0b5a45; }
+    .btn-secondary { background:#e2e8f0; color:#1e293b; }
+    .btn-secondary:hover { background:#cbd5e1; }
+    .group { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; }
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:.75rem }
+    .grid-3 { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:.75rem }
+    textarea { min-height: 120px; }
+    input, textarea { border:1px solid #cbd5e1; outline-color:#0e6f57; }
+    .small { font-size:.85rem }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+  <div class="max-w-5xl mx-auto card p-5 md:p-8">
+    <header class="mb-8">
+      <h1 class="text-2xl md:text-3xl font-bold">Strategic Plan Generator 📝</h1>
+      <p class="muted">
+        Fill out the questionnaire below. When you're done, click "Generate Word Document" to download your strategic plan.
+      </p>
+    </header>
+
+    <section class="mb-8">
+      <h2 class="section-title text-xl font-semibold mb-4">Title Page & Business Basics</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label for="bizName" class="block font-medium mb-1">Full Business Name (<<5>>)</label>
+          <input id="bizName" class="w-full border rounded-lg p-2" value="Brisbane Computer Solutions Pty Ltd (BCS)"/>
+        </div>
+        <div>
+          <label for="tradingName" class="block font-medium mb-1">Trading Name (<<6>>)</label>
+          <input id="tradingName" class="w-full border rounded-lg p-2" value="BCS"/>
+        </div>
+        <div>
+          <label for="bizType" class="block font-medium mb-1">Business Type (<<7>>)</label>
+          <input id="bizType" class="w-full border rounded-lg p-2" value="Managed Services provider"/>
+        </div>
+        <div>
+          <label for="firstYear" class="block font-medium mb-1">First Year of Operation (<<8>>)</label>
+          <input id="firstYear" class="w-full border rounded-lg p-2" value="2010"/>
+        </div>
+        <div>
+          <label for="geo" class="block font-medium mb-1">Geographic Location (<<9>>)</label>
+          <input id="geo" class="w-full border rounded-lg p-2" value="The Northern Suburbs of Brisbane"/>
+        </div>
+        <div>
+          <label for="primaryMarket" class="block font-medium mb-1">Primary Target Market (<<10>>)</label>
+          <input id="primaryMarket" class="w-full border rounded-lg p-2" value="Small to Medium Enterprises"/>
+        </div>
+        <div>
+          <label for="primaryArea" class="block font-medium mb-1">Primary Market Area (<<11>>)</label>
+          <input id="primaryArea" class="w-full border rounded-lg p-2" value="Northern Brisbane Area"/>
+        </div>
+        <div>
+          <label for="secondaryMarket" class="block font-medium mb-1">Secondary Target Market (<<12>>)</label>
+          <input id="secondaryMarket" class="w-full border rounded-lg p-2" value="Professional service firms"/>
+        </div>
+        <div>
+          <label for="secondaryArea" class="block font-medium mb-1">Secondary Market Area (<<13>>)</label>
+          <input id="secondaryArea" class="w-full border rounded-lg p-2" value="Greater Brisbane North"/>
+        </div>
+        <div class="md:col-span-2">
+          <label for="imageUrl" class="block font-medium mb-1">Business Image URL (for title page) (<<14>>)</label>
+          <input id="imageUrl" class="w-full border rounded-lg p-2" value="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg"/>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="section-title text-xl font-semibold mb-4">Executive Summary & Strategic Overview</h2>
+      <div>
+        <label for="businessDescription" class="block font-medium mb-1">Business Description (<<15>>)</label>
+        <textarea id="businessDescription" class="w-full border rounded-lg p-3">We avoid the ‘Break/Fix’ model that our industry operates on; we remain a leading, trustworthy choice for computer repair services and I.T. solutions. We also believe in being adaptable to our clients’ needs, knowing that every problem requires a tailored solution, and are thus capable of providing remote support and performing site visits. We are a Managed Services Provider; we specialise in I.T. support and computer networking services to businesses, computer repairs and upgrades, fast custom builds, powerful workstations, and removal of unnecessary hardware and software from your machines. We are I.T. experts.</textarea>
+      </div>
+      <div class="mt-4">
+        <label for="background" class="block font-medium mb-1">Business Background (<<17>>)</label>
+        <textarea id="background" class="w-full border rounded-lg p-3">BCS was founded to deliver dependable, proactive I.T. services to SMEs. Since 2010, we’ve grown through word-of-mouth and long-term relationships, focusing on uptime, security and right-sized solutions that scale with clients.</textarea>
+      </div>
+      <div class="mt-4">
+        <label for="serviceIntent" class="block font-medium mb-1">Service Delivery Intent (<<18>>)</label>
+        <textarea id="serviceIntent" class="w-full border rounded-lg p-3">Always strive to exceed expectations. Follow-ups, complimentary visits where needed, warranties on all projects, and “we turn up when we say”.</textarea>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="section-title text-xl font-semibold mb-4">Strategic Purpose & Direction</h2>
+      <div>
+        <label for="purpose" class="block font-medium mb-1">Strategic Purpose (Why does the business exist?) (<<19>>)</label>
+        <textarea id="purpose" class="w-full border rounded-lg p-3">BCS provides managed I.T. services so SMEs can become the success they want to be—empowering them with secure, reliable technology and expert support.</textarea>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label for="planningPeriod" class="block font-medium mb-1">Planning Period (<<22>>)</label>
+          <input id="planningPeriod" class="w-full border rounded-lg p-2" value="3 years (FY2025–FY2027)"/>
+        </div>
+        <div>
+          <label for="planningGoal" class="block font-medium mb-1">Planning Period Goal (<<22 Planning period Goal>>)</label>
+          <input id="planningGoal" class="w-full border rounded-lg p-2" value="have 1000 devices"/>
+        </div>
+        <div>
+          <label for="detailedPeriod" class="block font-medium mb-1">Detailed Planning Period (<<23>>)</label>
+          <input id="detailedPeriod" class="w-full border rounded-lg p-2" value="the end of the next 12 months."/>
+        </div>
+        <div>
+          <label for="detailedGoal" class="block font-medium mb-1">Detailed Planning Period Goal (<<24>>)</label>
+          <input id="detailedGoal" class="w-full border rounded-lg p-2" value="500 devices"/>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="section-title text-xl font-semibold mb-4">Values</h2>
+      <div>
+        <label for="valuesStatement" class="block font-medium mb-1">Values Statement (<<25>>)</label>
+        <textarea id="valuesStatement" class="w-full border rounded-lg p-3">We place Integrity and Learning above all else. We communicate plainly and deliver proactive managed services designed around our clients’ needs.</textarea>
+      </div>
+      <div class="group mt-4">
+        <div class="flex items-center justify-between mb-3">
+          <div class="font-medium">Values (up to 5)</div>
+          <button class="btn btn-secondary" type="button" id="addValueBtn">+ Add Value</button>
+        </div>
+        <div id="valuesList" class="space-y-4"></div>
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="section-title text-xl font-semibold mb-4">Stakeholders</h2>
+      <div>
+        <label for="stakeholderStatement" class="block font-medium mb-1">Stakeholder Statement (<<42>>)</label>
+        <textarea id="stakeholderStatement" class="w-full border rounded-lg p-3">We consider the needs of our internal and external stakeholders and align procedures to enhance performance and outcomes for all.</textarea>
+      </div>
+      <div class="group mt-4">
+        <div class="flex items-center justify-between mb-3">
+          <div class="font-medium">Stakeholders</div>
+          <button class="btn btn-secondary" type="button" id="addStakeBtn">+ Add Stakeholder</button>
+        </div>
+        <div id="stakeList" class="space-y-4"></div>
+      </div>
+    </section>
+
+    <div class="flex items-center justify-between gap-4 p-4 bg-gray-50 rounded-lg">
+      <button class="btn btn-primary w-full md:w-auto" id="generateBtn" type="button">🚀 Generate Word Document</button>
+      <span class="muted small hidden md:block">A .docx file will be downloaded, styled to match the template.</span>
+    </div>
+  </div>
+
+<script>
+// ---------- Helper Functions ----------
+function el(html) {
+    const t = document.createElement('template');
+    t.innerHTML = html.trim();
+    return t.content.firstChild;
+}
+
+// Function to add a new "Value" row to the form
+function addValueRow(def = { value: "", principle: "", behaviour: "" }) {
+    const placeholder = document.getElementById('valuesList').children.length + 1;
+    document.getElementById('valuesList').appendChild(el(`
+        <div class="p-3 border rounded-lg bg-white value-item">
+            <div class="font-semibold mb-2 text-gray-700">Value ${placeholder}</div>
+            <div class="grid-3">
+                <input class="border rounded-lg p-2" placeholder="Value (e.g., Integrity)" value="${def.value}"/>
+                <input class="border rounded-lg p-2" placeholder="Principle" value="${def.principle}"/>
+                <input class="border rounded-lg p-2" placeholder="Behaviour" value="${def.behaviour}"/>
+            </div>
+        </div>
+    `));
+}
+
+// Function to add a new "Stakeholder" row to the form
+function addStakeRow(def = { who: "", stake: "" }) {
+    const placeholder = document.getElementById('stakeList').children.length + 1;
+    document.getElementById('stakeList').appendChild(el(`
+        <div class="p-3 border rounded-lg bg-white stake-item">
+            <div class="font-semibold mb-2 text-gray-700">Stakeholder ${placeholder}</div>
+            <div class="grid-2">
+                <input class="border rounded-lg p-2" placeholder="Stakeholder (e.g., Customers)" value="${def.who}"/>
+                <input class="border rounded-lg p-2" placeholder="What is their stake in the business?" value="${def.stake}"/>
+            </div>
+        </div>
+    `));
+}
+
+// Attach event listeners to the "Add" buttons
+document.getElementById('addValueBtn').addEventListener('click', () => addValueRow());
+document.getElementById('addStakeBtn').addEventListener('click', () => addStakeRow());
+
+// Pre-fill the form with some example data for demonstration
+addValueRow({ value: "Integrity", principle: "We do the right thing, even when unseen.", behaviour: "We uphold ethical standards in every action." });
+addValueRow({ value: "Learning", principle: "We continuously improve and share knowledge.", behaviour: "We invest in training and apply learnings to client outcomes." });
+addStakeRow({ who: "Customers", stake: "Reliable support, clear communication, and predictable positive outcomes." });
+addStakeRow({ who: "Employees", stake: "A safe workload, clear processes, and opportunities for growth." });
+
+// ---------- DOCX Generation Logic ----------
+document.getElementById('generateBtn').addEventListener('click', async () => {
+    const {
+        AlignmentType, Document, Footer, HeadingLevel, ImageRun, Packer, Paragraph, ShadingType, TextRun,
+        PageNumber, convertInchesToTwip
+    } = docx;
+
+    // --- Styling Constants from Template ---
+    const SHADE_SECTION = "C5E0B3"; // Green for major headings
+    const SHADE_SUBHEAD = "E2EFD9"; // Lighter green for subheadings
+    const BASE_FONT = "Calibri";
+    const BASE_FONT_SIZE = 22; // 11pt font size
+
+    // --- Helper functions for creating Word elements ---
+    const H1 = (text) => new Paragraph({
+        text,
+        heading: HeadingLevel.HEADING_1,
+        shading: { type: ShadingType.CLEAR, color: "auto", fill: SHADE_SECTION },
+        spacing: { before: 240, after: 120 }
+    });
+    const H2 = (text) => new Paragraph({
+        text,
+        heading: HeadingLevel.HEADING_2,
+        shading: { type: ShadingType.CLEAR, color: "auto", fill: SHADE_SUBHEAD },
+        spacing: { before: 240, after: 120 }
+    });
+    const H3 = (text) => new Paragraph({
+        text,
+        heading: HeadingLevel.HEADING_3,
+        shading: { type: ShadingType.CLEAR, color: "auto", fill: SHADE_SUBHEAD },
+        spacing: { before: 240, after: 120 }
+    });
+    const P = (text) => new Paragraph({
+        children: [new TextRun({ text: String(text ?? ""), font: BASE_FONT, size: BASE_FONT_SIZE })],
+        spacing: { after: 120 }
+    });
+
+    // --- Gather all answers from the form ---
+    const data = {
+        bizName: document.getElementById('bizName').value.trim(),
+        tradingName: document.getElementById('tradingName').value.trim(),
+        bizType: document.getElementById('bizType').value.trim(),
+        firstYear: document.getElementById('firstYear').value.trim(),
+        geo: document.getElementById('geo').value.trim(),
+        primaryMarket: document.getElementById('primaryMarket').value.trim(),
+        primaryArea: document.getElementById('primaryArea').value.trim(),
+        secondaryMarket: document.getElementById('secondaryMarket').value.trim(),
+        secondaryArea: document.getElementById('secondaryArea').value.trim(),
+        imageUrl: document.getElementById('imageUrl').value.trim(),
+        businessDescription: document.getElementById('businessDescription').value.trim(),
+        background: document.getElementById('background').value.trim(),
+        serviceIntent: document.getElementById('serviceIntent').value.trim(),
+        purpose: document.getElementById('purpose').value.trim(),
+        planningPeriod: document.getElementById('planningPeriod').value.trim(),
+        planningGoal: document.getElementById('planningGoal').value.trim(),
+        detailedPeriod: document.getElementById('detailedPeriod').value.trim(),
+        detailedGoal: document.getElementById('detailedGoal').value.trim(),
+        valuesStatement: document.getElementById('valuesStatement').value.trim(),
+        stakeholderStatement: document.getElementById('stakeholderStatement').value.trim(),
+        values: Array.from(document.querySelectorAll('.value-item')).map(r => {
+            const [v, p, b] = r.querySelectorAll('input');
+            return { v: v.value.trim(), p: p.value.trim(), b: b.value.trim() };
+        }),
+        stakeholders: Array.from(document.querySelectorAll('.stake-item')).map(r => {
+            const [who, stake] = r.querySelectorAll('input');
+            return { who: who.value.trim(), stake: stake.value.trim() };
+        }),
+    };
+
+    // --- Define the document footer ---
+    const footer = new Footer({
+        children: [
+            new Paragraph({
+                alignment: AlignmentType.RIGHT,
+                children: [
+                    new TextRun({ children: [PageNumber.CURRENT], font: BASE_FONT, size: BASE_FONT_SIZE }),
+                    new TextRun({ text: " | Strategic Plan", font: BASE_FONT, size: BASE_FONT_SIZE })
+                ]
+            })
+        ]
+    });
+
+    // --- Build the document section by section, matching the template ---
+    const docChildren = [];
+
+    // << Title Page >>
+    docChildren.push(new Paragraph({
+        text: `${data.bizName} – Strategic Business Plan`,
+        heading: HeadingLevel.TITLE,
+        spacing: { after: 300 }
+    }));
+
+   
+    // << EXECUTIVE SUMMARY >>
+    docChildren.push(H1("EXECUTIVE SUMMARY"));
+    const execSummaryIntro = `${data.bizName} Trading as ${data.tradingName} is a ${data.bizType} business based in ${data.geo}. We offer a range of services to ${data.primaryMarket} in the ${data.primaryArea} primarily and ${data.secondaryArea} generally.`;
+    docChildren.push(P(execSummaryIntro));
+    if (data.imageUrl) {
+        try {
+            const resp = await fetch(data.imageUrl); // No CORS needed for most image hosts
+            const blob = await resp.blob();
+            const imageBuffer = await blob.arrayBuffer();
+            docChildren.push(new Paragraph({
+                alignment: AlignmentType.CENTER,
+                children: [new ImageRun({ data: imageBuffer, transformation: { width: 480, height: 270 } })],
+            }));
+        } catch (e) {
+            console.warn("Image could not be loaded. Ensure the URL is correct and allows direct access.", e);
+            docChildren.push(P("[Image could not be loaded from the provided URL]"));
+        }
+    }
+    // Static paragraphs from template
+    docChildren.push(P("Our strategic purpose is driven by our customers’ needs, our stakeholder expectations, and our values."));
+    docChildren.push(P("To achieve our strategic objective, we have completed a strategic review and have prioritised issues identified."));
+    docChildren.push(P("From here we have and set clear achievable goals and action plans to achieve these goals."));
+    docChildren.push(P("Progress on achieving these goals and the overall strategic objective is reviewed ongoing and new short-term goals that are in line with the strategic objective are set every three months."));
+    docChildren.push(P("We have engaged the support of a Strategic Advisor to assist us to stay the course."));
+    // Dynamic Business Description <<15>>
+    if (data.businessDescription) docChildren.push(P(data.businessDescription));
+
+    // << STRATEGIC OVERVIEW >>
+    docChildren.push(H1("STRATEGIC OVERVIEW"));
+    const overviewIntro = `${data.tradingName} has been operating since ${data.firstYear} and offers an extensive range of services to clients in our target market area of ${data.primaryArea}.`;
+    docChildren.push(P(overviewIntro));
+    // Dynamic Business Background <<17>> and Service Intent <<18>>
+    if (data.background) docChildren.push(P(data.background));
+    if (data.serviceIntent) docChildren.push(P(data.serviceIntent));
+    // Static paragraphs from template
+    docChildren.push(P("In preparing this comprehensive strategic plan, a comprehensive strategic analysis was conducted, including a review of our purpose and strategic direction both of which are informed by our values stakeholder need."));
+    docChildren.push(P("This analysis included an examination of our internal strengths and weaknesses, as well as external opportunities and threats."));
+    docChildren.push(P("We have looked at them by way of the positive attributes (Strengths and Opportunities) and challenges to overcome (Weakness and Threats)."));
+    docChildren.push(P("These have been identified in each strategic area of the business; Customer (Sales), Finance, Operations, Learning and Growth."));
+    docChildren.push(P("In undertaking this strategic analysis process, we also considered the external environment (Political, Economic Social and Technological- PEST)"));
+    docChildren.push(P("We also evaluated our current position in the market and our competition."));
+    docChildren.push(P("All this information informs our strategic goals and objectives and will continue to guide our decision-making and actions moving forward."));
+    docChildren.push(P("From this work we have prioritized issues using a version of the “Urgent-Important Matrix” also known as the “Eisenhower Matrix”."));
+    docChildren.push(P("This has assisted in the decision making to address important/Urgent issues as a priority, scheduling Urgent/Not Important, Delegate Not Urgent/Important and deferring or deleting Not Important/Not urgent issues."));
+    docChildren.push(P("This assists us to decide on and prioritize tasks by urgency and importance, sorting out less urgent and important tasks which we should either delegate or not do at all."));
+    docChildren.push(P("This work serves as the foundation for our strategic goals and objectives."));
+    docChildren.push(P("By adopting a forward-looking approach, we are now able to leverage the identified strengths and opportunities while proactively addressing challenges posed."));
+    docChildren.push(P("This information not only shapes our strategic roadmap but also acts as an ongoing compass, informing and guiding our decision-making processes and actions as we navigate the dynamic landscape ahead."));
+    docChildren.push(P("Our commitment to strategic excellence ensures that our organization remains agile, adaptive, and aligned with the ever-evolving demands of our industry and the expectations of our valued customers."));
+
+    // << Strategic Purpose >>
+    docChildren.push(H2("Strategic Purpose- Why does the business exist."));
+    if (data.purpose) docChildren.push(P(`${data.tradingName}’s ${data.purpose}`));
+    
+    // << Strategic Direction >>
+    docChildren.push(H2("Strategic Direction – Where are we going, what is our big goal?"));
+    const directionText = `In ${data.planningPeriod}, ${data.tradingName} will ${data.planningGoal} under management by ${data.detailedPeriod}, with ${data.detailedGoal} under management by ${data.detailedPeriod}`;
+    docChildren.push(P(directionText));
+    
+    // << Our Values >>
+    docChildren.push(H2("Our Values"));
+    if (data.valuesStatement) docChildren.push(P(data.valuesStatement));
+    data.values.forEach((row, i) => {
+        if (!row.v && !row.p && !row.b) return; // Skip empty rows
+        docChildren.push(H3(`Value ${i + 1}: ${row.v || ''}`));
+        if (row.p) docChildren.push(P(`${row.p}`)); // << Principle >>
+        if (row.b) docChildren.push(P(`${row.b}`)); // << Behaviour >>
+    });
+
+    // << Our Stakeholders >>
+    docChildren.push(H2("Our Stakeholders"));
+    if (data.stakeholderStatement) docChildren.push(P(data.stakeholderStatement));
+    data.stakeholders.forEach(s => {
+        if (!s.who && !s.stake) return; // Skip empty rows
+        docChildren.push(P(s.who)); // << Stakeholder Name >>
+        docChildren.push(P(s.stake)); // << Stakeholder's stake >>
+    });
+
+    // --- Assemble the final document ---
+    const doc = new Document({
+        sections: [{
+            properties: {
+                page: { margin: { top: 720, right: 720, bottom: 720, left: 720 } } // 0.5 inch margins
+            },
+            footers: { default: footer },
+            children: docChildren,
+        }],
+        styles: {
+            default: {
+                document: {
+                    run: { font: BASE_FONT, size: BASE_FONT_SIZE },
+                    paragraph: { spacing: { line: 276, before: 0, after: 120 } }
+                }
+            }
+        }
+    });
+
+    // --- Trigger the download ---
+    const blob = await Packer.toBlob(doc);
+    const a = document.createElement('a');
+    const safeFileName = (data.tradingName || data.bizName || "Strategic_Plan").replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '_');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${safeFileName}_Strategic_Plan.docx`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+});
+</script>
+</body>
+</html>
