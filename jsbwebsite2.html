@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Business Consulting Brisbane | Just Smart Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                'jsb-main': '#7da53f',
+                'jsb-secondary': '#476931',
+                'jsb-lines': '#47c9e5',
+                'jsb-main-bg': 'rgba(125, 165, 63, 0.1)',
+              }
+            }
+          }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+        }
+        .logo{
+            width: 20px;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(71, 105, 49, 0.3), rgba(71, 105, 49, 0.6)), url('https://core3.imgix.net/59afd35f588d0medialibrary_city_panavasquez301340.jpg?auto=format,compress&fit=max&');
+            background-size: cover;
+            background-position: center;
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .testimonial-card {
+            scroll-snap-align: start;
+        }
+        .scroll-container {
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* For hiding scrollbar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
+            <a href="#" >
+               <img src="./jsb_logo.svg" alt="" class="w-40">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#services" class="text-gray-600 hover:text-jsb-main transition">Services</a>
+                <a href="#process" class="text-gray-600 hover:text-jsb-main transition">Our Process</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-jsb-main transition">Client Stories</a>
+                <a href="#about" class="text-gray-600 hover:text-jsb-main transition">About Us</a>
+                <a href="#contact" class="text-gray-600 hover:text-jsb-main transition">Contact</a>
+            </nav>
+            <a href="#contact" class="hidden md:inline-block bg-jsb-secondary text-white font-semibold px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
+            <a href="#services" class="block text-gray-600 hover:text-jsb-main">Services</a>
+            <a href="#process" class="block text-gray-600 hover:text-jsb-main">Our Process</a>
+            <a href="#testimonials" class="block text-gray-600 hover:text-jsb-main">Client Stories</a>
+            <a href="#about" class="block text-gray-600 hover:text-jsb-main">About Us</a>
+            <a href="#contact" class="block text-gray-600 hover:text-jsb-main">Contact</a>
+            <a href="#contact" class="block bg-jsb-secondary text-white text-center font-semibold mt-4 px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main style="padding-top: 80px;"> <!-- Offset for fixed header -->
+        <section class="hero-bg text-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center max-w-7xl">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Stop Spinning Your Wheels. <br class="hidden md:block"> Start Scaling Your Business.</h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto">Strategic advisory, growth workshops, and expert mentoring for Australian startups and SMEs.</p>
+                <a href="#contact" class="bg-jsb-main text-white font-bold py-4 px-8 rounded-lg text-lg shadow-xl cta-button inline-block">
+                    Book a Free 30-Min Strategy Session
+                </a>
+            </div>
+        </section>
+
+        <!-- Trust Signals Bar -->
+        <section class="bg-white py-8 shadow-sm">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-200">
+                    <div class="p-4">
+                        <h3 class="text-3xl font-bold text-jsb-secondary">1000+</h3>
+                        <p class="text-gray-600 mt-1">Businesses Mentored</p>
+                    </div>
+                    <div class="p-4 pt-8 md:pt-4">
+                        <h3 class="text-3xl font-bold text-jsb-secondary">30+</h3>
+                        <p class="text-gray-600 mt-1">Years Combined Experience</p>
+                    </div>
+                    <div class="p-4 pt-8 md:pt-4">
+                        <h3 class="text-3xl font-bold text-jsb-secondary">9/10</h3>
+                        <p class="text-gray-600 mt-1">Average Workshop Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Your Partner in Business Growth</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">We provide the clarity, strategy, and accountability you need to succeed.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg service-card">
+                        <div class="flex items-center justify-center h-16 w-16 bg-jsb-main-bg rounded-full mb-6">
+                            <svg class="w-8 h-8 text-jsb-main" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Strategic Advisory</h3>
+                        <p class="text-gray-600">Gain a clear roadmap with one-on-one guidance. We help you define your 'Big Goal', navigate challenges, and make data-driven decisions.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg service-card">
+                         <div class="flex items-center justify-center h-16 w-16 bg-jsb-main-bg rounded-full mb-6">
+                            <svg class="w-8 h-8 text-jsb-main" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Growth Workshops</h3>
+                        <p class="text-gray-600">Actionable, hands-on sessions like "Big Picture" and "Show Me the Money" designed to give you tangible tools and a clear financial plan.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg service-card">
+                         <div class="flex items-center justify-center h-16 w-16 bg-jsb-main-bg rounded-full mb-6">
+                           <svg class="w-8 h-8 text-jsb-main" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Expert Mentoring</h3>
+                        <p class="text-gray-600">Consistent support and accountability to keep you on track. We're your co-pilot, ensuring you implement your strategy and achieve your goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Our Process Section -->
+        <section id="process" class="py-20 bg-white">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Our Proven Process</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">We guide you through a simple yet powerful framework for success.</p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-0">
+                    <!-- Step 1 -->
+                    <div class="text-center w-full md:w-1/3 p-4">
+                        <div class="flex items-center justify-center h-20 w-20 bg-jsb-secondary text-white rounded-full mx-auto mb-4 text-2xl font-bold">1</div>
+                        <h3 class="text-2xl font-bold mb-2">Create</h3>
+                        <p class="text-gray-600">Define your vision and build a powerful, actionable strategy.</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="hidden md:block text-jsb-lines text-4xl mx-8 font-light">→</div>
+                    <!-- Step 2 -->
+                     <div class="text-center w-full md:w-1/3 p-4">
+                        <div class="flex items-center justify-center h-20 w-20 bg-jsb-secondary text-white rounded-full mx-auto mb-4 text-2xl font-bold">2</div>
+                        <h3 class="text-2xl font-bold mb-2">Refine</h3>
+                        <p class="text-gray-600">Continuously test, learn, and adapt your approach with expert feedback.</p>
+                    </div>
+                     <!-- Arrow -->
+                    <div class="hidden md:block text-jsb-lines text-4xl mx-8 font-light">→</div>
+                    <!-- Step 3 -->
+                     <div class="text-center w-full md:w-1/3 p-4">
+                        <div class="flex items-center justify-center h-20 w-20 bg-jsb-secondary text-white rounded-full mx-auto mb-4 text-2xl font-bold">3</div>
+                        <h3 class="text-2xl font-bold mb-2">Achieve</h3>
+                        <p class="text-gray-600">Execute with confidence and watch your business reach its goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">What Our Clients Say</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Real results from Brisbane business owners just like you.</p>
+                </div>
+                <div class="relative">
+                    <div id="testimonial-slider" class="flex overflow-x-auto scroll-container snap-x snap-mandatory scrollbar-hide">
+                        <!-- Testimonial 1 -->
+                        <div class="w-full flex-shrink-0 p-4 testimonial-card">
+                            <div class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                                <p class="text-xl italic text-gray-700">"Working with Just Smart Business was surprisingly easy... I now have bite-sized, achievable goals that I can implement immediately."</p>
+                                <div class="mt-6 flex items-center">
+                                    <img src="https://placehold.co/50x50/e2e8f0/4a5568?text=JJ" alt="Jeanette Jifkins" class="w-12 h-12 rounded-full mr-4">
+                                    <div>
+                                        <p class="font-bold text-gray-900">Jeanette Jifkins</p>
+                                        <p class="text-sm text-gray-500">ONYX Online Law</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Testimonial 2 -->
+                        <div class="w-full flex-shrink-0 p-4 testimonial-card">
+                            <div class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                                <p class="text-xl italic text-gray-700">"I feel more committed to my business and achieving my goals. They provided a clear path forward which has been invaluable for our growth."</p>
+                                <div class="mt-6 flex items-center">
+                                     <img src="https://placehold.co/50x50/e2e8f0/4a5568?text=LM" alt="Linda Mandy" class="w-12 h-12 rounded-full mr-4">
+                                    <div>
+                                        <p class="font-bold text-gray-900">Linda Mandy</p>
+                                        <p class="text-sm text-gray-500">Digital Realism</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Testimonial 3 -->
+                        <div class="w-full flex-shrink-0 p-4 testimonial-card">
+                            <div class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                                <p class="text-xl italic text-gray-700">"The strategic planning process was incredibly thorough. We identified key priorities that we had completely overlooked. Highly recommend!"</p>
+                                <div class="mt-6 flex items-center">
+                                     <img src="https://placehold.co/50x50/e2e8f0/4a5568?text=MS" alt="Mark Smith" class="w-12 h-12 rounded-full mr-4">
+                                    <div>
+                                        <p class="font-bold text-gray-900">Mark Smith</p>
+                                        <p class="text-sm text-gray-500">Innovate Tech QLD</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-8 space-x-2">
+                        <button onclick="slide(0)" class="slider-dot w-3 h-3 bg-gray-400 rounded-full focus:outline-none"></button>
+                        <button onclick="slide(1)" class="slider-dot w-3 h-3 bg-gray-400 rounded-full focus:outline-none"></button>
+                        <button onclick="slide(2)" class="slider-dot w-3 h-3 bg-gray-400 rounded-full focus:outline-none"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Your Experienced Local Advisors</h2>
+                </div>
+                <div class="flex flex-col md:flex-row gap-12 justify-center items-center max-w-4xl mx-auto">
+                    <!-- Keith Davidson -->
+                    <div class="text-center w-full md:w-1/2">
+                        <img src="./head2025-08-24 213617.png" alt="Keith Davidson" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-2xl font-bold">Keith Davidson</h3>
+                        <p class="text-jsb-main font-semibold mb-2">Co-Founder & Lead Strategist</p>
+                        <p class="text-gray-600">With over 30 years of industry experience, Keith is a serial entrepreneur who has mentored over a thousand small businesses from lightbulb idea to profitable enterprise.</p>
+                    </div>
+                    <!-- Patrick Comerford -->
+                    <div class="text-center w-full md:w-1/2">
+                        <img src="https://placehold.co/150x150/476931/ffffff?text=Patrick+C." alt="Patrick Comerford" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-2xl font-bold">Patrick Comerford</h3>
+                         <p class="text-jsb-main font-semibold mb-2">Co-Founder & Business Coach</p>
+                        <p class="text-gray-600">A former GM with 20 years of coaching expertise, Patrick excels at helping business owners build strong operational systems and high-performing teams.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lead Magnet / CTA Section -->
+        <section id="lead-magnet" class="bg-jsb-secondary text-white">
+            <div class="container mx-auto px-6 py-16 max-w-7xl">
+                <div class="lg:flex justify-between items-center">
+                    <div class="lg:w-1/2 mb-6 lg:mb-0">
+                        <h2 class="text-3xl font-bold mb-4">Ready to Build Your Strategy?</h2>
+                        <p class="text-gray-200">Download our free 1-Page Startup Strategy Template to get started. It's the first step to gaining clarity and focus for your business.</p>
+                    </div>
+                    <div class="lg:w-1/2">
+                        <form class="flex flex-col sm:flex-row gap-4">
+                            <input type="email" placeholder="Enter your email address" class="w-full px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-jsb-main" required>
+                            <button type="submit" class="bg-white text-jsb-secondary font-bold px-6 py-3 rounded-lg shadow-md cta-button">Download Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-7xl">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Take the First Step Today</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Your free, no-obligation strategy session is waiting. Let's discuss your goals and how we can help you achieve them.</p>
+                </div>
+                <div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                    <form>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-jsb-main" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-jsb-main" required>
+                        </div>
+                         <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Tell us about your business</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-jsb-main" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-jsb-secondary text-white font-bold py-3 px-6 rounded-lg shadow-lg cta-button text-lg">
+                            Book My Free Session
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-jsb-secondary text-white">
+        <div class="container mx-auto px-6 py-10 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Just <span class="text-jsb-main">Smart</span> Business</h3>
+                    <p class="text-gray-400">Your trusted partner in business growth, proudly based in Brisbane, QLD.</p>
+                    <p class="text-gray-400 mt-4">Herston, QLD 4006, Australia</p>
+                    <p class="text-gray-400 mt-2">Phone: <a href="tel:+61430000000" class="hover:text-jsb-main">0430 XXX XXX</a></p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-white">Client Stories</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Connect With Us</h3>
+                    <!-- Social media icons can be added here -->
+                    <p class="text-gray-400">Follow us for tips and insights on growing your business.</p>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="#" class="hover:text-white">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Close mobile menu on click
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Adjust for fixed header height
+                    const headerOffset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+
+        // Testimonial slider logic
+        const slider = document.getElementById('testimonial-slider');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+
+        function updateDots(index) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('bg-jsb-main', i === index);
+                dot.classList.toggle('bg-gray-400', i !== index);
+            });
+        }
+        
+        function slide(index) {
+            const slideWidth = slider.clientWidth;
+            slider.scrollTo({
+                left: slideWidth * index,
+                behavior: 'smooth'
+            });
+            currentSlide = index;
+            updateDots(currentSlide);
+        }
+
+        // Auto-advance slider
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % dots.length;
+            slide(currentSlide);
+        }, 5000);
+        
+        // Update dots on manual scroll
+        slider.addEventListener('scroll', () => {
+            const slideWidth = slider.clientWidth;
+            const newIndex = Math.round(slider.scrollLeft / slideWidth);
+            if (newIndex !== currentSlide) {
+                currentSlide = newIndex;
+                updateDots(currentSlide);
+            }
+        });
+        
+        // Initialize first dot
+        updateDots(0);
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
+
