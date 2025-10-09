@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Business Consulting Brisbane | Just Smart Business</title>
+    <link rel="icon" href="assets/img/jsb_icon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                'jsb-main': '#7da53f',
+                'jsb-secondary': '#476931',
+                'jsb-lines': '#47c9e5',
+                'jsb-main-bg': 'rgba(125, 165, 63, 0.1)',
+              }
+            }
+          }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
+            <a href="index.html">
+    <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
+</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="services.html" class="text-gray-600 hover:text-jsb-main transition">Services</a>
+                <a href="workshops.html" class="text-gray-600 hover:text-jsb-main transition">Workshops</a>
+                <a href="about.html" class="text-gray-600 hover:text-jsb-main transition">About Us</a>
+                <a href="testimonials.html" class="text-gray-600 hover:text-jsb-main transition">Client Stories</a>
+                <a href="contact.html" class="text-gray-600 hover:text-jsb-main transition">Contact</a>
+            </nav>
+            <a href="contact.html" class="hidden md:inline-block bg-jsb-secondary text-white font-semibold px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
+            <a href="services.html" class="block text-gray-600 hover:text-jsb-main">Services</a>
+            <a href="workshops.html" class="block text-gray-600 hover:text-jsb-main">Workshops</a>
+            <a href="about.html" class="block text-gray-600 hover:text-jsb-main">About Us</a>
+            <a href="testimonials.html" class="block text-gray-600 hover:text-jsb-main">Client Stories</a>
+            <a href="contact.html" class="block text-gray-600 hover:text-jsb-main">Contact</a>
+            <a href="contact.html" class="block bg-jsb-secondary text-white text-center font-semibold mt-4 px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style="padding-top: 80px;">
+        <!-- Hero Section -->
+        <section class="hero-bg text-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center max-w-7xl">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4 hero-text-shadow">Success is simply Achieving Goals.</h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto hero-text-shadow">We help Brisbane startups and SMEs build a winning strategy and the discipline to implement it, turning vision into reality.</p>
+                <a href="contact.html" class="bg-jsb-main text-white font-bold py-4 px-8 rounded-lg text-lg shadow-xl cta-button inline-block">
+                    Book a Free 30-Min Strategy Session
+                </a>
+            </div>
+        </section>
+
+        <!-- Trust Signals Bar -->
+        <section class="bg-white py-8 shadow-sm">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-200">
+                    <div class="p-4"><h3 class="text-3xl font-bold text-jsb-secondary">1000+</h3><p class="text-gray-600 mt-1">Businesses Mentored</p></div>
+                    <div class="p-4 pt-8 md:pt-4"><h3 class="text-3xl font-bold text-jsb-secondary">30+</h3><p class="text-gray-600 mt-1">Years Combined Experience</p></div>
+                    <div class="p-4 pt-8 md:pt-4"><h3 class="text-3xl font-bold text-jsb-secondary">9/10</h3><p class="text-gray-600 mt-1">Average Workshop Rating</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brief Services Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Your Partner in Business Growth</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">We provide the clarity, strategy, and accountability you need to succeed.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg service-card text-center"><h3 class="text-xl font-bold mb-3">Strategic Advisory</h3><p class="text-gray-600">Gain a clear roadmap with one-on-one guidance to define your 'Big Goal' and make data-driven decisions.</p></div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg service-card text-center"><h3 class="text-xl font-bold mb-3">Growth Workshops</h3><p class="text-gray-600">Actionable, hands-on sessions designed to give you tangible tools and a clear financial and marketing plan.</p></div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg service-card text-center"><h3 class="text-xl font-bold mb-3">Expert Mentoring</h3><p class="text-gray-600">Consistent support and accountability to keep you on track and ensure you implement your strategy effectively.</p></div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="services.html" class="bg-jsb-secondary text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg cta-button inline-block">Explore Our Services</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Brief About Us Section -->
+        <section class="py-20 bg-white">
+             <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Your Experienced Local Advisors</h2>
+                     <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Led by co-founders Keith Davidson and Patrick Comerford, our team brings decades of real-world experience in senior management, entrepreneurship, and professional coaching to help your business thrive.</p>
+                     <div class="mt-8">
+                        <a href="about.html" class="text-jsb-main font-semibold text-lg hover:text-jsb-secondary">Meet the Team →</a>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brief Testimonials -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">What Our Clients Say</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-lg italic text-gray-700">"Working with Just Smart Business was surprisingly easy... I now have bite-sized, achievable goals that I can implement immediately."</p>
+                        <div class="mt-4"><p class="font-bold text-gray-900">Jeanette Jifkins</p><p class="text-sm text-gray-500">ONYX Online Law</p></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-lg italic text-gray-700">"I feel more committed to my business and achieving my goals. They provided a clear path forward which has been invaluable for our growth."</p>
+                        <div class="mt-4"><p class="font-bold text-gray-900">Linda Mandy</p><p class="text-sm text-gray-500">Digital Realism</p></div>
+                    </div>
+                </div>
+                 <div class="text-center mt-12">
+                    <a href="testimonials.html" class="bg-jsb-secondary text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg cta-button inline-block">Read More Success Stories</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA / Contact Section -->
+        <section id="contact" class="py-20 bg-jsb-secondary text-white">
+            <div class="container mx-auto px-6 text-center max-w-4xl">
+                <h2 class="text-3xl md:text-4xl font-bold">Take the First Step Today</h2>
+                <p class="text-lg text-gray-200 mt-4 mb-8 mx-auto">Your free, no-obligation strategy session is waiting. Let's discuss your goals and how we can help you achieve them.</p>
+                <a href="contact.html" class="bg-white text-jsb-secondary font-bold py-4 px-8 rounded-lg text-lg shadow-xl cta-button inline-block">
+                    Book My Free Session
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-10 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Just <span class="text-jsb-main">Smart</span> Business</h3>
+                    <p class="text-gray-400">Your trusted partner in business growth, proudly based in Brisbane, QLD.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="workshops.html" class="text-gray-400 hover:text-white">Workshops</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="testimonials.html" class="text-gray-400 hover:text-white">Client Stories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                     <p class="text-gray-400">Herston, QLD 4006, Australia</p>
+                    <p class="text-gray-400 mt-2">Phone: <a href="tel:+61430000000" class="hover:text-jsb-main">0430 XXX XXX</a></p>
+                    <p class="text-gray-400 mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="hover:text-jsb-main">info@justsmartbusiness.com.au</a></p>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="#" class="hover:text-white">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
+
