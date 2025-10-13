@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workshops & Programs | Just Smart Business</title>
+    <title>Workshops & Client Success | Just Smart Business</title>
     <link rel="icon" href="assets/img/jsb_icon.svg" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
@@ -13,7 +13,7 @@
           theme: {
             extend: {
               colors: {
-                'jsb-main': '#7da53f',
+               'jsb-main': '#7da53f',
                 'jsb-secondary': '#476931',
                 'jsb-lines': '#47c9e5',
                 'jsb-main-bg': 'rgba(125, 165, 63, 0.1)',
@@ -32,13 +32,13 @@
     <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
             <a href="index.html">
-    <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
-</a>
+                <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
+            </a>
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="services.html" class="text-gray-600 hover:text-jsb-main transition">Services</a>
                 <a href="workshops.html" class="text-jsb-main font-semibold">Workshops</a>
                 <a href="about.html" class="text-gray-600 hover:text-jsb-main transition">About Us</a>
-                <a href="testimonials.html" class="text-gray-600 hover:text-jsb-main transition">Client Stories</a>
+                <a href="platform.html" class="text-gray-600 hover:text-jsb-main transition">JSB Platform</a>
                 <a href="contact.html" class="text-gray-600 hover:text-jsb-main transition">Contact</a>
             </nav>
             <a href="contact.html" class="hidden md:inline-block bg-jsb-secondary text-white font-semibold px-5 py-2 rounded-lg shadow-lg cta-button">
@@ -51,9 +51,9 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
             <a href="services.html" class="block text-gray-600 hover:text-jsb-main">Services</a>
-            <a href="workshops.html" class="block text-jsb-main font-semibold">Workshops</a>
+            <a href="workshops-stories.html" class="block text-jsb-main font-semibold">Workshops & Stories</a>
             <a href="about.html" class="block text-gray-600 hover:text-jsb-main">About Us</a>
-            <a href="testimonials.html" class="block text-gray-600 hover:text-jsb-main">Client Stories</a>
+            <a href="platform.html" class="block text-gray-600 hover:text-jsb-main">Client Hub</a>
             <a href="contact.html" class="block text-gray-600 hover:text-jsb-main">Contact</a>
             <a href="contact.html" class="block bg-jsb-secondary text-white text-center font-semibold mt-4 px-5 py-2 rounded-lg shadow-lg cta-button">
                 Book Free Session
@@ -63,44 +63,115 @@
     
     <main style="padding-top: 80px;">
         <!-- Page Header -->
-        <section class="bg-jsb-main-bg py-16">
+         <section class="bg-jsb-main-bg py-16 page-header-bg">
             <div class="container mx-auto px-6 text-center max-w-7xl">
-                <h1 class="text-4xl md:text-5xl font-bold text-jsb-secondary">Workshops & Programs</h1>
-                <p class="text-lg text-gray-700 mt-4 max-w-3xl mx-auto">Hands-on, practical sessions designed to deliver tangible results and actionable plans for your business.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-jsb-secondary">Workshops & Client Success</h1>
+                <p class="text-lg text-gray-700 mt-4 max-w-3xl mx-auto">Actionable workshops designed for real-world results, trusted by businesses across Queensland.</p>
             </div>
         </section>
         
-        <!-- Detailed Workshops -->
+           <!-- Workshops Section -->
         <section class="py-20">
             <div class="container mx-auto px-6 max-w-7xl">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 workshop-card">
-                        <h3 class="text-2xl font-bold mb-3">Big Picture Workshop</h3>
-                        <p class="text-gray-700">This foundational workshop is designed to give you ultimate clarity on your business direction. We work with you to define your 'Big Goal', articulate a compelling Strategic Purpose, identify and prioritise the key issues holding you back, and set actionable goals to overcome them. You'll leave with the cornerstone of your business strategy, ready for implementation.</p>
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Our Business Growth Workshops</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Our hands-on workshops are designed to give you practical tools and a clear plan. You’ll walk away with tangible assets for your business, not just theory.</p>
+                </div>
+                <div class="grid grid-cols-1 gap-16">
+                    <!-- Workshop: The Big Picture -->
+                    <div class="group grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                        <div class="overflow-hidden rounded-xl shadow-lg md:col-span-2">
+                            <img src="https://placehold.co/600x450/7da53f/ffffff?text=Strategic+Planning" alt="A group of professionals in a strategic planning workshop" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="bg-jsb-light-green rounded-xl shadow-lg border border-gray-200 p-8 lg:p-12 transform transition-shadow duration-500 group-hover:shadow-2xl md:col-span-3">
+                            <h3 class="text-2xl font-bold mb-3 text-jsb-secondary">The Big Picture – Strategic Planning</h3>
+                            <p class="text-gray-600 mb-6">This foundational workshop helps you define your long-term vision and create a clear, actionable roadmap to get there.</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Define your 'Big Goal' and articulate your Strategic Purpose.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Identify and prioritise the key issues holding your business back.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Walk away with a one-page strategic plan to guide your decisions.</span></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 workshop-card">
-                        <h3 class="text-2xl font-bold mb-3">Show Me the Money Workshop</h3>
-                        <p class="text-gray-700">Gain complete control over your business finances. In this session, we help you create comprehensive 3-year financial projections, including Profit & Loss, Cash Flow, and Balance Sheet. You'll also learn how to use a simple scorecard to monitor your financial health, enabling you to make informed decisions and drive profitability.</p>
+                    <!-- Workshop: Show Me the Money -->
+                    <div class="group grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                        <div class="bg-jsb-light-green rounded-xl shadow-lg border border-gray-200 p-8 lg:p-12 transform transition-shadow duration-500 group-hover:shadow-2xl md:col-span-3">
+                            <h3 class="text-2xl font-bold mb-3 text-jsb-secondary">Show Me the Money – Financial Planning</h3>
+                            <p class="text-gray-600 mb-6">Gain control of your finances. This workshop demystifies financial forecasting and gives you the tools to manage cash flow effectively.</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Develop simple 3-year financial projections for your business.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Create a simple scorecard to track your most important financial goals.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Understand the key drivers of profit and cash flow in your business.</span></li>
+                            </ul>
+                        </div>
+                        <div class="overflow-hidden rounded-xl shadow-lg md:col-span-2">
+                            <img src="https://placehold.co/600x450/476931/ffffff?text=Financial+Planning" alt="Financial charts and graphs indicating a financial planning session" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
+                        </div>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 workshop-card">
-                        <h3 class="text-2xl font-bold mb-3">Marketing Workshop</h3>
-                        <p class="text-gray-700">Stop wasting money on ineffective marketing. This workshop focuses on defining your ideal target customer, developing a powerful value proposition that resonates with them, and creating a focused marketing action plan. We ensure that every dollar you spend on marketing is a strategic investment towards customer acquisition and growth.</p>
+                    <!-- Workshop: InvestReady Program -->
+                    <div class="group grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                        <div class="overflow-hidden rounded-xl shadow-lg md:col-span-2">
+                            <img src="https://placehold.co/600x450/47c9e5/ffffff?text=InvestReady+Program" alt="An entrepreneur pitching to investors" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="bg-jsb-light-green rounded-xl shadow-lg border border-gray-200 p-8 lg:p-12 transform transition-shadow duration-500 group-hover:shadow-2xl md:col-span-3">
+                            <h3 class="text-2xl font-bold mb-3 text-jsb-secondary">InvestReady Program</h3>
+                            <p class="text-gray-600 mb-6">Prepare your business for its next stage of growth by becoming 'investor-ready'. We guide you through the process of securing capital.</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Understand what investors are looking for and how to prepare.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Develop a compelling pitch deck and financial model.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Gain confidence in presenting your business and its valuation.</span></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 workshop-card">
-                        <h3 class="text-2xl font-bold mb-3">InvestReady Program</h3>
-                        <p class="text-gray-700">If you're seeking external funding, this program is essential. We guide you through the process of preparing your business for investment, which includes creating a compelling and professional Information Memorandum. We then help you connect with our extensive network of venture capitalists and angel investors to get your pitch in front of the right people.</p>
+                    <!-- Workshop: Marketing & Sales -->
+                    <div class="group grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                        <div class="bg-jsb-light-green rounded-xl shadow-lg border border-gray-200 p-8 lg:p-12 transform transition-shadow duration-500 group-hover:shadow-2xl md:col-span-3">
+                            <h3 class="text-2xl font-bold mb-3 text-jsb-secondary">Marketing & Sales Strategy</h3>
+                            <p class="text-gray-600 mb-6">Turn your marketing efforts into measurable results. This workshop helps you build a practical strategy to attract and convert your ideal customers.</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Clearly define your target audience and unique value proposition.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Create a simple yet effective sales and marketing funnel.</span></li>
+                                <li class="flex items-start"><span class="text-jsb-main font-bold mr-2">✓</span><span>Develop a plan to generate consistent leads and grow revenue.</span></li>
+                            </ul>
+                        </div>
+                        <div class="overflow-hidden rounded-xl shadow-lg md:col-span-2">
+                             <img src="https://placehold.co/600x450/a8d08d/ffffff?text=Marketing+%26+Sales" alt="A marketing funnel or sales chart illustrating growth" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Client Stories Section -->
+        <section class="py-20 bg-jsb-light-green">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">What Our Clients Achieve</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Hear directly from business owners who have transformed their clarity and results after working with us.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-lg italic text-gray-700">"Working with Just Smart Business was surprisingly easy... I now have bite-sized, achievable goals that I can implement immediately."</p>
+                        <div class="mt-4"><p class="font-bold text-gray-900">Jeanette Jifkins</p><p class="text-sm text-gray-500">ONYX Online Law</p></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-lg italic text-gray-700">"I feel more committed to my business and achieving my goals. They provided a clear path forward which has been invaluable for our growth."</p>
+                        <div class="mt-4"><p class="font-bold text-gray-900">Linda Mandy</p><p class="text-sm text-gray-500">Digital Realism</p></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-lg italic text-gray-700">"It’s like having my business coach, project plan, and progress tracker in one place. I can see exactly where I’m at and what to do next."</p>
+                        <div class="mt-4"><p class="font-bold text-gray-900">— JSB Client, Brisbane</p></div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- CTA -->
+        <!-- CTA Section -->
         <section class="bg-jsb-secondary text-white py-20">
              <div class="container mx-auto px-6 text-center max-w-4xl">
                 <h2 class="text-3xl md:text-4xl font-bold">Ready to Build Your Action Plan?</h2>
-                <p class="text-lg text-gray-200 mt-4 mb-8 mx-auto">Find out which workshop is the right fit for your business. Let's talk about your goals and how our programs can help.</p>
+                <p class="text-lg text-gray-200 mt-4 mb-8 mx-auto">Whether you're interested in a workshop or one-on-one advisory, the first step is a conversation. Let's discuss your goals.</p>
                 <a href="contact.html" class="bg-white text-jsb-secondary font-bold py-4 px-8 rounded-lg text-lg shadow-xl cta-button inline-block">
-                    Enquire About Workshops
+                    Book a Free Consultation
                 </a>
             </div>
         </section>
@@ -111,13 +182,21 @@
         <div class="container mx-auto px-6 py-10 max-w-7xl">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div><h3 class="text-xl font-bold mb-4">Just <span class="text-jsb-main">Smart</span> Business</h3><p class="text-gray-400">Your trusted partner in business growth, proudly based in Brisbane, QLD.</p></div>
-                <div><h3 class="text-xl font-bold mb-4">Quick Links</h3><ul class="space-y-2"><li><a href="services.html" class="text-gray-400 hover:text-white">Services</a></li><li><a href="workshops.html" class="text-gray-400 hover:text-white">Workshops</a></li><li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li><li><a href="testimonials.html" class="text-gray-400 hover:text-white">Client Stories</a></li></ul></div>
+                <div><h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="workshops-stories.html" class="text-gray-400 hover:text-white">Workshops & Stories</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                         <li><a href="platform.html" class="text-gray-400 hover:text-white">JSB Platform</a></li>
+                    </ul>
+                </div>
                 <div><h3 class="text-xl font-bold mb-4">Contact Us</h3><p class="text-gray-400">Herston, QLD 4006, Australia</p><p class="text-gray-400 mt-2">Phone: <a href="tel:+61430000000" class="hover:text-jsb-main">0430 XXX XXX</a></p><p class="text-gray-400 mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="hover:text-jsb-main">info@justsmartbusiness.com.au</a></p></div>
             </div>
-            <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm"><p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacypolicy.html" class="hover:text-white">Privacy Policy</a></p></div>
+            <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm"><p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a></p></div>
         </div>
     </footer>
     
     <script src="main.js"></script>
 </body>
 </html>
+

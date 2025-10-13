@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your JSB Client Platform</title>
+    <link rel="icon" href="assets/img/jsb_icon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+             'jsb-main': '#7da53f',
+                'jsb-secondary': '#476931',
+                'jsb-lines': '#47c9e5',
+                'jsb-main-bg': 'rgba(125, 165, 63, 0.1)',
+              }
+            }
+          }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
+            <a href="index.html">
+                <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="services.html" class="text-gray-600 hover:text-jsb-main transition">Services</a>
+                <a href="workshops.html" class="text-gray-600 hover:text-jsb-main transition">Workshops</a>
+                <a href="about.html" class="text-gray-600 hover:text-jsb-main transition">About Us</a>
+                <a href="platform.html" class="text-jsb-main font-semibold">JSB Platform</a>
+                <a href="contact.html" class="text-gray-600 hover:text-jsb-main transition">Contact</a>
+            </nav>
+            <a href="contact.html" class="hidden md:inline-block bg-jsb-secondary text-white font-semibold px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
+            <a href="services.html" class="block text-gray-600 hover:text-jsb-main">Services</a>
+            <a href="workshops.html" class="block text-gray-600 hover:text-jsb-main">Workshops</a>
+            <a href="about.html" class="block text-gray-600 hover:text-jsb-main">About Us</a>
+            <a href="platform.html" class="block text-jsb-main font-semibold">Client Hub</a>
+            <a href="testimonials.html" class="block text-gray-600 hover:text-jsb-main">Client Stories</a>
+            <a href="contact.html" class="block text-gray-600 hover:text-jsb-main">Contact</a>
+            <a href="contact.html" class="block bg-jsb-secondary text-white text-center font-semibold mt-4 px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+        </div>
+    </header>
+    
+    <main style="padding-top: 80px;">
+        <!-- Hero Section -->
+        <section class="bg-jsb-main-bg py-20 md:py-28 page-header-bg">
+            <div class="container mx-auto px-6 text-center max-w-7xl">
+                <h1 class="text-4xl md:text-5xl font-bold text-jsb-secondary mb-4">Welcome to Your JSB Client Platform</h1>
+                <p class="text-lg md:text-xl text-gray-700 mt-4 max-w-3xl mx-auto">Where clarity meets action, and strategy turns into results.</p>
+                <div class="mt-8 flex justify-center items-center space-x-6">
+                    <a href="#" class="inline-block bg-jsb-secondary text-white font-bold py-3 px-8 rounded-lg text-lg shadow-xl cta-button">
+                        Log In to Your Platform
+                    </a>
+                    <a href="services.html" class="text-jsb-secondary font-semibold hover:text-jsb-main transition">
+                        Not a client yet? Learn how we can help →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1 – Stay Connected -->
+        <section class="py-20">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Your Business. Your Dashboard. Your Way.</h2>
+                        <p class="text-gray-600 leading-relaxed">The JSB Client Platform brings everything about your business growth journey together in one secure place. You can review your project updates, track your key goals, and communicate directly with your JSB Strategic Advisor — all from your personalised dashboard.</p>
+                        <p class="text-gray-600 leading-relaxed mt-4">It’s designed to help you stay focused, make faster decisions, and see the real impact of your actions.</p>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/600x450/e2e8f0/476931?text=Dashboard+Mockup" alt="Illustration of the JSB Client Platform Dashboard" class="rounded-xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2 – What You Can Do Inside -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 text-center">
+                    <!-- Feature: Projects & Goals -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">View Projects & Goals</h3>
+                        <p class="text-sm text-gray-600">Monitor your strategic projects, milestones, and actions at a glance.</p>
+                    </div>
+                    <!-- Feature: Connect -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Connect with Your Advisor</h3>
+                        <p class="text-sm text-gray-600">Message your JSB Advisor and get timely guidance when you need it.</p>
+                    </div>
+                    <!-- Feature: Tools -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
+                             <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 14h.01M9 11h.01M12 11h.01M15 11h.01M12 4v1m0 14v1m-6.364-2.364l1.414-1.414M18.364 5.636l1.414-1.414M19.778 12h-1M4.222 12H3m15.364 6.364l-1.414-1.414M5.636 5.636L4.222 4.222m0 15.556l1.414-1.414m12.728 0l-1.414-1.414M4 12a8 8 0 018-8h0a8 8 0 018 8v0a8 8 0 01-8 8h0a8 8 0 01-8-8z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Access Growth Tools</h3>
+                        <p class="text-sm text-gray-600">Instantly use calculators and assessments to make data-driven decisions.</p>
+                    </div>
+                    <!-- Feature: Library -->
+                    <div class="flex flex-col items-center">
+                         <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
+                             <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Resource Library</h3>
+                        <p class="text-sm text-gray-600">Explore templates, guides, and frameworks that support your growth plan.</p>
+                    </div>
+                    <!-- Feature: Sessions -->
+                    <div class="flex flex-col items-center">
+                         <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
+                             <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Book & Manage Sessions</h3>
+                        <p class="text-sm text-gray-600">Schedule upcoming meetings, workshops, or accountability check-ins online.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 – The Tools -->
+        <section class="py-20">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">From Insight to Action — Tools Built for Real Business Growth</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">The JSB Client Platform includes a suite of intelligent business tools designed to help you see clearly, plan effectively, and act confidently. Each tool provides data-driven insights so you can make better choices, improve performance, and accelerate results.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Tool: Strategic Assessment -->
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3">🧠 Strategic Assessment</h3>
+                        <p class="text-gray-600">Gain a deep understanding of your business from every angle — purpose, customers, operations, finances, and growth potential. You’ll see where your strategy is strong and where to focus next.</p>
+                    </div>
+                    <!-- Tool: Resilience Assessment -->
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3">💪 Business Resilience Assessment</h3>
+                        <p class="text-gray-600">Evaluate how well your business can handle change and challenge. This assessment identifies vulnerabilities and helps you build systems that keep your business steady, even when conditions shift.</p>
+                    </div>
+                     <!-- Tool: Sales Calculator -->
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3">💰 Sales & Profit Calculator</h3>
+                        <p class="text-gray-600">Plan smarter sales goals with real numbers. This interactive calculator helps you find your ideal sales volume, profit targets, and pricing structure, giving you clarity on what to aim for.</p>
+                    </div>
+                     <!-- Tool: Goal Tracker -->
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3">🎯 Goal & KPI Tracker</h3>
+                        <p class="text-gray-600">Transform ideas into measurable progress. Track your strategic objectives, set key performance indicators, and measure results as your actions unfold. You’ll always know how you are performing against plan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 – Why Clients Love It -->
+        <section class="py-20 bg-jsb-light-green">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Why Clients Love It</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-lg italic text-gray-700">"It’s like having my business coach, project plan, and progress tracker in one place. I can see exactly where I’m at and what to do next."</p>
+                        <div class="mt-4"><p class="font-bold text-gray-900">— JSB Client, Brisbane</p></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-lg italic text-gray-700">"The assessments and calculators helped me see my business from a different angle — now I make better decisions every week."</p>
+                        <div class="mt-4"><p class="font-bold text-gray-900">— Workshop Participant, Gold Coast</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5 – Get Started -->
+        <section class="py-20 text-center">
+            <div class="container mx-auto px-6 max-w-2xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Already a JSB Client?</h2>
+                <p class="text-lg text-gray-600 mt-4">Your business growth journey is just one click away. Log in to your JSB Client Platform to access your dashboard, assessments, and growth tools.</p>
+                <div class="mt-8">
+                    <a href="#" class="inline-block bg-jsb-secondary text-white font-bold py-3 px-12 rounded-lg text-lg shadow-xl cta-button">
+                        Log In to Your Platform
+                    </a>
+                    <p class="mt-6 text-gray-600">
+                        Not a client yet? <a href="services.html" class="text-jsb-main font-semibold hover:underline">Discover how JSB can help you grow.</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-10 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div><h3 class="text-xl font-bold mb-4">Just <span class="text-jsb-main">Smart</span> Business</h3><p class="text-gray-400">Your trusted partner in business growth, proudly based in Brisbane, QLD.</p></div>
+                <div><h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="services.html" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="workshops.html" class="text-gray-400 hover:text-white">Workshops</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="platform.html" class="text-gray-400 hover:text-white">JSB Platform</a></li>
+                        
+                    </ul>
+                </div>
+                <div><h3 class="text-xl font-bold mb-4">Contact Us</h3><p class="text-gray-400">Herston, QLD 4006, Australia</p><p class="text-gray-400 mt-2">Phone: <a href="tel:+61430000000" class="hover:text-jsb-main">0430 XXX XXX</a></p><p class="text-gray-400 mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="hover:text-jsb-main">info@justsmartbusiness.com.au</a></p></div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm"><p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a></p></div>
+        </div>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>
+
