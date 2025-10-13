@@ -10,7 +10,7 @@ body {
         /* Dark overlay */
         linear-gradient(rgba(26, 32, 44, 0.3), rgba(26, 32, 44, 0.7)),
         /* Your image */
-        url('../assets/img/hero.jpg'); /* <-- CHANGE THIS LINE */
+        url(assets/img/hero.jpg); /* <-- CHANGE THIS LINE */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -123,4 +123,5 @@ header nav a.font-semibold::after {
 .prose a:hover {
     text-decoration: underline;
 }
+
 
