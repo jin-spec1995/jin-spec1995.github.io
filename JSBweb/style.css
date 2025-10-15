@@ -75,6 +75,84 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+/* Platform Slider Styles */
+.platform-slider-container {
+    width: 100%;
+}
+.platform-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #476931;
+    border: none;
+    border-radius: 9999px;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.platform-arrow:hover {
+    background-color: white;
+}
+.platform-arrow.left-0 {
+    left: 0.5rem;
+}
+.platform-arrow.right-0 {
+    right: 0.5rem;
+}
+
+/* Lightbox Modal Styles */
+.lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.lightbox-modal.active {
+    opacity: 1;
+}
+.lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+.lightbox-modal.active .lightbox-content {
+    transform: scale(1);
+}
+.lightbox-close-btn {
+    position: absolute;
+    top: -2.5rem;
+    right: -1rem;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
 
 /* Service Card Hover Effect */
 .service-card {
@@ -126,4 +204,91 @@ header nav a.font-semibold::after {
 }
 .prose a:hover {
     text-decoration: underline;
+}
+
+/* Video Modal Styles */
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.video-modal.active {
+    opacity: 1;
+}
+.video-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
+.video-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    background-color: black;
+    border-radius: 0.5rem;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+.video-modal.active .video-modal-content {
+    transform: scale(1);
+}
+.video-close-btn {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2rem;
+    z-index: 110;
+}
+@media (max-width: 768px) {
+    .video-close-btn {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.5rem;
+        background-color: rgba(0,0,0,0.5);
+        border-radius: 9999px;
+    }
+}
+
+/* Image Flip Animation */
+@keyframes flip {
+    0% { transform: rotateY(0deg); }
+    33% { transform: rotateY(180deg); }
+    66% { transform: rotateY(0deg); }
+    100% { transform: rotateY(0deg); }
+}
+
+.image-flipper {
+    transform-style: preserve-3d;
+    transition: transform 0.3s;
+}
+
+#keith-video-trigger:hover .image-flipper {
+    animation: flip 1.2s ease-in-out;
+}
+
+/* Keith Video Trigger Hover Effect */
+.play-button-overlay {
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s; /* No delay when hiding */
+}
+
+#keith-video-trigger:hover .play-button-overlay {
+    transition-delay: 1s; /* 1-second delay on hover */
 }

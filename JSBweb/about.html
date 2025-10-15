@@ -70,26 +70,31 @@
             </div>
         </section>
         
-        <!-- Team Section -->
+          <!-- Team Section -->
         <section class="py-20">
             <div class="container mx-auto px-6 max-w-7xl">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Your Experienced Local Advisors</h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-                    <!-- Keith Davidson -->
+                      <!-- Keith Davidson -->
                     <div class="text-center">
-                        <img src="assets/img/handsomeman.png" alt="Keith Davidson" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
-                        <h3 class="text-2xl font-bold">Keith Davidson</h3>
+                        <div id="keith-video-trigger" class="relative w-40 h-40 mx-auto group cursor-pointer" style="perspective: 1000px;">
+                            <img src="assets/img/handsomeman.png" alt="Keith Davidson" class="w-40 h-40 rounded-full shadow-lg image-flipper">
+                            <div class="play-button-overlay absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold mt-4">Keith Davidson</h3>
                         <p class="text-jsb-main font-semibold mb-4">Co-Founder & Lead Strategist</p>
-                        <p class="text-gray-600 text-left px-6 sm:px-4">Keith has over 30 years of experience in senior management roles with major companies like Telstra, where he was responsible for significant business units. As a serial entrepreneur, he has built and sold his own successful businesses, giving him firsthand knowledge of the challenges and opportunities business owners face. He has mentored over a thousand small business owners, helping them navigate everything from startup phases to growth and exit strategies.</p>
+                        <p class="text-gray-600 text-left px-4">Keith has over 30 years of experience in senior management roles with major companies like Telstra, where he was responsible for significant business units. As a serial entrepreneur, he has built and sold his own successful businesses, giving him firsthand knowledge of the challenges and opportunities business owners face. He has mentored over a thousand small business owners, helping them navigate everything from startup phases to growth and exit strategies.</p>
                     </div>
                     <!-- Patrick Comerford -->
                     <div class="text-center">
                         <img src="assets/img/patrick.avif" alt="Patrick Comerford" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
-                        <h3 class="text-2xl font-bold">Patrick Comerford</h3>
+                        <h3 class="text-2xl font-bold mt-4">Patrick Comerford</h3>
                          <p class="text-jsb-main font-semibold mb-4">Co-Founder & Business Coach</p>
-                        <p class="text-gray-600 text-left px-6 sm:px-4">Patrick brings extensive experience as a General Manager with Spotless Services, a major publicly listed company. He has also owned and operated his own successful businesses, providing him with a unique blend of corporate and entrepreneurial expertise. With 20 years of coaching experience, Patrick excels at helping business owners build strong operational systems, develop high-performing teams, and create a culture of accountability and success.</p>
+                        <p class="text-gray-600 text-left px-4">Patrick brings extensive experience as a General Manager with Spotless Services, a major publicly listed company. He has also owned and operated his own successful businesses, providing him with a unique blend of corporate and entrepreneurial expertise. With 20 years of coaching experience, Patrick excels at helping business owners build strong operational systems, develop high-performing teams, and create a culture of accountability and success.</p>
                     </div>
                 </div>
             </div>
@@ -163,6 +168,24 @@
             </div>
         </section>
     </main>
+
+    
+   <!-- Video Modal -->
+    <div id="video-modal" class="video-modal hidden">
+        <div class="video-modal-overlay"></div>
+        <div class="video-modal-content">
+            <button id="close-modal-btn" class="video-close-btn">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="aspect-w-16 aspect-h-9 w-full">
+                <video id="keith-video" controls class="w-full h-full">
+                    <!-- IMPORTANT: Replace this with the actual path to your video file -->
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white">
