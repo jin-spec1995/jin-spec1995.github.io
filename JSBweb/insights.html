@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Insights & Articles | Just Smart Business</title>
+    <link rel="icon" href="assets/img/jsb_icon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                'jsb-main': '#7da53f',
+                'jsb-secondary': '#476931',
+                'jsb-lines': '#47c9e5',
+                'jsb-main-bg': 'rgba(125, 165, 63, 0.1)',
+              
+              }
+            }
+          }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
+            <a href="index.html">
+                <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="services.html" class="text-gray-600 hover:text-jsb-main transition">Services</a>
+                <a href="workshops-stories.html" class="text-gray-600 hover:text-jsb-main transition">Workshops</a>
+                <a href="about.html" class="text-gray-600 hover:text-jsb-main transition">About Us</a>
+                <a href="platform.html" class="text-gray-600 hover:text-jsb-main transition">JSB Platform</a>
+                <a href="insights.html" class="text-jsb-main font-semibold">Insights</a>
+                <a href="contact.html" class="text-gray-600 hover:text-jsb-main transition">Contact</a>
+            </nav>
+            <a href="contact.html" class="hidden md:inline-block bg-jsb-secondary text-white font-semibold px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
+            <a href="services.html" class="block text-gray-600 hover:text-jsb-main">Services</a>
+            <a href="workshops-stories.html" class="block text-gray-600 hover:text-jsb-main">Workshops & Stories</a>
+            <a href="about.html" class="block text-gray-600 hover:text-jsb-main">About Us</a>
+            <a href="platform.html" class="block text-gray-600 hover:text-jsb-main">Client Hub</a>
+            <a href="insights.html" class="block text-jsb-main font-semibold">Insights</a>
+            <a href="contact.html" class="block text-gray-600 hover:text-jsb-main">Contact</a>
+            <a href="contact.html" class="block bg-jsb-secondary text-white text-center font-semibold mt-4 px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+        </div>
+    </header>
+    
+    <main style="padding-top: 80px;">
+        <!-- Page Header -->
+        <section class="bg-jsb-main-bg py-20 md:py-28 page-header-bg">
+            <div class="container mx-auto px-6 text-center max-w-7xl">
+                <h1 class="text-4xl md:text-5xl font-bold text-jsb-secondary">Business Growth Insights</h1>
+                <p class="text-lg text-gray-700 mt-4 max-w-3xl mx-auto">Actionable advice and strategies for Brisbane's ambitious business owners.</p>
+            </div>
+        </section>
+        
+        <!-- Articles Grid -->
+        <section class="py-20">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Article Card 1 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group">
+                        <a href="article-financial-mistakes.html" class="block">
+                            <img src="https://placehold.co/600x400/ef4444/ffffff?text=Financial+Mistakes" alt="Calculator and financial documents" class="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-105">
+                        </a>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-jsb-main transition">5 Common Financial Mistakes Brisbane Startups Make (And How to Avoid Them)</h2>
+                            <p class="text-gray-600 flex-grow">From confusing profit with cash flow to neglecting forecasting, we break down the critical errors that can hinder a new business in Queensland.</p>
+                            <a href="article-financial-mistakes.html" class="mt-6 font-semibold text-jsb-secondary hover:text-jsb-main transition">Read More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 2 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group">
+                        <a href="article-strategic-plan.html" class="block">
+                             <img src="https://placehold.co/600x400/7da53f/ffffff?text=Strategic+Plan" alt="A one-page strategic plan document" class="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-105">
+                        </a>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-jsb-main transition">How to Create a One-Page Strategic Plan for Your Service Business</h2>
+                            <p class="text-gray-600 flex-grow">A business plan doesn't need to be 50 pages long. Learn how to distill your vision, goals, and actions into a single, powerful document.</p>
+                            <a href="article-strategic-plan.html" class="mt-6 font-semibold text-jsb-secondary hover:text-jsb-main transition">Read More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 3 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group">
+                        <a href="article-investment-ready.html" class="block">
+                            <img src="https://placehold.co/600x400/47c9e5/ffffff?text=Investment+Ready" alt="An upward-trending graph indicating investment growth" class="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-105">
+                        </a>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-jsb-main transition">Is Your Business Ready for Investment? A 7-Point Checklist</h2>
+                            <p class="text-gray-600 flex-grow">Securing capital is more than just having a good idea. We cover the essential steps to ensure your business is truly 'investor-ready'.</p>
+                            <a href="article-investment-ready.html" class="mt-6 font-semibold text-jsb-secondary hover:text-jsb-main transition">Read More →</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="bg-jsb-secondary text-white py-20">
+             <div class="container mx-auto px-6 text-center max-w-4xl">
+                <h2 class="text-3xl md:text-4xl font-bold">Ready to Apply These Insights?</h2>
+                <p class="text-lg text-gray-200 mt-4 mb-8 mx-auto">Information is only powerful when acted upon. Let's discuss how these strategies can be tailored to your specific business goals.</p>
+                <a href="contact.html" class="bg-white text-jsb-secondary font-bold py-4 px-8 rounded-lg text-lg shadow-xl cta-button inline-block">
+                    Book a Free Consultation
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-10 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div><h3 class="text-xl font-bold mb-4">Just <span class="text-jsb-main">Smart</span> Business</h3><p class="text-gray-400">Your trusted partner in business growth, proudly based in Brisbane, QLD.</p></div>
+                <div><h3 class="text-xl font-bold mb-4">Quick Links</h3><ul class="space-y-2"><li><a href="services.html" class="text-gray-400 hover:text-white">Services</a></li><li><a href="workshops-stories.html" class="text-gray-400 hover:text-white">Workshops & Stories</a></li><li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li> <li><a href="platform.html" class="text-gray-400 hover:text-white">Client Hub</a></li><li><a href="insights.html" class="text-gray-400 hover:text-white">Insights</a></li></ul></div>
+                <div><h3 class="text-xl font-bold mb-4">Contact Us</h3><p class="text-gray-400">Herston, QLD 4006, Australia</p><p class="text-gray-400 mt-2">Phone: <a href="tel:+61430000000" class="hover:text-jsb-main">0430 XXX XXX</a></p><p class="text-gray-400 mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="hover:text-jsb-main">info@justsmartbusiness.com.au</a></p></div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm"><p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a></p></div>
+        </div>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>
