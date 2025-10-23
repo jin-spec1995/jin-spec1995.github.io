@@ -1,0 +1,163 @@
+Professional Pre-Deployment Checklist
+
+Before you upload your website files to a web server, it's crucial to perform a series of checks and optimizations. This checklist covers everything from performance and SEO to content and security.
+
+Phase 1: Code & Performance Optimization
+
+Your goal here is to make the website as fast as possible. A fast site ranks better on Google and provides a much better user experience.
+
+1. Build Your Final CSS with Tailwind CLI
+
+Your current setup uses the Tailwind CSS CDN, which is fantastic for development but not for production. It forces the user's browser to download a large library and process your HTML to generate the styles, which is slow.
+
+Action: Use the Tailwind CLI to scan your HTML files and generate a tiny, highly-optimized CSS file that only includes the styles you've actually used.
+
+Setup: If you haven't already, you'll need Node.js installed. In your project folder, run npm install -D tailwindcss and then npx tailwindcss init.
+
+Configure: Edit the tailwind.config.js file to tell Tailwind where your HTML files are:
+
+module.exports = {
+  content: ["./*.html"], // This scans all .html files in your root folder
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+
+Build: Create a simple CSS file named input.css with the following lines:
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+Run the Build Command: In your terminal, run this command:
+
+npx tailwindcss -i ./input.css -o ./style.css --minify
+
+
+Result: This will replace your current style.css file with a new, much smaller, production-ready version.
+
+2. Minify Your JavaScript
+
+Your main.js file is small, but minifying it is good practice. This process removes all unnecessary characters (like spaces and comments) without changing its functionality.
+
+Action: Use an online tool like Terser or JavaScript Minifier. Copy the code from your main.js file, paste it into the tool, and copy the minified result back into your main.js file.
+
+3. Optimize All Images
+
+This is one of the most important steps for performance. Large images will dramatically slow down your site.
+
+Action:
+
+Compress Photos (.jpg): Use a tool like TinyJPG to compress all your photo-based images (like the hero slider photos). This can reduce their file size by over 70% with almost no visible loss in quality.
+
+Compress Graphics/Logos (.png, .svg): Use TinyPNG for .png files and a tool like SVGOMG for your .svg logos and icons.
+
+Correct Sizing: Make sure your images are sized appropriately. An image that only appears 600px wide on the site shouldn't be a 4000px wide file. Resize them before uploading.
+
+Phase 2: SEO & Metadata Finalization
+
+This ensures Google understands your site and that it looks great when shared on social media.
+
+1. Finalize All Page Titles and Meta Descriptions
+
+Every single HTML page must have a unique, descriptive title and meta description.
+
+Action: Go through each HTML file and update the <head> section.
+
+Example for services.html:
+
+<title>Business Strategy & Mentoring Services in Brisbane | Just Smart Business</title>
+<meta name="description" content="JSB offers expert strategic advisory, growth workshops, and one-on-one mentoring for Brisbane startups and SMEs. Build a clear roadmap for success.">
+
+
+2. Add Social Media (Open Graph) Tags
+
+These tags control how your pages look when shared on platforms like Facebook, LinkedIn, and X (Twitter).
+
+Action: Add the following tags to the <head> of every HTML page, customizing the og:title, og:description, and og:image for each page.
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="[https://justsmartbusiness.com.au/index.html](https://justsmartbusiness.com.au/index.html)">
+<meta property="og:title" content="Startup Business Consulting Brisbane | Just Smart Business">
+<meta property="og:description" content="We help Brisbane startups and SMEs build a winning strategy and the discipline to implement it, turning vision into reality.">
+<meta property="og:image" content="[https://justsmartbusiness.com.au/assets/img/social-share-image.jpg](https://justsmartbusiness.com.au/assets/img/social-share-image.jpg)"> <!-- Create a nice 1200x630px image -->
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="[https://justsmartbusiness.com.au/index.html](https://justsmartbusiness.com.au/index.html)">
+<meta property="twitter:title" content="Startup Business Consulting Brisbane | Just Smart Business">
+<meta property="twitter:description" content="We help Brisbane startups and SMEs build a winning strategy and the discipline to implement it, turning vision into reality.">
+<meta property="twitter:image" content="[https://justsmartbusiness.com.au/assets/img/social-share-image.jpg](https://justsmartbusiness.com.au/assets/img/social-share-image.jpg)">
+
+
+3. Create robots.txt and sitemap.xml
+
+These files live in the root directory of your website and are essential for search engines.
+
+robots.txt: Tells search engines which pages to ignore. For a simple site like this, you generally want them to crawl everything.
+
+Action: Create a new file named robots.txt in your main folder with this content:
+
+User-agent: *
+Allow: /
+
+Sitemap: [https://justsmartbusiness.com.au/sitemap.xml](https://justsmartbusiness.com.au/sitemap.xml)
+
+
+sitemap.xml: Provides a map of all your pages for Google to easily find and index.
+
+Action: Create a new file named sitemap.xml in your main folder. You can use a free online sitemap generator or use this template:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="[http://www.sitemaps.org/schemas/sitemap/0.9](http://www.sitemaps.org/schemas/sitemap/0.9)">
+  <url>
+    <loc>[https://justsmartbusiness.com.au/index.html](https://justsmartbusiness.com.au/index.html)</loc>
+    <lastmod>2025-10-21</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>[https://justsmartbusiness.com.au/services.html](https://justsmartbusiness.com.au/services.html)</loc>
+    <lastmod>2025-10-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <!-- Add a <url> block for every other page -->
+</urlset>
+
+
+Phase 3: Content & Functionality Review
+
+This is your final quality assurance check to catch any mistakes.
+
+Replace ALL Placeholder Content: This is non-negotiable for a professional launch.
+
+Action: Go through every page and replace all placeholder images (placehold.co), text (XXX XXX), and video links (w3schools.com).
+
+Check All Links: Click every single link on the website—in the navigation, in the footer, and in the content—to ensure none are broken.
+
+Test on Multiple Browsers and Devices: Open your website on Chrome, Firefox, and Safari, on both a desktop computer and a mobile phone. Make sure everything looks and functions correctly.
+
+Proofread All Content: Read every word on the website to check for spelling mistakes and grammatical errors. It's often helpful to have someone else do a final proofread.
+
+Test the Contact Form: Once the site is on the server, submit a test message through your Suitedash form to confirm you receive the notification correctly.
+
+Phase 4: Deployment & Analytics
+
+This is the final "go-live" step.
+
+Web Hosting & Domain: Ensure your domain name is pointing to your web host. For a static site like this, hosts like Netlify, Vercel, or GitHub Pages are excellent, fast, and often free.
+
+Enable HTTPS/SSL: Your website must be served over https://. This is crucial for security and SEO. Most modern hosts provide a free SSL certificate (like Let's Encrypt).
+
+Install Analytics: You need to know how many people are visiting your site.
+
+Action: Sign up for a free Google Analytics account. It will give you a tracking code snippet. Paste this code into the <head> section of every single one of your HTML files.
+
+Connect to Google Search Console: This is a free tool from Google that helps you monitor your site's health and SEO performance.
+
+Action: Sign up for Google Search Console and verify your website ownership. After that, submit your sitemap.xml file to help Google index your site faster.
+
+By following this checklist, you can be confident that you are launching a professional, high-performing website that is set up for success from day one. Good luck with the launch!
