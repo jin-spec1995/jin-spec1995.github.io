@@ -1,97 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenuButton) {
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Dynamic Year for Footer
-    const yearSpan = document.getElementById('year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
+  // Mobile Menu Toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
 
-    // Hero Slider
-    const slides = document.querySelectorAll('#hero-slider .slide');
-    const dots = document.querySelectorAll('#slider-dots .slider-dot');
-    if (slides.length > 0 && dots.length > 0) {
-        let currentSlide = 0;
-        let slideInterval;
+  // Dynamic Year
+  const yearSpan = document.getElementById('year');
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-        function showSlide(index) {
-            const exitingSlide = document.querySelector('#hero-slider .slide.active');
-            if(exitingSlide) exitingSlide.classList.add('exiting');
-            
-            currentSlide = index;
-            const newSlide = slides[currentSlide];
+  // Hero Slider
+  const slides = document.querySelectorAll('#hero-slider .slide');
+  const dots = document.querySelectorAll('#slider-dots .slider-dot');
+  if (slides.length && dots.length) {
+    let currentSlide = 0;
+    let slideInterval;
 
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
+    const showSlide = (i) => {
+      const exitingSlide = document.querySelector('#hero-slider .slide.active');
+      if (exitingSlide) exitingSlide.classList.add('exiting');
 
-            newSlide.classList.add('active');
-            dots[currentSlide].classList.add('active');
-            
-            if(exitingSlide) {
-                setTimeout(() => {
-                    exitingSlide.classList.remove('exiting');
-                }, 1000); 
-            }
+      currentSlide = i;
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+
+      if (exitingSlide && !prefersReduced) {
+        setTimeout(() => exitingSlide.classList.remove('exiting'), 1000);
+      } else if (exitingSlide) {
+        exitingSlide.classList.remove('exiting');
+      }
+    };
+
+    const nextSlide = () => showSlide((currentSlide + 1) % slides.length);
+    const start = () => { if (!prefersReduced) slideInterval = setInterval(nextSlide, 5000); };
+    const stop = () => clearInterval(slideInterval);
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        if (idx !== currentSlide) {
+          stop(); showSlide(idx); start();
         }
+      });
+    });
 
-        function nextSlide() {
-            showSlide((currentSlide + 1) % slides.length);
-        }
-
-        function startSlider() {
-            slideInterval = setInterval(nextSlide, 3500);
-        }
-
-        function stopSlider() {
-            clearInterval(slideInterval);
-        }
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                if (index !== currentSlide) {
-                    stopSlider();
-                    showSlide(index);
-                    startSlider();
-                }
-            });
-        });
-        
-        startSlider();
-    }
-
-     // Video Modal Logic
-    const videoTrigger = document.getElementById('keith-video-trigger');
-    const modal = document.getElementById('video-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const video = document.getElementById('keith-video');
-    const modalOverlay = document.querySelector('.video-modal-overlay'); // Correctly select the overlay
-
-    if(videoTrigger && modal && closeModalBtn && video && modalOverlay) {
-        const openModal = () => {
-            modal.classList.remove('hidden');
-            setTimeout(() => modal.classList.add('active'), 10);
-            video.play();
-        };
-
-        const closeModal = () => {
-            modal.classList.remove('active');
-            video.pause();
-            video.currentTime = 0;
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        };
-
-        videoTrigger.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModal);
-        // Correctly listen for clicks on the overlay
-        modalOverlay.addEventListener('click', closeModal);
-    }
+    start();
+  }
+     
      // Platform Slider
     const platformSlider = document.getElementById('platform-slider');
     if (platformSlider) {
@@ -180,4 +142,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000); // 2000 milliseconds = 2 seconds
     }
 });
-
