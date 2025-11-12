@@ -136,9 +136,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const formContainer = document.getElementById('suitedash-form-container');
     const formLoader = document.getElementById('form-loader');
 
-    if (formContainer && formLoader) {
+  if (formContainer && formLoader) {
         setTimeout(() => {
             formLoader.style.display = 'none'; // Hide the loader after 2 seconds
         }, 2000); // 2000 milliseconds = 2 seconds
     }
+
+  // Scroll-triggered reveal for service cards
+  const scrollCards = document.querySelectorAll('[data-scroll-reveal]');
+  if (scrollCards.length) {
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+      scrollCards.forEach(card => card.classList.add('is-visible'));
+    } else {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+      scrollCards.forEach(card => observer.observe(card));
+    }
+  }
 });
