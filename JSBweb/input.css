@@ -1,0 +1,507 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------------------------
+   JSB base tweaks
+-------------------------------------------------- */
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+  }
+}
+@layer components {
+  .hero-gradient-overlay,
+  .hero-bg,
+  header .bg-overlay,
+  .bg-cover-layer,
+  img.bg-hero { pointer-events: none; }
+
+  header, main, footer { position: relative; z-index: 10; }
+
+  .lightbox-modal,
+  .video-modal { display: none; }
+
+  .lightbox-modal.active,
+  .video-modal.active { display: flex; }
+
+  .lightbox-overlay,
+  .video-modal-overlay { pointer-events: auto; }
+
+  .prose .cta-button {
+    color: #fff !important;
+  }
+
+  .prose .cta-button:hover {
+    color: #fff !important;
+  }
+
+}
+/* -------------------------------------------------
+   JSB components (PUT your old style.css rules here)
+   ⚠️ No nested selectors, no stray braces. Plain CSS only.
+-------------------------------------------------- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+}
+/* Hero Slider Styles */
+.slide {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 1s ease-in-out;
+}
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+.slide.exiting {
+    transform: translateX(-100%);
+}
+.slider-dot.active {
+    background-color: #ffffff;
+}
+.hero-gradient-overlay {
+    background-image: linear-gradient(to right, rgba(26, 32, 44, 0.7) 60%, rgba(26, 32, 44, 0.2) 100%)
+}
+/* Hero Section Background with Custom Image */
+.hero-bg {
+    background-color: #1a202c; /* Fallback color */
+    background-image: 
+        /* Dark overlay */
+        linear-gradient(rgba(26, 32, 44, 0.3), rgba(26, 32, 44, 0.7)),;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/* NEW: Branded Page Header Background */
+.page-header-bg {
+    background:rgba(125, 165, 63, 0.1);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='360'%3E%3Crect width='1920' height='360' fill='%237da53f1a'/%3E%3Cg transform='translate(-80,20)'%3E%3Cpolygon points='0,200 120,0 240,200' fill='none' stroke='%2322c28a' stroke-opacity='0.6' stroke-width='2'/%3E%3Cpolygon points='60,230 180,30 300,230' fill='none' stroke='%230e6f57' stroke-opacity='0.5' stroke-width='1.6'/%3E%3Cpolygon points='120,260 240,60 360,260' fill='none' stroke='%2322c28a' stroke-opacity='0.35' stroke-width='1.2'/%3E%3Cpolygon points='180,290 300,90 420,290' fill='none' stroke='%230e6f57' stroke-opacity='0.3' stroke-width='1.2'/%3E%3C/g%3E%3Cg transform='translate(1560,20)'%3E%3Cpolygon points='0,200 120,0 240,200' fill='none' stroke='%2322c28a' stroke-opacity='0.6' stroke-width='2'/%3E%3Cpolygon points='-60,230 60,30 180,230' fill='none' stroke='%230e6f57' stroke-opacity='0.5' stroke-width='1.6'/%3E%3Cpolygon points='-120,260 0,60 120,260' fill='none' stroke='%2322c28a' stroke-opacity='0.35' stroke-width='1.2'/%3E%3Cpolygon points='-180,290 -60,90 60,290' fill='none' stroke='%230e6f57' stroke-opacity='0.3' stroke-width='1.2'/%3E%3C/g%3E%3Cdefs%3E%3ClinearGradient id='fade' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%230d3b2e' stop-opacity='1'/%3E%3Cstop offset='15%25' stop-color='%230d3b2e' stop-opacity='0.8'/%3E%3Cstop offset='50%25' stop-color='%230d3b2e' stop-opacity='0'/%3E%3Cstop offset='85%25' stop-color='%230d3b2e' stop-opacity='0.8'/%3E%3Cstop offset='100%25' stop-color='%230d3b2e' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1920' height='360' fill='url(%23fade)' opacity='0.25'/%3E%3C/svg%3E");
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+}
+
+.service-card, .workshop-card {
+    transition: all 0.3s ease;
+}
+
+.service-card:hover, .workshop-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Scroll reveal animations for service cards */
+.scroll-reveal {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    transition: transform 1s linear, opacity 1s linear;
+    will-change: transform, opacity;
+}
+.scroll-reveal.slide-in-left {
+    transform: translate3d(-160px, 0, 0);
+}
+.scroll-reveal.slide-in-right {
+    transform: translate3d(160px, 0, 0);
+}
+.scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+.scroll-reveal.scroll-fast {
+    transition: transform 1.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.85s ease;
+    transition-delay: var(--scroll-delay, 0s);
+}
+.scroll-shake {
+    opacity: 0;
+    display: inline-block;
+    will-change: transform, opacity;
+}
+.scroll-shake.is-visible {
+    opacity: 1;
+    animation: ctaShake 1.5s ease;
+}
+.scroll-scale {
+    opacity: 0;
+    display: inline-block;
+    transform-origin: center;
+}
+.scroll-scale.is-visible {
+    opacity: 1;
+    animation: namePulse 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.scroll-rise {
+    opacity: 0;
+    transform: translate3d(0, 80px, 0);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+    transition-delay: var(--scroll-delay, 0s);
+    will-change: transform, opacity;
+}
+.scroll-rise.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+.scroll-pop {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.7);
+}
+.scroll-pop.is-visible {
+    animation: heroHeadingPop 1s cubic-bezier(0.34, 1, 0.68, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal,
+    .scroll-reveal.is-visible,
+    .scroll-pop,
+    .scroll-pop.is-visible,
+    .scroll-shake,
+    .scroll-shake.is-visible,
+    .scroll-scale,
+    .scroll-scale.is-visible,
+    .scroll-rise,
+    .scroll-rise.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none;
+    }
+}
+
+@keyframes ctaShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70% { transform: translateX(-6px); }
+    20%, 40%, 60%, 80% { transform: translateX(6px); }
+    90% { transform: translateX(-2px); }
+}
+
+
+/* Add a text shadow for better readability on hero image */
+.hero-text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Hero heading entrance animation */
+.hero-animate {
+    opacity: 0;
+    transform: translateY(24px) scale(0.9);
+    animation: heroHeadingPop 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+@keyframes heroHeadingPop {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.85);
+    }
+    65% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.06);
+    }
+    85% {
+        transform: translateY(2px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* CTA Button Hover Effect */
+.cta-button {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+/* Platform Slider Styles */
+.platform-slider-container {
+    width: 100%;
+}
+.platform-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #476931;
+    border: none;
+    border-radius: 9999px;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.platform-arrow:hover {
+    background-color: white;
+}
+.platform-arrow.left-0 {
+    left: 0.5rem;
+}
+.platform-arrow.right-0 {
+    right: 0.5rem;
+}
+
+/* Lightbox Modal Styles */
+.lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.lightbox-modal.active {
+    opacity: 1;
+}
+.lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+.lightbox-modal.active .lightbox-content {
+    transform: scale(1);
+}
+.lightbox-close-btn {
+    position: absolute;
+    top: -2.5rem;
+    right: -1rem;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Service Card Hover Effect */
+.service-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.client-story-card {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.client-story-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+}
+
+.what-card {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.what-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Add a subtle underline animation for nav links on hover */
+header nav a {
+    position: relative;
+    padding-bottom: 4px;
+}
+header nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #7da53f;
+    transition: width 0.3s ease-in-out;
+}
+header nav a:hover::after {
+    width: 100%;
+}
+header nav a.font-semibold::after {
+    width: 100%; /* Keep underline for active link */
+}
+
+/* Prose styles for policy pages */
+.prose {
+    color: #374151;
+}
+.prose h2 {
+    color: #111827;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+.prose p, .prose ul li {
+    line-height: 1.75;
+}
+.prose a {
+    color: #476931;
+    font-weight: 500;
+}
+.prose a:hover {
+    text-decoration: underline;
+}
+
+/* Video Modal Styles */
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.video-modal.active {
+    opacity: 1;
+}
+.video-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
+.video-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    background-color: black;
+    border-radius: 0.5rem;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+.video-modal.active .video-modal-content {
+    transform: scale(1);
+}
+.video-close-btn {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2rem;
+    z-index: 110;
+}
+@media (max-width: 768px) {
+    .video-close-btn {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.5rem;
+        background-color: rgba(0,0,0,0.5);
+        border-radius: 9999px;
+    }
+}
+
+/* Image Flip Animation */
+@keyframes flip {
+    0% { transform: rotateY(0deg); }
+    33% { transform: rotateY(180deg); }
+    66% { transform: rotateY(0deg); }
+    100% { transform: rotateY(0deg); }
+}
+
+.image-flipper {
+    transform-style: preserve-3d;
+    transition: transform 0.3s;
+}
+
+#keith-video-trigger:hover .image-flipper {
+    animation: flip 1.2s ease-in-out;
+}
+
+/* Keith Video Trigger Hover Effect */
+.play-button-overlay {
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s; /* No delay when hiding */
+}
+
+#keith-video-trigger:hover .play-button-overlay {
+    transition-delay: 1s; /* 1-second delay on hover */
+}
+/* Form Loader Animation */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #476931; /* JSB Secondary Green */
+  animation: spin 1s ease infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@layer components {
+  /* Header underline hover */
+  header nav a { position: relative; padding-bottom: 4px; }
+  header nav a::after {
+    content: "";
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: #7da53f;
+    transition: width .3s ease-in-out;
+  }
+  header nav a:hover::after { width: 100%; }
+
+  /* Example button */
+  .btn-jsb { @apply inline-flex items-center gap-2 rounded-lg bg-jsb-secondary text-white px-5 py-3 transition; }
+  .btn-jsb:hover { opacity: .95; }
+}
+
+/* -------------------------------------------------
+   Utilities (keyframes & tiny helpers so purge keeps them)
+-------------------------------------------------- */
+@layer utilities {
+  @keyframes flip {
+    0% { transform: rotateY(0deg); }
+    33% { transform: rotateY(180deg); }
+    66% { transform: rotateY(0deg); }
+    100% { transform: rotateY(0deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .image-flipper { transform-style: preserve-3d; transition: transform .3s; }
+  .animate-flip { animation: flip 1.2s ease-in-out; }
+  .spinner {
+    border: 4px solid rgba(0,0,0,.1);
+    width: 36px; height: 36px; border-radius: 50%;
+    border-left-color: #476931;
+    animation: spin 1s ease infinite;
+    margin: 0 auto;
+  }
+}
