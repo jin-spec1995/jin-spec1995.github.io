@@ -477,6 +477,23 @@ header nav a.font-semibold::after {
   /* Example button */
   .btn-jsb { @apply inline-flex items-center gap-2 rounded-lg bg-jsb-secondary text-white px-5 py-3 transition; }
   .btn-jsb:hover { opacity: .95; }
+
+  /* Premium Design Utilities */
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+  
+  .premium-shadow {
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 10px 20px -10px rgba(0, 0, 0, 0.05);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-jsb-secondary to-jsb-main;
+  }
+
+  .list-icon-wrapper {
+    @apply flex-shrink-0 w-6 h-6 rounded-full bg-jsb-light-green flex items-center justify-center text-jsb-main mr-3 mt-0.5;
+  }
 }
 
 /* -------------------------------------------------
@@ -505,3 +522,333 @@ header nav a.font-semibold::after {
     margin: 0 auto;
   }
 }
+  /* 1. Responsive Video Container (16:9 Aspect Ratio) */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 2. Slider Specific Styles */
+        #testimonial-slider-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .testimonial-slide {
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        /* 3. Success Badge Branding */
+        .success-badge {
+            background-color: rgba(125, 165, 63, 0.15);
+            color: #476931;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Slider Controls */
+        .testi-arrow {
+            position: absolute;
+            top: 30%;
+            transform: translateY(-50%);
+            background: white;
+            color: #476931;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .testi-arrow:hover {
+            background: #7da53f;
+            color: white;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .testi-arrow.left { left: -1.5rem; }
+        .testi-arrow.right { right: -1.5rem; }
+
+        @media (max-width: 1024px) {
+            .testi-arrow { top: auto; bottom: -4rem; transform: none; }
+            .testi-arrow.left { left: calc(50% - 4rem); }
+            .testi-arrow.right { right: calc(50% - 4rem); }
+        }
+
+        .testi-dot {
+            width: 10px;
+            height: 10px;
+            background: #d1d5db;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .testi-dot.active {
+            background: #7da53f;
+            width: 24px;
+        }
+          .team-card {
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        .profile-img-container {
+            flex-shrink: 0;
+        }
+
+        /* A dynamic background with a diagonal slice */
+.hero-split-bg {
+    background-color: #f9fafb; /* Light Gray base */
+    position: relative;
+    overflow: hidden;
+}
+
+/* The dark angled shape behind the content */
+/* Update this section in input.css */
+/* Update this rule in input.css */
+/* 1. THE BASE STYLE (Applies to all pages) */
+.hero-split-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Global Background Color */
+    background-color: #1a202c;
+
+    /* Global Blend Mode (Works for both veins and other patterns) */
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+    
+    /* The Shape */
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    z-index: 0;
+}
+
+/* Mobile Adjustment */
+@media (max-width: 1024px) {
+    .hero-split-bg::before {
+        clip-path: none;
+        height: 65%;
+    }
+}
+
+/* 2. MODIFIER: The Veins Art (For Contact Page) */
+.bg-texture-veins::before {
+    /* Make sure this filename matches exactly! */
+    background-image: url('/assets/img/veins-art.jpg');
+}
+
+/* 3. MODIFIER: The Dots Pattern (For Services/Home) */
+/* This allows you to revert to the old style on other pages if you want */
+.bg-texture-dots::before {
+    background-image: url("/assets/img/art2.png");
+    /* Reset blend mode if dots don't need multiply */
+    
+}
+
+/* A decorative accent circle */
+.hero-accent-circle {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(125,165,63,0.15) 0%, rgba(125,165,63,0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    top: -100px;
+    left: -100px;
+}
+
+/* Image framing styling */
+.hero-image-frame {
+    position: relative;
+    z-index: 10;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 4px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-image-frame img {
+    transition: transform 0.7s ease;
+}
+
+.hero-image-frame:hover img {
+    transform: scale(1.05);
+}
+/* -------------------------------------------------
+   Hero Animations & Polish
+-------------------------------------------------- */
+
+/* 1. Smooth Fade Up for Text */
+@keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-animate-text {
+    opacity: 0; /* Start hidden */
+    animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.hero-delay-1 { animation-delay: 0.1s; }
+.hero-delay-2 { animation-delay: 0.3s; }
+.hero-delay-3 { animation-delay: 0.5s; }
+
+/* 2. Slide In for the Image */
+@keyframes heroSlideIn {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-animate-image {
+    opacity: 0;
+    animation: heroSlideIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+/* 3. Gentle Float for the "Result Card" badge */
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.floating-badge {
+    animation: gentleFloat 6s ease-in-out infinite;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 4. Parallax Wrapper */
+.parallax-layer {
+    transition: transform 0.1s linear; /* Smooths out the JS scroll event */
+    will-change: transform;
+}
+/* -------------------------------------------------
+   SCROLL REVEAL UTILITIES
+-------------------------------------------------- */
+
+/* Base state: Hidden and slightly lower */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px); /* Move down 30px initially */
+    transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000), 
+                transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    will-change: opacity, transform;
+}
+
+/* Active state: Visible and back to position 0 */
+.scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optional: Stagger delays for grid items (cards appearing one by one) */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-blob {
+    animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+/* -------------------------------------------------
+   Unified Hero Animation (Fade Up)
+-------------------------------------------------- */
+
+@keyframes heroFadeUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* 1. General Rule: Everything with this class animates immediately by default */
+/* This handles the Platform page AND the Static Button on the Home page */
+.hero-animate-text {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    will-change: transform, opacity;
+}
+
+/* 2. Exception: If it's inside a slide, PAUSE it initially */
+.slide .hero-animate-text {
+    animation: none;
+    opacity: 0;
+}
+
+/* 3. Re-enable: When the slide becomes ACTIVE, run the animation */
+.slide.active .hero-animate-text {
+    animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Delays */
+.hero-delay-1 { animation-delay: 0.1s; }
+.hero-delay-2 { animation-delay: 0.3s; }
+.hero-delay-3 { animation-delay: 0.5s; }
+/* New delay for the button so it appears last (0.9s) */
+.hero-delay-button { animation-delay: 0.9s; } 
+
+/* Slider specific delays (Adding extra time for slide transition) */
+.slide.active .hero-delay-1 { animation-delay: 0.5s; }
+.slide.active .hero-delay-2 { animation-delay: 0.7s; }

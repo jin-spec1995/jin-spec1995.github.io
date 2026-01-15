@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSB Platform | Brisbane Small Business Client Hub</title>
-<meta name="description" content="Your private client hub to manage strategy, goals, and reports. Built for Brisbane small business owners to stay focused, connected, and accountable.">
+    <meta name="description" content="Your private client hub to manage strategy, goals, and reports. Built for Brisbane small business owners to stay focused, connected, and accountable.">
     <link rel="icon" href="assets/img/jsb_icon.svg" type="image/svg+xml">
-   <link rel="stylesheet" href="assets/css/app.min.css?v=1" />
+    <link rel="stylesheet" href="assets/css/app.min.css?v=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,174 +15,296 @@
 
     <!-- Header & Navigation -->
     <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
-        <a href="index.html">
-            <!-- Use root-relative path for assets -->
-            <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
-        </a>
-        <nav class="hidden md:flex items-center space-x-8">
-            <a href="services.html" class="text-gray-600 hover:text-jsb-main transition">Services</a>
-            <a href="workshops.html" class="text-gray-600 hover:text-jsb-main transition">Workshops</a>
-            <a href="about.html" class="text-gray-600 hover:text-jsb-main transition">About Us</a>
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
+            <a href="index.html">
+                <!-- Use root-relative path for assets -->
+                <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="services.html" class="text-gray-600 hover:text-jsb-main transition">Services</a>
+                <a href="workshops.html" class="text-gray-600 hover:text-jsb-main transition">Workshops</a>
+                <a href="about.html" class="text-gray-600 hover:text-jsb-main transition">About Us</a>
+                <a href="platform.html" class="text-jsb-main font-semibold">JSB Platform</a>
+                <a href="insights.html" class="text-gray-600 hover:text-jsb-main transition">Insights</a>
+                <a href="contact.html" class="text-gray-600 hover:text-jsb-main transition">Contact</a>
+            </nav>
+            <a href="contact.html" class="hidden md:inline-block bg-jsb-secondary text-white font-semibold px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-800" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
+            <a href="services.html" class="block text-gray-600 hover:text-jsb-main">Services</a>
+            <a href="workshops.html" class="block text-gray-600 hover:text-jsb-main">Workshops</a>
+            <a href="about.html" class="block text-gray-600 hover:text-jsb-main">About Us</a>
             <a href="platform.html" class="text-jsb-main font-semibold">JSB Platform</a>
-            <a href="insights.html" class="text-gray-600 hover:text-jsb-main transition">Insights</a>
-            <a href="contact.html" class="text-gray-600 hover:text-jsb-main transition">Contact</a>
-        </nav>
-        <a href="contact.html" class="hidden md:inline-block bg-jsb-secondary text-white font-semibold px-5 py-2 rounded-lg shadow-lg cta-button">
-            Book Free Session
-        </a>
-        <button id="mobile-menu-button" class="md:hidden text-gray-800" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-        </button>
-    </div>
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
-        <a href="services.html" class="block text-gray-600 hover:text-jsb-main">Services</a>
-        <a href="workshops.html" class="block text-gray-600 hover:text-jsb-main">Workshops</a>
-        <a href="about.html" class="block text-gray-600 hover:text-jsb-main">About Us</a>
-        <a href="platform.html" class="text-jsb-main font-semibold">JSB Platform</a>
-        <a href="insights.html" class="block text-gray-600 hover:text-jsb-main">Insights</a>
-        <a href="contact.html" class="block text-gray-600 hover:text-jsb-main">Contact</a>
-        <a href="contact.html" class="block bg-jsb-secondary text-white text-center font-semibold mt-4 px-5 py-2 rounded-lg shadow-lg cta-button">
-            Book Free Session
-        </a>
-    </div>
-</header>
+            <a href="insights.html" class="block text-gray-600 hover:text-jsb-main">Insights</a>
+            <a href="contact.html" class="block text-gray-600 hover:text-jsb-main">Contact</a>
+            <a href="contact.html" class="block bg-jsb-secondary text-white text-center font-semibold mt-4 px-5 py-2 rounded-lg shadow-lg cta-button">
+                Book Free Session
+            </a>
+        </div>
+    </header>
     
     <main style="padding-top: 80px;">
         <!-- Hero Section -->
-        <section class="bg-jsb-main-bg py-20 md:py-28 page-header-bg">
-            <div class="container mx-auto px-6 text-center max-w-7xl">
-                <h1 class="text-4xl md:text-5xl font-bold text-jsb-secondary mb-4">Welcome to the JSB Client Platform</h1>
-                <p class="text-lg md:text-xl text-gray-700 mt-4 max-w-3xl mx-auto">Built to keep you focused, accountable and moving forward.</p>
-                <div class="mt-8 flex justify-center items-center space-x-6">
-                    <a href="contact.html" class="inline-block bg-jsb-secondary text-white font-bold py-3 px-8 rounded-lg text-lg shadow-xl cta-button">
-                        Log in to access your platform 
-                    </a>
-                    <a href="contact.html" class="text-jsb-secondary font-semibold hover:text-jsb-main transition">
-                        New here? Let's start a conversation &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>
+      <section class="relative pt-32 pb-20 lg:pt-32 lg:pb-20 overflow-hidden bg-gray-900">
+    
+    <div class="hero-accent-circle opacity-20" style="top: -50px; left: 50%; transform: translateX(-50%);"></div>
+    
+    <div class="absolute inset-0 opacity-10 pointer-events-none" 
+         style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;">
+    </div>
 
-        <!-- Section 1 â€“ Stay Connected -->
-        <section class="py-20">
+    <div class="absolute top-1/4 left-10 w-24 h-24 bg-jsb-main rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-1/4 right-10 w-24 h-24 bg-jsb-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+    <div class="container mx-auto px-6 relative z-10 max-w-5xl text-center">
+        
+        <div class="hero-animate-text hero-delay-1 inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 mb-8 shadow-lg">
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-white">Secure Client Hub</span>
+        </div>
+
+        <h1 class="hero-animate-text hero-delay-2 text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 drop-shadow-sm">
+            Your Growth Strategy. <br class="hidden md:block" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-jsb-main to-green-300">Centralised & Actionable.</span>
+        </h1>
+        
+        <p class="hero-animate-text hero-delay-3 text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Access your strategic plan, track live KPIs, and collaborate directly with your advisor. 
+            Everything you need to move from <em>intent</em> to <em>impact</em>, in one secure place.
+        </p>
+        
+        <div class="hero-animate-text hero-delay-3 flex flex-col sm:flex-row items-center justify-center gap-5">
+            <a href="contact.html" class="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-jsb-main hover:bg-jsb-secondary text-white font-bold rounded-lg shadow-lg hover:shadow-green-900/50 transform transition duration-300 hover:-translate-y-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                Client Login
+            </a>
+            
+            <a href="contact.html" class="group w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 backdrop-blur-sm text-white font-semibold rounded-lg transition duration-300">
+                Request Access
+            </a>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s; animation-fill-mode: forwards;">
+            <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition duration-500 group cursor-default">
+                <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-500/30 transition">
+                    <svg class="w-6 h-6 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                </div>
+                <h3 class="text-white font-semibold text-base">Live Dashboards</h3>
+            </div>
+            <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition duration-500 group cursor-default">
+                <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500/30 transition">
+                    <svg class="w-6 h-6 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-white font-semibold text-base">Action Tracking</h3>
+            </div>
+            <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition duration-500 group cursor-default">
+                <div class="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-500/30 transition">
+                    <svg class="w-6 h-6 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </div>
+                <h3 class="text-white font-semibold text-base">Resource Library</h3>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+        <!-- Section 1 – Stay Connected -->
+        <section class="py-20 overflow-hidden">
             <div class="container mx-auto px-6 max-w-7xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Your Business. Your Dashboard. Your Way.</h2>
-                        <p class="text-gray-600 leading-relaxed">The JSB Client Platform brings everything about your business growth journey together in one secure place. You can review your project updates, track your key goals, and communicate directly with your JSB Strategic Advisor â€” all from your personalised dashboard.</p>
-                        <p class="text-gray-600 leading-relaxed mt-4">Itâ€™s designed to help you stay focused, make faster decisions, and see the real impact of your actions.</p>
+                    <div class="order-2 md:order-1">
+                        <div class="mb-2 text-jsb-main font-bold tracking-wide uppercase text-sm">Centralised Control</div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Your Business. Your Dashboard. Your Way.</h2>
+                        <div class="prose prose-lg text-gray-600">
+                            <p class="leading-relaxed mb-4">The JSB Client Platform brings everything about your business growth journey together in one secure place. You can review your project updates, track your key goals, and communicate directly with your JSB Strategic Advisor — all from your personalised dashboard.</p>
+                            <p class="leading-relaxed">It’s designed to help you stay focused, make faster decisions, and see the real impact of your actions.</p>
+                        </div>
+                        <div class="mt-8 flex items-center gap-4">
+                            <div class="flex -space-x-2">
+                                <div class="w-10 h-10 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-500">JD</div>
+                                <div class="w-10 h-10 rounded-full bg-jsb-secondary border-2 border-white flex items-center justify-center text-xs font-bold text-white">JSB</div>
+                            </div>
+                            <span class="text-sm font-medium text-gray-500">Direct 2-way communication with your advisor</span>
+                        </div>
                     </div>
-                    <div>
-                        <img src="assets/img/dashboard.png" alt="Illustration of the JSB Client Platform Dashboard" class="rounded-xl shadow-2xl">
+                    <div class="order-1 md:order-2 relative">
+                        <!-- Decorative Blob Background -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-jsb-light-green/40 rounded-full blur-3xl -z-10"></div>
+                        <img src="assets/img/dashboard.png" alt="Illustration of the JSB Client Platform Dashboard" class="relative rounded-xl shadow-2xl border-4 border-white/80 transform rotate-1 hover:rotate-0 transition duration-500">
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Section 2 â€“ What You Can Do Inside -->
+        <!-- Section 2 – What You Can Do Inside -->
         <section class="py-20 bg-gray-50">
             <div class="container mx-auto px-6 max-w-7xl">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 text-center">
+                <div class="text-center mb-16">
+                     <h2 class="text-3xl font-bold text-gray-900">What You Can Do Inside</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
                     <!-- Feature: Projects & Goals -->
-                    <div class="flex flex-col items-center">
-                        <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+                        <div class="bg-jsb-main/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110 group-hover:bg-jsb-main group-hover:text-white text-jsb-secondary">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                         </div>
-                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">View Projects & Goals</h3>
-                        <p class="text-sm text-gray-600">Monitor your strategic projects, milestones, and actions at a glance.</p>
+                        <h3 class="font-bold text-gray-900 mb-2">Projects & Goals</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Monitor strategic milestones and actions at a glance.</p>
                     </div>
+                    
                     <!-- Feature: Connect -->
-                    <div class="flex flex-col items-center">
-                        <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
-                            <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+                        <div class="bg-jsb-main/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110 group-hover:bg-jsb-main group-hover:text-white text-jsb-secondary">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                         </div>
-                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Connect with Your Advisor</h3>
-                        <p class="text-sm text-gray-600">Message your JSB Advisor and get timely guidance when you need it.</p>
+                        <h3 class="font-bold text-gray-900 mb-2">Connect</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Message your JSB Advisor for timely guidance.</p>
                     </div>
+                    
                     <!-- Feature: Tools -->
-                    <div class="flex flex-col items-center">
-                        <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
-                             <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 14h.01M9 11h.01M12 11h.01M15 11h.01M12 4v1m0 14v1m-6.364-2.364l1.414-1.414M18.364 5.636l1.414-1.414M19.778 12h-1M4.222 12H3m15.364 6.364l-1.414-1.414M5.636 5.636L4.222 4.222m0 15.556l1.414-1.414m12.728 0l-1.414-1.414M4 12a8 8 0 018-8h0a8 8 0 018 8v0a8 8 0 01-8 8h0a8 8 0 01-8-8z"></path></svg>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+                        <div class="bg-jsb-main/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110 group-hover:bg-jsb-main group-hover:text-white text-jsb-secondary">
+                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 14h.01M9 11h.01M12 11h.01M15 11h.01M12 4v1m0 14v1m-6.364-2.364l1.414-1.414M18.364 5.636l1.414-1.414M19.778 12h-1M4.222 12H3m15.364 6.364l-1.414-1.414M5.636 5.636L4.222 4.222m0 15.556l1.414-1.414m12.728 0l-1.414-1.414M4 12a8 8 0 018-8h0a8 8 0 018 8v0a8 8 0 01-8 8h0a8 8 0 01-8-8z"></path></svg>
                         </div>
-                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Access Growth Tools</h3>
-                        <p class="text-sm text-gray-600">Instantly use calculators and assessments to make data-driven decisions.</p>
+                        <h3 class="font-bold text-gray-900 mb-2">Growth Tools</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Access interactive calculators and data tools.</p>
                     </div>
+                    
                     <!-- Feature: Library -->
-                    <div class="flex flex-col items-center">
-                         <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
-                             <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+                         <div class="bg-jsb-main/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110 group-hover:bg-jsb-main group-hover:text-white text-jsb-secondary">
+                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                         </div>
-                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Resource Library</h3>
-                        <p class="text-sm text-gray-600">Explore templates, guides, and frameworks that support your growth plan.</p>
+                        <h3 class="font-bold text-gray-900 mb-2">Library</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Templates, guides, and frameworks on demand.</p>
                     </div>
+                    
                     <!-- Feature: Sessions -->
-                    <div class="flex flex-col items-center">
-                         <div class="bg-jsb-main/10 p-4 rounded-full mb-4">
-                             <svg class="w-8 h-8 text-jsb-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+                         <div class="bg-jsb-main/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110 group-hover:bg-jsb-main group-hover:text-white text-jsb-secondary">
+                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
-                        <h3 class="font-bold text-lg mb-2 h-12 flex justify-center pt-1">Book & Manage Sessions</h3>
-                        <p class="text-sm text-gray-600">Schedule upcoming meetings, workshops, or accountability check-ins online.</p>
+                        <h3 class="font-bold text-gray-900 mb-2">Book Sessions</h3>
+                        <p class="text-sm text-gray-600 leading-snug">Schedule meetings and check-ins online.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3 â€“ The Tools -->
+        <!-- Section 3 – The Tools -->
         <section class="py-20">
             <div class="container mx-auto px-6 max-w-7xl">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">From Insight to Action - Tools Built for Real Business Growth</h2>
-                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">The JSB Client Platform includes a suite of intelligent business tools designed to help you see clearly, plan effectively, and act confidently. Each tool provides data-driven insights so you can make better choices, improve performance, and accelerate results.</p>
+                <div class="text-center mb-16">
+                    <span class="text-jsb-main font-bold tracking-wide uppercase text-sm">Actionable Intelligence</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Tools Built for Real Business Growth</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">The JSB Client Platform includes a suite of intelligent business tools designed to help you see clearly, plan effectively, and act confidently.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Tool: Strategic Assessment -->
-                    <div class="bg-white p-8 rounded-xl border border-gray-200">
-                        <h3 class="text-xl font-bold mb-3">🧠 Strategic Assessment</h3>
-                        <p class="text-gray-600">Gain a deep understanding of your business from every angle â€” purpose, customers, operations, finances, and growth potential. Youâ€™ll see where your strategy is strong and where to focus next.</p>
+                    <div class="bg-white p-8 rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
+                        <div class="w-14 h-14 bg-jsb-light-green rounded-lg flex items-center justify-center mb-6 group-hover:bg-jsb-main transition-colors duration-300">
+                            <svg class="w-8 h-8 text-jsb-secondary group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 group-hover:text-jsb-secondary transition-colors">Strategic Assessment</h3>
+                        <p class="text-gray-600">Gain a deep understanding of your business from every angle — purpose, customers, operations, finances, and growth potential. You’ll see where your strategy is strong and where to focus next.</p>
                     </div>
+
                     <!-- Tool: Resilience Assessment -->
-                    <div class="bg-white p-8 rounded-xl border border-gray-200">
-                        <h3 class="text-xl font-bold mb-3">💪 Business Resilience Assessment</h3>
+                    <div class="bg-white p-8 rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
+                        <div class="w-14 h-14 bg-jsb-light-green rounded-lg flex items-center justify-center mb-6 group-hover:bg-jsb-main transition-colors duration-300">
+                            <svg class="w-8 h-8 text-jsb-secondary group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 group-hover:text-jsb-secondary transition-colors">Business Resilience Assessment</h3>
                         <p class="text-gray-600">Evaluate how well your business can handle change and challenge. This assessment identifies vulnerabilities and helps you build systems that keep your business steady, even when conditions shift.</p>
                     </div>
-                     <!-- Tool: Sales Calculator -->
-                    <div class="bg-white p-8 rounded-xl border border-gray-200">
-                        <h3 class="text-xl font-bold mb-3">💰 Sales & Profit Calculator</h3>
+
+                    <!-- Tool: Sales Calculator -->
+                    <div class="bg-white p-8 rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
+                        <div class="w-14 h-14 bg-jsb-light-green rounded-lg flex items-center justify-center mb-6 group-hover:bg-jsb-main transition-colors duration-300">
+                            <svg class="w-8 h-8 text-jsb-secondary group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 group-hover:text-jsb-secondary transition-colors">Sales & Profit Calculator</h3>
                         <p class="text-gray-600">Plan smarter sales goals with real numbers. This interactive calculator helps you find your ideal sales volume, profit targets, and pricing structure, giving you clarity on what to aim for.</p>
                     </div>
-                     <!-- Tool: Goal Tracker -->
-                    <div class="bg-white p-8 rounded-xl border border-gray-200">
-                        <h3 class="text-xl font-bold mb-3">🎯 Goal & KPI Tracker</h3>
-                        <p class="text-gray-600">Transform ideas into measurable progress. Track your strategic objectives, set key performance indicators, and measure results as your actions unfold. Youâ€™ll always know how you are performing against plan.</p>
+
+                    <!-- Tool: Goal Tracker -->
+                    <div class="bg-white p-8 rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
+                        <div class="w-14 h-14 bg-jsb-light-green rounded-lg flex items-center justify-center mb-6 group-hover:bg-jsb-main transition-colors duration-300">
+                            <svg class="w-8 h-8 text-jsb-secondary group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 group-hover:text-jsb-secondary transition-colors">Goal & KPI Tracker</h3>
+                        <p class="text-gray-600">Transform ideas into measurable progress. Track your strategic objectives, set key performance indicators, and measure results as your actions unfold. You’ll always know how you are performing against plan.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4 â€“ Why Clients Love It -->
+        <!-- Section 4 – Why Clients Love It (Redesigned) -->
         <section class="py-20 bg-jsb-light-green">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <div class="text-center mb-12">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center mb-16">
                      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Why Clients Love It</h2>
+                     <p class="text-gray-600 mt-3">Feedback from Brisbane owners using the platform weekly.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white p-8 rounded-xl shadow-lg">
-                        <p class="text-lg italic text-gray-700">"It’s like having my business coach, project plan, and progress tracker in one place. I can see exactly where Iâ€™m at and what to do next."</p>
-                        <div class="mt-4"><p class="font-bold text-gray-900">— JSB Client, Brisbane</p></div>
+                    <!-- Review 1 -->
+                    <div class="relative bg-white p-8 rounded-xl shadow-lg border-t-4 border-jsb-secondary transform transition-transform duration-300 hover:-translate-y-1">
+                        <!-- Decorative Quote -->
+                        <div class="absolute top-4 right-4 text-gray-100 -z-0">
+                            <svg class="w-20 h-20 fill-current" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.321 16.067 14.929 15.513C15.537 14.959 16.636 14.682 18.226 14.682V12.09C18.226 11.432 18.068 10.966 17.752 10.692C17.436 10.418 16.848 10.281 15.988 10.281H14.773V3H21V10.741C21 13.911 20.301 16.326 18.903 17.986C17.505 19.646 15.876 20.651 14.017 21ZM3 21L3 18C3 16.896 3.304 16.067 3.912 15.513C4.52 14.959 5.619 14.682 7.209 14.682V12.09C7.209 11.432 7.051 10.966 6.735 10.692C6.419 10.418 5.831 10.281 4.971 10.281H3.756V3H9.983V10.741C9.983 13.911 9.284 16.326 7.886 17.986C6.488 19.646 4.859 20.651 3 21Z" /></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-lg italic text-gray-700 leading-relaxed mb-6">"It’s like having my business coach, project plan, and progress tracker in one place. I can see exactly where I’m at and what to do next."</p>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-jsb-secondary text-white flex items-center justify-center font-bold text-sm mr-3">JC</div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm">JSB Client</p>
+                                    <p class="text-xs text-gray-500">Service Business, Brisbane</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg">
-                        <p class="text-lg italic text-gray-700">"The assessments and calculators helped me see my business from a different angle â€” now I make better decisions every week."</p>
-                        <div class="mt-4"><p class="font-bold text-gray-900">— Workshop Participant, Gold Coast</p></div>
+                    <!-- Review 2 -->
+                    <div class="relative bg-white p-8 rounded-xl shadow-lg border-t-4 border-jsb-secondary transform transition-transform duration-300 hover:-translate-y-1">
+                        <!-- Decorative Quote -->
+                        <div class="absolute top-4 right-4 text-gray-100 -z-0">
+                             <svg class="w-20 h-20 fill-current" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.896 14.321 16.067 14.929 15.513C15.537 14.959 16.636 14.682 18.226 14.682V12.09C18.226 11.432 18.068 10.966 17.752 10.692C17.436 10.418 16.848 10.281 15.988 10.281H14.773V3H21V10.741C21 13.911 20.301 16.326 18.903 17.986C17.505 19.646 15.876 20.651 14.017 21ZM3 21L3 18C3 16.896 3.304 16.067 3.912 15.513C4.52 14.959 5.619 14.682 7.209 14.682V12.09C7.209 11.432 7.051 10.966 6.735 10.692C6.419 10.418 5.831 10.281 4.971 10.281H3.756V3H9.983V10.741C9.983 13.911 9.284 16.326 7.886 17.986C6.488 19.646 4.859 20.651 3 21Z" /></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-lg italic text-gray-700 leading-relaxed mb-6">"The assessments and calculators helped me see my business from a different angle — now I make better decisions every week."</p>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-jsb-main text-white flex items-center justify-center font-bold text-sm mr-3">WP</div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm">Workshop Participant</p>
+                                    <p class="text-xs text-gray-500">Retail, Gold Coast</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 5 â€“ Get Started -->
+        <!-- Section 5 – Get Started -->
         <section class="py-20 text-center">
             <div class="container mx-auto px-6 max-w-2xl">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Already a JSB Client?</h2>
@@ -238,9 +360,9 @@
             <!-- Column 3: Contact Us -->
             <div>
                 <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                 <p class="text-gray-400">Herston, QLD 4006, Australia</p>
+                 <p class="text-gray-400">Suite 1703, 17 Gould Rd, Herston QLD 4029 Australia</p>
                 <!-- TODO: Replace placeholder phone number -->
-                <p class="text-gray-400 mt-2">Phone: <a href="tel:+61430000000" class="hover:text-jsb-main">0430 XXX XXX</a></p>
+                
                 <p class="text-gray-400 mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="hover:text-jsb-main">info@justsmartbusiness.com.au</a></p>
             </div>
         </div>
@@ -255,6 +377,3 @@
     <script src="assets/js/main.js"></script>
 </body>
 </html>
-
-
-
