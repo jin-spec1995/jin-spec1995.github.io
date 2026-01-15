@@ -24,7 +24,17 @@
     <meta name="twitter:title" content="Business Strategy & Advisory Services Brisbane">
     <meta name="twitter:description" content="Partner with Brisbane advisors to align strategy, improve cash flow, and accelerate growth.">
     <meta name="twitter:image" content="https://www.justsmartbusiness.com.au/assets/img/og-image.png">
-    <style>
+    <style>      
+    /* 1. Tell the pseudo-element to look for the variable we set */
+    .hero-split-bg::before {
+        background-image: var(--hero-bg) !important;
+        
+        /* 2. Ensure the blend mode is on so the white background disappears */
+        background-blend-mode: multiply !important;
+        
+        /* 3. Ensure the background color is dark so the veins show up */
+        background-color: #1a202c !important; 
+    }
         /* Smooth scrolling for anchor links */
         html { scroll-behavior: smooth; }
         /* Active state for sticky nav */
@@ -502,5 +512,4 @@
         });
     </script>
 </body>
-
 </html>
