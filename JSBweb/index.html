@@ -26,8 +26,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+</style>
 </head>
-<body class="bg-white text-gray-800">
+<body class="bg-white text-gray-800 overflow-x-hidden" style="overflow-x: hidden; width: 100%;">
 
     <!-- Header & Navigation -->
     <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
@@ -48,7 +54,9 @@
             Book Free Session
         </a>
         <button id="mobile-menu-button" class="md:hidden text-gray-800" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
-            <svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+</svg>
         </button>
     </div>
     <!-- Mobile Menu -->
