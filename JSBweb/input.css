@@ -631,10 +631,7 @@ header nav a.font-semibold::after {
     overflow: hidden;
 }
 
-/* The dark angled shape behind the content */
-/* Update this section in input.css */
-/* Update this rule in input.css */
-/* 1. THE BASE STYLE (Applies to all pages) */
+/* In input.css */
 .hero-split-bg::before {
     content: '';
     position: absolute;
@@ -643,15 +640,14 @@ header nav a.font-semibold::after {
     width: 100%;
     height: 100%;
     
-    /* Global Background Color */
     background-color: #1a202c;
 
-    /* Global Blend Mode (Works for both veins and other patterns) */
+    /* CHANGE THIS LINE: Look for a variable named --hero-bg */
+    background-image: var(--hero-bg);
+
     background-blend-mode: multiply;
     background-size: cover;
     background-position: center;
-    
-    /* The Shape */
     clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
     z-index: 0;
 }
@@ -664,19 +660,7 @@ header nav a.font-semibold::after {
     }
 }
 
-/* 2. MODIFIER: The Veins Art (For Contact Page) */
-.bg-texture-veins::before {
-    /* Make sure this filename matches exactly! */
-    background-image: url('/assets/img/veins-art.jpg');
-}
 
-/* 3. MODIFIER: The Dots Pattern (For Services/Home) */
-/* This allows you to revert to the old style on other pages if you want */
-.bg-texture-dots::before {
-    background-image: url("/assets/img/art2.png");
-    /* Reset blend mode if dots don't need multiply */
-    
-}
 
 /* A decorative accent circle */
 .hero-accent-circle {
@@ -852,3 +836,29 @@ header nav a.font-semibold::after {
 /* Slider specific delays (Adding extra time for slide transition) */
 .slide.active .hero-delay-1 { animation-delay: 0.5s; }
 .slide.active .hero-delay-2 { animation-delay: 0.7s; }
+
+/* about us page  Resume Modal Animations & Utilities */
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.animate-scale-up {
+    animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Scrollbar for Modal Content to look clean */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d1d5db; 
+    border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af; 
+}
+/* Ensure the utility classes work even if Tailwind isn't fully compiled */

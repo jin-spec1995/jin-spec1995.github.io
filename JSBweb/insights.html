@@ -10,6 +10,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <style>      
+    /* 1. Tell the pseudo-element to look for the variable we set */
+    .hero-split-bg::before {
+        background-image: var(--hero-bg) !important;
+        
+        /* 2. Ensure the blend mode is on so the white background disappears */
+        background-blend-mode: multiply !important;
+        
+        /* 3. Ensure the background color is dark so the veins show up */
+        background-color: #1a202c !important; 
+    }
+         </style>
 </head>
 <body class="bg-white text-gray-800">
 
@@ -51,7 +63,8 @@
     
     <main style="padding-top: 80px;">
         <!-- Page Header -->
-      <section class="hero-split-bg relative pt-20 pb-12 lg:pt-20 lg:pb-16 overflow-hidden">
+      <section class="hero-split-bg relative pt-20 pb-12 lg:pt-20 lg:pb-16 overflow-hidden"
+      style="--hero-bg: url('assets/img/background3.avif');">
     
     <div class="hero-accent-circle" style="left: auto; right: -50px; top: -50px; opacity: 0.1;"></div>
 
@@ -196,11 +209,7 @@
                             <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
                         </svg>
                     </a>
-                    <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg>
-                    </a>
+                    
                 </div>
             </div>
 
@@ -211,18 +220,17 @@
             <!-- Column 3: Contact Us -->
             <div>
                 <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                 <p class="text-gray-400">Herston, QLD 4006, Australia</p>
+                 <p class="text-gray-400">Suite 1703, 17 Gould Rd, Herston QLD 4029 Australia</p>
                 <!-- TODO: Replace placeholder phone number -->
-                <p class="text-gray-400 mt-2">Phone: <a href="tel:+61430000000" class="hover:text-jsb-main">0430 XXX XXX</a></p>
                 <p class="text-gray-400 mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="hover:text-jsb-main">info@justsmartbusiness.com.au</a></p>
             </div>
         </div>
 
         <!-- Footer Bottom Bar -->
-        <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
-            <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a></p>
+       <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a> | <a href="terms.html" class="hover:text-white">Terms of Use</a></p>
+            </div>
         </div>
-    </div>
 </footer>
     
     <script src="assets/js/main.js"></script>

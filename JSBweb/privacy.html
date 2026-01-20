@@ -10,14 +10,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 1. Reuse the hero overlay logic but adapt for full width */
+        .hero-full-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #020a17; /* Dark base */
+            background-image: var(--hero-bg);
+            background-blend-mode: multiply;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.9; /* Slightly darker for text readability */
+            z-index: 0;
+        }
+    </style>
 </head>
 <body class="bg-white text-gray-800">
 
-    <!-- Header & Navigation -->
-   <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+    <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
         <a href="index.html">
-            <!-- Use root-relative path for assets -->
             <img class="h-14 w-auto" src="assets/img/jsb_logo.svg" alt="Just Smart Business Logo">
         </a>
         <nav class="hidden md:flex items-center space-x-8">
@@ -32,10 +48,9 @@
             Book Free Session
         </a>
         <button id="mobile-menu-button" class="md:hidden text-gray-800" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
-            <svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
         </button>
     </div>
-    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 space-y-2">
         <a href="services.html" class="block text-gray-600 hover:text-jsb-main">Services</a>
         <a href="workshops.html" class="block text-gray-600 hover:text-jsb-main">Workshops</a>
@@ -50,35 +65,47 @@
 </header>
     
     <main style="padding-top: 80px;">
-        <!-- Page Header -->
-        <section class="bg-jsb-main-bg py-16 page-header-bg">
-            <div class="container mx-auto px-6 text-center max-w-7xl">
-                <h1 class="text-4xl md:text-5xl font-bold text-jsb-secondary">Privacy Policy</h1>
-                <p class="text-lg text-gray-700 mt-4 max-w-3xl mx-auto">Your privacy is important to us. This policy outlines how we collect, use, and protect your information.</p>
+                <section class="hero-full-bg relative pt-24 pb-20 lg:pt-32 lg:pb-24 overflow-hidden" 
+                 style="--hero-bg: url('assets/img/background4.avif');">
+            
+            <div class="container mx-auto px-6 relative z-10 max-w-4xl text-center">
+                
+                <div class="hero-animate-text hero-delay-1 inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6 shadow-sm">
+                    <svg class="w-3 h-3 text-jsb-main" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span class="text-xs font-bold uppercase tracking-wider text-jsb-main">Secure • Transparent • Trusted</span>
+                </div>
+
+                <h1 class="hero-animate-text hero-delay-2 text-4xl md:text-5xl font-bold text-white leading-tight mb-6 drop-shadow-sm">
+                    Privacy Policy
+                </h1>
+                
+                <p class="hero-animate-text hero-delay-3 text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                    We value your trust. This policy outlines exactly how we collect, protect, and manage your information in accordance with Australian standards.
+                </p>
+
             </div>
         </section>
         
-        <!-- Privacy Policy Content -->
         <section class="py-20">
-            <div class="container mx-auto px-6 max-w-4xl prose lg:prose-lg">
+            <div class="container mx-auto px-6 max-w-4xl prose lg:prose-lg text-gray-600">
                 
-                <p><strong>Last Updated: 9 October 2025</strong></p>
+                <p class="text-sm text-gray-400 mb-8"><strong>Last Updated: 9 October 2025</strong></p>
 
-                <h3>1. Our Commitment to Your Privacy</h3>
+                <h3 class="text-jsb-secondary font-bold">1. Our Commitment to Your Privacy</h3>
                 <p>Just Smart Business ("we", "us", "our") is committed to protecting your privacy. This Privacy Policy explains how we handle your personal information in accordance with the Australian Privacy Principles (APPs) contained within the Privacy Act 1988 (Cth). This policy applies to information we collect through our website (justsmartbusiness.com.au) and in the course of providing our services.</p>
 
-                <h3>2. What Information We Collect</h3>
+                <h3 class="text-jsb-secondary font-bold">2. What Information We Collect</h3>
                 <p>We may collect personal information from you when you interact with us, such as when you fill out our contact form, book a session, or engage our services. The types of personal information we may collect include:</p>
-                <ul>
+                <ul class="list-disc pl-5 space-y-2">
                     <li>Your name</li>
                     <li>Your contact details (e.g., email address, phone number)</li>
                     <li>Information about your business or inquiry</li>
                     <li>Any other information you voluntarily provide to us</li>
                 </ul>
 
-                <h3>3. How We Use Your Information</h3>
+                <h3 class="text-jsb-secondary font-bold">3. How We Use Your Information</h3>
                 <p>We use your personal information for the purposes for which it was collected, which include:</p>
-                <ul>
+                <ul class="list-disc pl-5 space-y-2">
                     <li>To respond to your inquiries and provide you with our consulting and coaching services.</li>
                     <li>To communicate with you about our services, workshops, and events.</li>
                     <li>To process transactions and maintain our business records.</li>
@@ -87,52 +114,46 @@
                 </ul>
                 <p>We will not use your personal information for any other purpose without your consent.</p>
 
-                <h3>4. Data Storage and Security</h3>
+                <h3 class="text-jsb-secondary font-bold">4. Data Storage and Security</h3>
                 <p>We take reasonable steps to protect your personal information from misuse, loss, unauthorised access, modification, or disclosure. Your information may be stored in secure physical and electronic formats. We retain your information for as long as necessary to fulfill the purposes outlined in this policy or as required by law.</p>
 
-                <h3>5. Use of Cookies and Analytics</h3>
+                <h3 class="text-jsb-secondary font-bold">5. Use of Cookies and Analytics</h3>
                 <p>Our website may use cookies to enhance your browsing experience. Cookies are small text files stored on your device that help us understand user behaviour, such as which pages are most visited. This information is aggregated and anonymous and helps us improve our website. You can adjust your browser settings to refuse cookies, but this may affect the functionality of our site.</p>
 
-                <h3>6. Sharing of Your Information</h3>
+                <h3 class="text-jsb-secondary font-bold">6. Sharing of Your Information</h3>
                 <p>We do not sell or trade your personal information. We may disclose your information to third parties only in the following circumstances:</p>
-                <ul>
+                <ul class="list-disc pl-5 space-y-2">
                     <li>To our trusted partners (as listed on our About Us page) but only with your explicit consent to facilitate a referral or integrated service.</li>
                     <li>To our third-party service providers who assist us in operating our business (e.g., payment processors, IT services), under strict confidentiality agreements.</li>
                     <li>If required to do so by law or in response to a valid legal request.</li>
                 </ul>
 
-                <h3>7. Your Rights and Access to Information</h3>
+                <h3 class="text-jsb-secondary font-bold">7. Your Rights and Access to Information</h3>
                 <p>You have the right to request access to the personal information we hold about you and to request its correction. To do so, please contact us using the details below. We will respond to your request within a reasonable timeframe.</p>
 
-                <h3>8. Changes to This Privacy Policy</h3>
+                <h3 class="text-jsb-secondary font-bold">8. Changes to This Privacy Policy</h3>
                 <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page, and we encourage you to review it periodically to stay informed about how we are protecting your information.</p>
 
-                <h3>9. How to Contact Us</h3>
+                <h3 class="text-jsb-secondary font-bold">9. How to Contact Us</h3>
                 <p>If you have any questions, concerns, or complaints about this Privacy Policy or our handling of your personal information, please contact us at:</p>
-                <p>
-                    <strong>Just Smart Business</strong><br>
-                    Email: <a href="mailto:info@justsmartbusiness.com.au">info@justsmartbusiness.com.au</a><br>
-                    Location: Herston, QLD 4006, Australia
-                </p>
+                <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-jsb-main mt-4">
+                    <p class="font-bold text-gray-900">Just Smart Business</p>
+                    <p class="mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="text-jsb-main hover:underline">info@justsmartbusiness.com.au</a></p>
+                    <p>Location: Herston, QLD 4006, Australia</p>
+                </div>
 
             </div>
         </section>
     </main>
 
-      <!-- Footer -->
-  <footer class="bg-gray-900 text-white">
+      <footer class="bg-gray-900 text-white">
     <div class="container mx-auto px-6 py-10 max-w-7xl">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Column 1: About & Socials -->
             <div>
                 <h3 class="text-xl font-bold mb-4">Just <span class="text-jsb-main">Smart</span> Business</h3>
                 <p class="text-gray-400">Your trusted partner in business growth, proudly based in Brisbane, QLD.</p>
                 
-                <!-- NEW: Social Media Icons -->
                 <div class="flex space-x-4 mt-4">
-                    <!-- 
-                      TODO: Replace "#" with your actual social media URLs 
-                    -->
                     <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
@@ -143,36 +164,27 @@
                             <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
                         </svg>
                     </a>
-                    <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg>
-                    </a>
+                   
                 </div>
             </div>
 
-            <!-- Column 2: Quick Links (Standardized) -->
-                            <div><h3 class="text-xl font-bold mb-4">Quick Links</h3><ul class="space-y-2"><li><a href="services.html" class="text-gray-400 hover:text-white">Services</a></li><li><a href="workshops.html" class="text-gray-400 hover:text-white">Workshops</a></li><li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li> <li><a href="platform.html" class="text-gray-400 hover:text-white">JSB Platform</a></li><li><a href="insights.html" class="text-gray-400 hover:text-white">Insights</a></li></ul></div>
+            <div><h3 class="text-xl font-bold mb-4">Quick Links</h3><ul class="space-y-2"><li><a href="services.html" class="text-gray-400 hover:text-white">Services</a></li><li><a href="workshops.html" class="text-gray-400 hover:text-white">Workshops</a></li><li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li> <li><a href="platform.html" class="text-gray-400 hover:text-white">JSB Platform</a></li><li><a href="insights.html" class="text-gray-400 hover:text-white">Insights</a></li></ul></div>
 
 
-            <!-- Column 3: Contact Us -->
             <div>
                 <h3 class="text-xl font-bold mb-4">Contact Us</h3>
                  <p class="text-gray-400">Suite 1703, 17 Gould Rd, Herston QLD 4029 Australia</p>
-                <!-- TODO: Replace placeholder phone number -->
-                
                 <p class="text-gray-400 mt-2">Email: <a href="mailto:info@justsmartbusiness.com.au" class="hover:text-jsb-main">info@justsmartbusiness.com.au</a></p>
             </div>
         </div>
 
-        <!-- Footer Bottom Bar -->
         <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
-            <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a></p>
-        </div>
+                <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a> | <a href="terms.html" class="hover:text-white">Terms of Use</a></p>
+            </div>
+       
     </div>
 </footer>
     
     <script src="assets/js/main.js"></script>
 </body>
 </html>
-

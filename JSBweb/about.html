@@ -69,6 +69,18 @@
       ]
     }
     </script>
+     <style>      
+    /* 1. Tell the pseudo-element to look for the variable we set */
+    .hero-split-bg::before {
+        background-image: var(--hero-bg) !important;
+        
+        /* 2. Ensure the blend mode is on so the white background disappears */
+        background-blend-mode: multiply !important;
+        
+        /* 3. Ensure the background color is dark so the veins show up */
+        background-color: #1a202c !important; 
+    }
+         </style>
 </head>
 <body class="bg-white text-gray-800">
 
@@ -109,7 +121,8 @@
     
     <main style="padding-top: 80px;">
         <!-- Page Header -->
-        <section class="hero-split-bg relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <section class="hero-split-bg relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden"
+        style="--hero-bg: url('assets/img/background4.avif');">
     
     <div class="hero-accent-circle" style="left: auto; right: -100px; top: -150px; opacity: 0.1;"></div>
 
@@ -230,14 +243,14 @@
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         </div>
                         <h3 class="font-bold text-gray-900">Proudly Local</h3>
-                        <p class="text-sm text-gray-600 mt-2">Based in Herston, QLD. We understand the Australian business landscape.</p>
+                        <p class="text-sm text-gray-600 mt-2">Based in Brisbane, QLD. We understand the Australian business landscape.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Team Section -->
-        <section class="py-20 bg-jsb-light-green">
+<section id="team-grid" class="py-20 bg-jsb-light-green relative">
             <div class="container mx-auto px-6 max-w-7xl">
                 <div class="text-center mb-16">
                     <span class="text-jsb-main font-bold tracking-wide uppercase text-sm">The Team</span>
@@ -245,74 +258,83 @@
                     <p class="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">Led from Brisbane, our advisors blend corporate scale-up experience with decades of hands-on ownership to guide founders through each growth stage.</p>
                 </div>
 
-                <!-- Keith Davidson: Full Width Row -->
                 <div class="mb-12">
-                    <article class="team-card bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden p-8 md:p-10 flex flex-col md:flex-row gap-10 items-center md:items-start transform hover:-translate-y-1 transition-transform duration-300" itemscope itemtype="https://schema.org/Person">
+                    <article class="team-card bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden p-8 md:p-10 flex flex-col md:flex-row gap-10 items-center md:items-start transform hover:-translate-y-1 transition-transform duration-300">
                         <div class="flex-shrink-0 w-full md:w-auto flex justify-center md:block">
-                            <img src="assets/img/handsomeman.png" alt="Keith Davidson, Brisbane small business strategist" class="w-48 h-48 md:w-64 md:h-64 rounded-2xl object-cover shadow-lg border-4 border-gray-50" loading="lazy" itemprop="image">
+                            <img src="assets/img/handsomeman.png" alt="Keith Davidson" class="w-48 h-48 md:w-64 md:h-64 rounded-2xl object-cover shadow-lg border-4 border-gray-50">
                         </div>
                         <div class="flex-grow text-center md:text-left">
-                            <div class="mb-4">
-                                <h3 class="text-3xl font-bold text-gray-900" itemprop="name">Keith Davidson</h3>
-                                <p class="text-jsb-main font-bold text-lg uppercase tracking-wide mt-1" itemprop="jobTitle">Founder & Lead Strategist</p>
+                            <div class="mb-2">
+                                <h3 class="text-3xl font-bold text-gray-900">Keith Davidson</h3>
+                                <p class="text-jsb-main font-bold text-lg uppercase tracking-wide mt-1">Founder & Lead Strategist</p>
                             </div>
-                            <p class="text-gray-600 leading-relaxed mb-8 text-lg" itemprop="description">
-                                Keith draws on more than 30 years leading major corporate divisions with Telstra and building his own successful ventures across Queensland. He specialises in commercial model design, cash-flow forecasting, and business turnarounds—coaching over 1,000 owners to move from reactive firefighting to proactive growth.
+                            
+                            <p class="text-jsb-secondary font-semibold italic mb-4">Clarity first. Focus next. Results that last.</p>
+                            
+                            <p class="text-gray-600 leading-relaxed mb-6 text-lg">
+                                Keith brings more than 30 years of experience across corporate leadership, entrepreneurship, and small business strategy. He helps business owners replace uncertainty with clear direction, disciplined execution, and sustainable growth using the JSB Create → Refine → Achieve framework.
                             </p>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-gray-100 pt-6 text-left">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h4 class="text-xs font-bold text-jsb-secondary uppercase mb-2 flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                        Specialties
-                                    </h4>
-                                    <p class="text-sm text-gray-600">Strategic planning, pricing strategy, funding readiness, executive mentoring</p>
-                                </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h4 class="text-xs font-bold text-jsb-secondary uppercase mb-2 flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 8.586 14.586 5H12z" clip-rule="evenodd"/></svg>
-                                        Notable Impact
-                                    </h4>
-                                    <p class="text-sm text-gray-600">Guided 40+ Brisbane SMEs through post-pandemic recovery and expansion programs.</p>
-                                </div>
+                            
+                            <div class="mb-6">
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Specialties</p>
+                                <p class="text-sm font-medium text-gray-700">Strategic planning · Financial forecasting · Funding readiness</p>
                             </div>
+                            
+                            <button onclick="openResume('keith')" class="inline-flex items-center gap-2 text-jsb-secondary font-bold hover:text-jsb-main transition-colors group">
+                                Read more &rarr;
+                            </button>
                         </div>
                     </article>
                 </div>
 
-                <!-- Patrick and Mike: Grid Layout -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Patrick Comerford Card -->
-                    <article class="team-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300" itemscope itemtype="https://schema.org/Person">
-                        <img src="assets/img/patrick.png" alt="Patrick Comerford, operational excellence coach" class="w-32 h-32 rounded-full object-cover shadow-md mb-6 border-4 border-jsb-light-green" loading="lazy" itemprop="image">
-                        <h3 class="text-2xl font-bold text-gray-900" itemprop="name">Patrick Comerford</h3>
-                        <p class="text-jsb-main font-bold text-xs uppercase tracking-wide mb-4" itemprop="jobTitle">Business Coach & Transformation Lead</p>
-                        <p class="text-gray-600 text-lg leading-relaxed mb-6" itemprop="description">
-                            Patrick is a former Spotless Services General Manager turned multi-site business owner. His collaborative approach helps teams embed operational systems and build accountability cultures that lift revenue.
+                    <article class="team-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <img src="assets/img/patrick.png" alt="Patrick Comerford" class="w-32 h-32 rounded-full object-cover shadow-md mb-6 border-4 border-jsb-light-green">
+                        
+                        <h3 class="text-2xl font-bold text-gray-900">Patrick Comerford</h3>
+                        <p class="text-jsb-main font-bold text-xs uppercase tracking-wide mb-3">Business Coach & Transformation Lead</p>
+                        
+                        <p class="text-jsb-secondary font-semibold italic text-sm mb-4">Patrick helps people and teams navigate change with clarity and confidence.</p>
+
+                        <p class="text-gray-600 text-base leading-relaxed mb-6">
+                            With senior corporate leadership experience and hands-on business ownership, Patrick works with owners and leadership teams to embed operational systems, strengthen accountability, and turn strategy into day-to-day execution.
                         </p>
-                         <div class="w-full mt-auto pt-4 border-t border-gray-100">
-                             <span class="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-medium">Ops Optimisation</span>
-                             <span class="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-medium">Leadership</span>
-                         </div>
+
+                        <div class="mb-6 w-full border-t border-gray-100 pt-4">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Specialties</p>
+                            <p class="text-sm font-medium text-gray-700">Operations optimisation · Leadership development · Change management</p>
+                        </div>
+
+                        <button onclick="openResume('patrick')" class="mt-auto inline-flex items-center gap-2 text-jsb-secondary font-bold hover:text-jsb-main transition-colors group">
+                            Read more &rarr;
+                        </button>
                     </article>
 
-                    <!-- Mike Avey Card -->
-                    <article class="team-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300" itemscope itemtype="https://schema.org/Person">
-                        <img src="assets/img/Mike_Avey_Profile.jpg" alt="Mike Avey, investment and governance advisor" class="w-32 h-32 rounded-full object-cover shadow-md mb-6 border-4 border-jsb-light-green" loading="lazy" itemprop="image">
-                        <h3 class="text-2xl font-bold text-gray-900" itemprop="name">Mike Avey</h3>
-                        <p class="text-jsb-main font-bold text-xs uppercase tracking-wide mb-4" itemprop="jobTitle">Innovation & Investment Lead</p>
-                        <p class="text-gray-600 text-lg leading-relaxed mb-6" itemprop="description">
-                            Mike is a seasoned corporate advisor with extensive experience in investment banking and governance. He guides ventures from early ideation through to scale, investment, and exit.
+                    <article class="team-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <img src="assets/img/Mike_Avey_Profile.jpg" alt="Mike Avey" class="w-32 h-32 rounded-full object-cover shadow-md mb-6 border-4 border-jsb-light-green">
+                        
+                        <h3 class="text-2xl font-bold text-gray-900">Mike Avey</h3>
+                        <p class="text-jsb-main font-bold text-xs uppercase tracking-wide mb-3">Capital & Governance Advisor</p>
+                        
+                        <p class="text-jsb-secondary font-semibold italic text-sm mb-4">From innovation to investment, with governance that scales.</p>
+
+                        <p class="text-gray-600 text-base leading-relaxed mb-6">
+                            Mike is a seasoned corporate advisor and Managing Director of Pachira Capital, supporting founders and investors from early concept through to scale, capital raising, and exit.
                         </p>
-                        <div class="w-full mt-auto pt-4 border-t border-gray-100">
-                             <span class="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-medium">Venture Capital</span>
-                             <span class="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-medium">Governance</span>
-                         </div>
+
+                        <div class="mb-6 w-full border-t border-gray-100 pt-4">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Specialties</p>
+                            <p class="text-sm font-medium text-gray-700">Investment readiness · Commercialisation · Governance & boards</p>
+                        </div>
+
+                        <button onclick="openResume('mike')" class="mt-auto inline-flex items-center gap-2 text-jsb-secondary font-bold hover:text-jsb-main transition-colors group">
+                            Read more &rarr;
+                        </button>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- Partners Section -->
         <section class="py-20 bg-white">
             <div class="container mx-auto px-6 max-w-7xl">
                 <div class="text-center mb-16">
@@ -320,7 +342,6 @@
                     <p class="text-gray-600 mt-4 max-w-2xl mx-auto">We collaborate with a network of experts to provide complete support.</p>
                 </div>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                    <!-- Partner: Pachira -->
                     <div class="flex items-center gap-6 bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
                         <div class="w-24 h-24 flex-shrink-0 bg-gray-50 rounded-lg flex items-center justify-center p-2">
                              <img src="assets/img/pachira200x200.avif" alt="Pachira Capital" class="max-w-full max-h-full" loading="lazy">
@@ -331,7 +352,6 @@
                             <p class="text-sm text-gray-600">Expert advisory for companies at every stage, helping build products, teams, and commercial objectives.</p>
                         </div>
                     </div>
-                    <!-- Partner: Small Business Digital -->
                     <div class="flex items-center gap-6 bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
                         <div class="w-24 h-24 flex-shrink-0 bg-gray-50 rounded-lg flex items-center justify-center p-2">
                             <img src="assets/img/partner-small-business-digital.avif" alt="Small Business Digital" class="max-w-full max-h-full" loading="lazy">
@@ -346,7 +366,6 @@
             </div>
         </section>
         
-        <!-- FAQ Section -->
         <section class="py-20 bg-gray-50">
             <div class="container mx-auto px-6 max-w-5xl">
                 <div class="text-center mb-12">
@@ -369,25 +388,23 @@
                             <span class="text-jsb-main transition-transform group-open:rotate-180">▼</span>
                         </summary>
                         <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                            We start with a diagnostic workshop to clarify goals and challenges. From there, we build a tailored roadmap supported by regular accountability sessions and on-demand advice.
+                            We start with an initial deep-dive session to understand your business, clarify your immediate priorities, and identify what matters most right now. From there, we focus on addressing urgent issues while applying a structured, considered approach aligned to your needs. Depending on your situation, this may involve ongoing strategic advisory, targeted financial support, accountability sessions, or a focused workshop — ensuring you get the right level of support at the right time.
                         </div>
                     </details>
                     <details class="group border border-gray-200 rounded-lg bg-white shadow-sm">
                         <summary class="cursor-pointer p-6 text-lg font-semibold text-gray-800 flex justify-between items-center">
-                            In-person or virtual?
+                            Do you offer in-person sessions or virtual support?
                             <span class="text-jsb-main transition-transform group-open:rotate-180">▼</span>
                         </summary>
                         <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                            Both. We meet onsite across Brisbane and SE QLD, supported by video strategy sessions and our digital JSB Platform for flexibility.
+                            Yes. While we are based in Brisbane our team is located through the country. We offer onsite and virtual meetings. We combine this with   real-time dashboards, and resources inside the JSB Platform so you and your team can engage from anywhere.
                         </div>
                     </details>
                 </div>
             </div>
         </section>
         
-        <!-- CTA -->
         <section class="bg-jsb-secondary text-white py-20 relative overflow-hidden">
-             <!-- Abstract shapes -->
              <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-white opacity-5"></div>
              <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 rounded-full bg-jsb-main opacity-20"></div>
 
@@ -399,7 +416,56 @@
                 </a>
             </div>
         </section>
-    </main>
+
+    <div id="resume-modal" class="fixed inset-0 z-[9999] hidden items-start justify-center px-4 pb-4 pt-24 md:pt-24">
+        
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onclick="closeResume()"></div>
+        
+        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[85vh] flex flex-col md:flex-row animate-scale-up overflow-hidden">
+            
+            <img src="assets/img/jsb_icon.svg" class="absolute top-4 right-4 w-12 h-12 opacity-15 pointer-events-none md:w-24 md:h-24 md:top-8 md:right-8" alt="JSB Watermark">
+
+            <button onclick="closeResume()" class="absolute top-4 right-4 z-20 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="w-full md:w-1/3 bg-jsb-light-green/30 p-8 flex flex-col items-center md:items-start text-center md:text-left border-b md:border-b-0 md:border-r border-gray-100 overflow-y-auto">
+                <img id="resume-img" src="" alt="Profile" class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg border-4 border-white mb-6">
+                
+                <h2 id="resume-name" class="text-2xl md:text-3xl font-bold text-gray-900 mb-1 leading-tight"></h2>
+                <p id="resume-role" class="text-jsb-main font-bold text-sm uppercase tracking-wider mb-6"></p>
+                
+                <div class="w-full h-px bg-gray-300/50 mb-6"></div>
+                
+                <div class="w-full">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Specialties</h3>
+                    <ul id="resume-specialties" class="space-y-3 text-sm text-gray-700 text-left">
+                        </ul>
+                </div>
+            </div>
+
+            <div class="w-full md:w-2/3 p-8 md:p-10 overflow-y-auto bg-white custom-scrollbar">
+                
+                <div id="resume-bio" class="prose prose-lg text-gray-600 max-w-none mb-8">
+                    </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 border-l-4 border-jsb-secondary">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-jsb-secondary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                        Notable Impact
+                    </h3>
+                    <ul id="resume-impact" class="space-y-3">
+                         </ul>
+                </div>
+
+                <div class="mt-8 text-center md:text-left">
+                    <button onclick="closeResume()" class="inline-block text-sm font-semibold text-gray-400 hover:text-jsb-main transition-colors border-b border-transparent hover:border-jsb-main">
+                        &larr; Return to Team
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
       <!-- Footer -->
   <footer class="bg-gray-900 text-white">
@@ -425,11 +491,7 @@
                             <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
                         </svg>
                     </a>
-                    <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg>
-                    </a>
+                 
                 </div>
             </div>
 
@@ -448,10 +510,10 @@
         </div>
 
         <!-- Footer Bottom Bar -->
-        <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
-            <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a></p>
+      <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a> | <a href="terms.html" class="hover:text-white">Terms of Use</a></p>
+            </div>
         </div>
-    </div>
 </footer>
     
     <script src="assets/js/main.js"></script>

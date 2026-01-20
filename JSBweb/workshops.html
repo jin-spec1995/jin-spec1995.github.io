@@ -12,6 +12,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>      
+    /* 1. Tell the pseudo-element to look for the variable we set */
+    .hero-split-bg::before {
+        background-image: var(--hero-bg) !important;
+        
+        /* 2. Ensure the blend mode is on so the white background disappears */
+        background-blend-mode: multiply !important;
+        
+        /* 3. Ensure the background color is dark so the veins show up */
+        background-color: #1a202c !important; 
+    }
+         </style>
 </head>
 
 <body class="bg-white text-gray-800">
@@ -50,7 +62,8 @@
 
     <main  style="padding-top: 80px;">
         <!-- Page Header -->
-       <section class="hero-split-bg bg-texture-dots relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+       <section class="hero-split-bg bg-texture-dots relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden"
+       style="--hero-bg: url('assets/img/background2.avif');">
     
     <div class="hero-accent-circle"></div>
 
@@ -91,7 +104,7 @@
             <div class="lg:w-1/2 w-full relative z-10 perspective-1000">
                 
                 <div id="hero-image-layer" class="hero-image-frame parallax-layer hero-animate-image relative">
-                    <img src="assets/img/strategicplan.avif" alt="Business owners planning strategy" class="w-full h-auto object-cover aspect-[4/3] shadow-2xl">
+                    <img src="assets/img/workshop_hero.png" alt="Business owners planning strategy" class="w-full h-auto object-cover aspect-[4/3] shadow-2xl">
                     
                     <div class="floating-badge absolute bottom-8 left-4 bg-white p-2 rounded-lg shadow-2xl hidden md:block max-w-xs border-l-4 border-jsb-secondary">
                         <div class="flex items-center gap-3 mb-2 justify-start">
@@ -126,7 +139,7 @@
                     <!-- Workshop: The Big Picture -->
                     <div class="group grid grid-cols-1 md:grid-cols-5 gap-8 items-center scroll-reveal">
                         <div class="overflow-hidden rounded-xl shadow-lg md:col-span-2">
-                            <img src="assets/img/strategicplan.avif"
+                            <img src="assets/img/workshop1.png"
                                 alt="A group of professionals in a strategic planning workshop"
                                 class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
                         </div>
@@ -170,7 +183,7 @@
                             </ul>
                         </div>
                         <div class="overflow-hidden rounded-xl shadow-lg md:col-span-2">
-                            <img src="assets/img/cashflow.avif"
+                            <img src="assets/img/workshop2.png"
                                 alt="Financial charts and graphs indicating a financial planning session"
                                 class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
                         </div>
@@ -178,7 +191,7 @@
                     <!-- Workshop: InvestReady Program --> 
                     <div class="group grid grid-cols-1 md:grid-cols-5 gap-8 items-center scroll-reveal delay-200">
                         <div class="overflow-hidden rounded-xl shadow-lg md:col-span-2">
-                            <img src="assets/img/investReadyprogram.avif" alt="An entrepreneur pitching to investors"
+                            <img src="assets/img/workshop3.avif" alt="An entrepreneur pitching to investors"
                                 class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
                         </div>
                         <div
@@ -252,15 +265,15 @@
                             <!-- Slide 1 -->
                             <div class="testimonial-slide">
                                 <div class="video-container">
-                                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_1?rel=0" title="Testimonial 1" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/k5OFwZjyvqQ?rel=0" title="Testimonial 1" allowfullscreen></iframe>
                                 </div>
                                 <div class="p-8 md:p-12 text-center">
                                     <div class="mb-4"><span class="success-badge">Strategic Results</span></div>
                                     <h3 class="text-2xl font-bold text-gray-900 mb-4">"I now have a clear 90-day plan"</h3>
-                                    <p class="text-gray-600 italic leading-relaxed max-w-2xl mx-auto">"The Big Picture workshop helped me stop firefighting and start leading. Having a one-page strategic plan has kept my team focused and aligned for months."</p>
+                                    <p class="text-gray-600 italic leading-relaxed max-w-2xl mx-auto">"It was a great experience, structured, insightful providing clear guidance on purpose and goals with relatable content"</p>
                                     <div class="mt-8">
                                         <p class="font-bold text-jsb-secondary text-lg">Workshop Participant</p>
-                                        <p class="text-sm text-gray-500">Service Business Owner, Brisbane</p>
+                                        <p class="text-sm text-gray-500">Mario Van Rensberg, Brisbane</p>
                                     </div>
                                 </div>
                             </div>
@@ -268,15 +281,15 @@
                             <!-- Slide 2 -->
                             <div class="testimonial-slide">
                                 <div class="video-container">
-                                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_2?rel=0" title="Testimonial 2" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/ZqMtk3dKD1U?rel=0" title="Testimonial 2" allowfullscreen></iframe>
                                 </div>
                                 <div class="p-8 md:p-12 text-center">
                                     <div class="mb-4"><span class="success-badge">Financial Clarity</span></div>
                                     <h3 class="text-2xl font-bold text-gray-900 mb-4">"Finally understood our margins"</h3>
-                                    <p class="text-gray-600 italic leading-relaxed max-w-2xl mx-auto">"Show Me The Money changed how I look at my bank balance. We found leaks in our profit margins that we fixed within a week of the session."</p>
+                                    <p class="text-gray-600 italic leading-relaxed max-w-2xl mx-auto">"Good job, Keith. Workshop was well-structured with quality materials. "</p>
                                     <div class="mt-8">
                                         <p class="font-bold text-jsb-secondary text-lg">Workshop Participant</p>
-                                        <p class="text-sm text-gray-500">Retail Founder, QLD</p>
+                                        <p class="text-sm text-gray-500">Anita Brown, Consultancy and SME Platform Development</p>
                                     </div>
                                 </div>
                             </div>
@@ -284,7 +297,7 @@
                             <!-- Slide 3 -->
                             <div class="testimonial-slide">
                                 <div class="video-container">
-                                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_3?rel=0" title="Testimonial 3" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/BFT7OVS3o0M?rel=0" title="Testimonial 3" allowfullscreen></iframe>
                                 </div>
                                 <div class="p-8 md:p-12 text-center">
                                     <div class="mb-4"><span class="success-badge">Implementation</span></div>
@@ -361,12 +374,7 @@
                                     d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
                             </svg>
                         </a>
-                        <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                            </svg>
-                        </a>
+                        
                     </div>
                 </div>
 
@@ -396,10 +404,10 @@
 
             <!-- Footer Bottom Bar -->
             <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
-                <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html"
-                        class="hover:text-white">Privacy Policy</a></p>
+                <p>&copy; <span id="year"></span> Just Smart Business. All Rights Reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a> | <a href="terms.html" class="hover:text-white">Terms of Use</a></p>
             </div>
         </div>
+       
     </footer>
 
     <script src="assets/js/main.js"></script>
