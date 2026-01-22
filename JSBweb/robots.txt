@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
 
+# Disallow standard server folders if they exist (Best Practice)
+Disallow: /cgi-bin/
+Disallow: /assets/css/
+Disallow: /assets/js/
+# Keep images allowlisted so Google can "see" the site design
+
+# Sitemap Location
 Sitemap: https://www.justsmartbusiness.com.au/sitemap.xml
