@@ -188,20 +188,55 @@
 </section>
 
          <!-- Intro Section -->
-        <section class="py-20 bg-white">
+<section class="py-16 bg-white">
             <div class="container mx-auto px-6 max-w-7xl">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <div class="mb-4 text-jsb-main font-bold tracking-wide uppercase text-sm">Our Mission</div>
-                        <h2 class="text-3xl font-bold text-gray-900 mb-6">Real-World Experience, <br><span class="text-jsb-secondary">Not Textbook Theory.</span></h2>
-                        <p class="text-lg text-gray-600 leading-relaxed mb-4">Just Smart Business brings together experienced entrepreneurs and corporate leaders to support small and medium-sized businesses across Australia.</p>
-                        <p class="text-gray-600 leading-relaxed mb-6">Headquartered in Brisbane, our advisors work with business owners nationwide to strengthen strategy, improve financial performance, and build sustainable growth. We deliver everything from <a href="services.html" class="font-semibold text-jsb-main hover:text-jsb-secondary underline decoration-jsb-light-green">tailored advisory programs</a> to <a href="workshops.html" class="font-semibold text-jsb-main hover:text-jsb-secondary underline decoration-jsb-light-green">practical workshops</a> for founders seeking clarity and results.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    
+                    <div class="order-2 lg:order-1">
+                        <div class="mb-3 text-jsb-main font-bold tracking-wide uppercase text-sm">Our Origins</div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-5">Real-World Experience, <br><span class="text-jsb-secondary">Not Textbook Theory.</span></h2>
+                        
+                        <div class="prose text-gray-600 leading-relaxed mb-8 text-base">
+                            <p class="mb-4">
+                                These two works reflect the origins of the Just Smart Business approach. Developed during a Small Business Professional Development "Action Learning" project delivered by the founder in partnership with others; they visually represent the journey many business owners experience.
+                            </p>
+                            <p class="mb-4">
+                                The first image captures the disorganisation, competing priorities, and lack of clarity that often exist before structured strategic thinking begins. The second reflects the order, alignment, and coherence that followed once participants applied a modified Balanced Scorecard approach—bringing strategy, priorities, and action into clear focus.
+                            </p>
+                        </div>
+
+                        <div>
+                            <button onclick="openHistory()" class="inline-flex items-center gap-2 bg-jsb-secondary text-white font-semibold px-6 py-3 rounded-lg shadow hover:bg-jsb-main transition-colors duration-300">
+                                Read Our Full Story
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </button>
+                        </div>
                     </div>
-                    <div class="group overflow-hidden rounded-xl shadow-2xl relative">
-                        <!-- Subtle border frame -->
-                        <div class="absolute inset-0 border-4 border-white/20 rounded-xl z-10 pointer-events-none"></div>
-                        <img src="assets/img/team.avif" alt="Just Smart Business team collaborating in a workshop" class="w-full h-96 object-cover transform transition-transform duration-700 group-hover:scale-105">
+
+                    <div class="order-1 lg:order-2 flex flex-col items-center">
+                        <div class="w-full max-w-lg">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="relative group">
+                                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition rounded-lg z-10"></div>
+                                    <img src="assets/img/journey-start.avif" alt="Visual representation of business disorganisation" class="w-full aspect-[3/4] object-cover rounded-lg shadow-md border border-gray-100 transform transition duration-500 group-hover:-translate-y-1">
+                                    
+                                </div>
+                                
+                                <div class="relative group">
+                                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition rounded-lg z-10"></div>
+                                    <img src="assets/img/journey-end.avif" alt="Visual representation of strategic clarity" class="w-full aspect-[3/4] object-cover rounded-lg shadow-md border border-gray-100 transform transition duration-500 group-hover:-translate-y-1">
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="mt-5 text-center px-4">
+                                <p class="text-sm text-gray-500 italic leading-relaxed">
+                                    “A visual representation of the journey from disorganisation to clarity through structured strategic thinking.”
+                                </p>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -556,6 +591,91 @@
         }
       ]
     }
+    </script>
+   <div id="history-modal" class="fixed inset-0 z-[9999] hidden items-start justify-center px-4 pt-[80px] pb-6">
+        
+        <div class="absolute inset-0 bg-gray-900/70 backdrop-blur-sm transition-opacity" onclick="closeHistory()"></div>
+        
+        <div class="relative bg-white rounded-b-2xl md:rounded-2xl shadow-2xl w-full max-w-4xl max-h-full flex flex-col animate-scale-up overflow-hidden border-t border-gray-200">
+            
+            <div class="bg-gray-50 border-b border-gray-200 px-8 py-4 flex justify-between items-center flex-shrink-0 z-20">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Our Story</h2>
+                    <p class="text-jsb-main text-xs font-bold uppercase tracking-wider">From Complexity to Clarity</p>
+                </div>
+                <button onclick="closeHistory()" class="bg-white border border-gray-200 hover:bg-gray-100 text-gray-600 rounded-full p-2 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="p-8 md:p-12 overflow-y-auto custom-scrollbar relative">
+                
+                <div class="flex flex-col items-center justify-center mb-8 text-jsb-main animate-bounce">
+                    <span class="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-80">Scroll to Read</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7-7-7m14-8l-7 7-7-7"></path></svg>
+                </div>
+
+                <img src="assets/img/jsb_icon.svg" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 opacity-[0.1] pointer-events-none" alt="JSB Watermark">
+
+                <div class="prose prose-lg max-w-none text-gray-600 relative z-10 text-justify">
+                    <p class="lead font-semibold text-gray-800 text-xl mb-6">
+                        Just Smart Business began as a practical, real-world response to a challenge faced by many small business owners: knowing what needs attention but not always knowing where to start.
+                    </p>
+
+                    <p>
+                        The foundations of the JSB methodology were formed through a Small Business Professional Development project delivered in conjunction with the <strong>Northern Rivers Chamber of Commerce</strong>. Led by JSB Founder Keith Davidson, the program was designed to support businesses in building their eCommerce capability while also addressing broader strategic and operational challenges.
+                    </p>
+                    
+                    <h3 class="text-jsb-secondary font-bold text-lg mt-8 mb-4">A New Framework for Strategy</h3>
+                    <p>
+                        Central to the program was the adoption of a modified <strong>Balanced Scorecard framework</strong>. Rather than focusing solely on financial outcomes, participants were guided to step back and view their businesses through multiple lenses—strategy, customers, internal systems, capability, and execution. This process helped business owners identify the few priorities that truly mattered, align their actions to those priorities, and regain control over how their business was developing.
+                    </p>
+
+                    <div class="my-8 p-6 bg-jsb-light-green/20 rounded-xl border-l-4 border-jsb-main">
+                        <p class="italic text-gray-800 font-medium m-0">
+                            "The two accompanying works visually document that journey. The first reflects the fragmented thinking, competing demands, and uncertainty that often exist before strategy is clarified. The second represents the structured order that emerged once businesses applied a disciplined strategic framework."
+                        </p>
+                    </div>
+
+                    <p>
+                        The program was independently evaluated and recognised as delivering exceptional value, particularly for its ability to translate complex strategic concepts into practical, usable outcomes for small business owners.
+                    </p>
+
+                    <p>
+                        In the years that followed, Keith continued to refine this approach through research, workshops, and one-to-one advisory work with start-ups and established businesses alike. What emerged was a repeatable, proven process—designed not to overwhelm, but to create clarity, focus, and momentum.
+                    </p>
+
+                    <p class="font-bold text-gray-900 mt-6">
+                        Today, Just Smart Business exists to bring that process to a wider business community, helping owners and leadership teams move from complexity to clarity, and from intention to action.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 border-t border-gray-100 p-6 text-center flex-shrink-0">
+                <button onclick="closeHistory()" class="text-gray-500 hover:text-jsb-main text-sm font-semibold transition-colors">Close Story</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openHistory() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeHistory() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        
+        // Close on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeHistory();
+        });
     </script>
 </body>
 </html>
