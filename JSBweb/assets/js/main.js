@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formContainer && formLoader) {
         setTimeout(() => {
             formLoader.style.display = 'none';
-        }, 2000);
+        }, 3000);
     }
 
     // 7. Scroll Reveal / Observer Logic
